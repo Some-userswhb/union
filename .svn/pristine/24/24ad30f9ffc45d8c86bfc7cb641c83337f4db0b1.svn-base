@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <!-- Morris -->
+    <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="css/combo.select.css" rel="stylesheet">
+    <link href="css/plugins/treeview/bootstrap-treeview.css" rel="stylesheet">
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+</head>
+<body class="gray-bg sidebar-content">
+<style>
+
+
+    .dataTables-example td, .dataTables-example th {
+        padding: 8px 0 !important;
+    }
+    #unionChange {
+        height: 500px;
+        overflow-y: scroll;
+        position: relative;
+    }
+
+    .file-add {
+        padding-top: 20px;
+    }
+    .butt-right {
+        width: 28%;
+    }
+    .file-operating li {
+        float: left;
+        margin-left: 5px;
+    }
+    [v-cloak] {
+        display: none;
+    }
+
+    .btn-group{
+        width: 210px;
+        height: 39px;
+        margin-bottom: 12px;
+    }
+    .btn-default.active.focus, .btn-default.active:focus,
+    .btn-default.active:hover, .btn-default:active.focus,
+    .btn-default:active:focus, .btn-default:active:hover,
+    .open>.dropdown-toggle.btn-default.focus, .open>.dropdown-toggle.btn-default:focus,
+    .open>.dropdown-toggle.btn-default:hover{
+        background-color: white;
+
+    }
+    .btn-default:hover, .btn-default:focus, .btn-default:active,
+    .btn-default.active, .open .dropdown-toggle.btn-default{
+        background-color: white;
+    }
+    .btn-default.active, .btn-default:focus,.btn-default:hover{
+    background-color: white;
+    }
+    .btn-group input{
+        width: 100%;
+        height: 40px;
+        background-color: white;
+        font-size: 12px !important;
+        text-align: left;
+    }
+    .btn-group .dropdown-menu{
+        width: 210px;
+        height: 200px;
+        overflow: hidden;
+        overflow-y:scroll;
+    }
+    .btn-group .dropdown-menu li{
+        width: 100%-10;
+        height: 35px;
+        line-height: 35px;
+        padding-left: 10px;
+        border-bottom: 1px solid #e6e6e6;
+        font-size: 14px;
+    }
+    .btn-group .dropdown-menu li:hover{
+        background-color: #1b6d85;
+        color: white;
+    }
+    .input-sm{
+        height: 40px !important;
+    }
+    .input-sm option{
+        width:100%;
+        height: 40px !important;
+    }
+
+</style>
+
+
+<div id="treeGhlist">
+    <div class="sidebard-panel" >
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                        <h5>工会列表</h5>
+                    </div>
+                    <div class="unlist-wrap">
+                        <div class="btn-group">
+                            <input class="btn btn-default btn-lg dropdown-toggle"
+                                   type="text" data-toggle="dropdown"
+                                   v-model="searchVal"
+                                   aria-haspopup="true"
+                                   placeholder="请选择工会"
+                                   aria-expanded="false"></input>
+                            <ul class="dropdown-menu">
+
+                                <li v-for="(item,key) in list"
+                                    @click="showDetails(item.laborun_code)
+                                ">{{item.laborun_name}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                       <!-- <select @change="showMsg(unioncode)" v-model="unioncode">
+                            <option value="">请选择工会</option>
+                            <option value="阳泉总工会" v-for="item in Ghlist"
+                                    v-model="code" :value="item.laborun_code"
+                                    @click="showDetails">{{item.laborun_name}}</option>
+                        </select>-->
+
+                    <div class="ibox-content">
+                        <div id="treeview5" class="test"></div>
+                        <div class="iconshow">
+                            <ul class="no-padding">
+                                <li>
+                                    <i class="fa fa fa-sitemap"></i>
+                                    <span class="nav-label">组织工会</span>
+                                </li>
+                                <li><i class="fa fa fa-database"></i>
+                                    <span class="nav-label">产业工会</span></li>
+                                <li><i class="fa fa fa-building"></i>
+                                    <span class="nav-label">企事业工会</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrapper wrapper-content animated fadeIn">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>小店区总工会</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="tabs-container">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> 工会详情</a>
+                                            </li>
+                                            <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">基层工会</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <!--工会详情选项卡开始-->
+                                            <div id="tab-1" class="tab-pane active">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="tabs-container">
+                                                                <ul class="nav nav-tabs">
+                                                                    <li class="active"><a data-toggle="tab" href="#tab-1-1"
+                                                                                          aria-expanded="true"> 基本信息</a></li>
+                                                                    <li class=""><a data-toggle="tab" href="#tab-1-2"
+                                                                                    aria-expanded="false">法人资格</a></li>
+                                                                    <li class=""><a data-toggle="tab" href="#tab-1-3"
+                                                                                    aria-expanded="false">工会变更</a></li>
+                                                                    <li class=""><a data-toggle="tab" href="#tab-1-4"
+                                                                                    aria-expanded="false">资质管理</a></li>
+                                                                    <li class=""><a data-toggle="tab" href="#tab-1-5"
+                                                                                    aria-expanded="false">文件档案</a></li>
+                                                                    <li class=""><a data-toggle="tab" href="#tab-1-6"
+                                                                                    aria-expanded="false">任职管理</a></li>
+                                                                    <li class=""><a data-toggle="tab" href="#tab-1-7"
+                                                                                    aria-expanded="false">账户管理</a></li>
+                                                                </ul>
+                                                                <div class="tab-content">
+                                                                    <div id="tab-1-1" class="tab-pane active">
+                                                                        <div class="panel-body table-scroll" id="unionDetails"
+                                                                             v-cloak>
+                                                                            <div class="row">
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="table-responsive">
+                                                                                        <table class="table table-striped table-hover no-bottom">
+                                                                                            <tbody>
+                                                                                            <tr class="nback">
+                                                                                                <td class="client-link no-top-border col-sm-3">
+                                                                                                    工会名称：
+                                                                                                </td>
+                                                                                                <td class="no-top-border">
+                                                                                                    {{Detailslist.laborunName}}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="nback">
+                                                                                                <td class="client-link no-top-border col-sm-3">
+                                                                                                    工会编号:
+                                                                                                </td>
+                                                                                                <td class="no-top-border">
+                                                                                                    {{Detailslist.administratCode}}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="nback">
+                                                                                                <td class="client-link no-top-border col-sm-3">
+                                                                                                    建会时间:
+                                                                                                </td>
+                                                                                                <td class="no-top-border">
+                                                                                                    {{Detailslist.establishTime}}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="nback">
+                                                                                                <td class="client-link no-top-border col-sm-3">
+                                                                                                    行政区划:
+                                                                                                </td>
+                                                                                                <td class="no-top-border">
+                                                                                                    {{Detailslist.administratName}}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="nback">
+                                                                                                <td class="client-link no-top-border col-sm-3">
+                                                                                                    工会地址:
+                                                                                                </td>
+                                                                                                <td class="no-top-border">
+                                                                                                    {{Detailslist.laborunAddr}}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="nback">
+                                                                                                <td class="client-link no-top-border col-sm-3">
+                                                                                                    工会状态:
+                                                                                                </td>
+                                                                                                <td class="no-top-border">
+                                                                                                    {{Detailslist.laborunStatusText}}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="nback">
+                                                                                                <td class="client-link no-top-border col-sm-3">
+                                                                                                    工会备注:
+                                                                                                </td>
+                                                                                                <td class="no-top-border">
+                                                                                                    {{Detailslist.laborunCode}}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!--工会编号-->
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="table-responsive">
+                                                                                        <table class="table table-striped table-hover no-bottom">
+                                                                                            <tbody>
+                                                                                            <tr class="nback">
+                                                                                                <td class="client-link no-top-border col-sm-3">
+                                                                                                    工会级次:
+                                                                                                </td>
+                                                                                                <td class="no-top-border">
+                                                                                                    {{Detailslist.laborunLevelText}}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="nback">
+                                                                                                <td class="client-link no-top-border col-sm-3">
+                                                                                                    工会类型:
+                                                                                                </td>
+                                                                                                <td class="no-top-border">
+                                                                                                    {{Detailslist.unitTypeText}}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="nback">
+                                                                                                <td class="client-link no-top-border col-sm-3">
+                                                                                                    上级工会:
+                                                                                                </td>
+                                                                                                <td class="no-top-border">
+                                                                                                    {{Detailslist.parentLaborunName}}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="nback">
+                                                                                                <td class="client-link no-top-border col-sm-3">
+                                                                                                    组建方式:
+                                                                                                </td>
+                                                                                                <td class="no-top-border">
+                                                                                                    {{Detailslist.buildWayText}}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="nback">
+                                                                                                <td class="client-link no-top-border col-sm-3">
+                                                                                                    负责人:
+                                                                                                </td>
+                                                                                                <td class="no-top-border">
+                                                                                                    {{Detailslist.principal}}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="nback">
+                                                                                                <td class="client-link no-top-border col-sm-3">
+                                                                                                    负责人电话:
+                                                                                                </td>
+                                                                                                <td class="no-top-border">
+                                                                                                    {{Detailslist.principalPhone}}
+                                                                                                </td>
+                                                                                            </tr>
+
+
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!--工会详情 基本信息-->
+                                                                            <div class="row">
+                                                                                <div class="col-sm-12">
+                                                                                    <div class="table-responsive">
+                                                                                        <table class="table table-striped table-hover">
+                                                                                            <tbody>
+                                                                                            <tr class="nback">
+                                                                                                <td class="client-link no-top-border"
+                                                                                                    style="width: 12%">
+                                                                                                    工会状态:
+                                                                                                </td>
+                                                                                                <td class="no-top-border">
+                                                                                                    <table class="table table-bordered">
+                                                                                                        <thead>
+                                                                                                        <tr>
+                                                                                                            <th>单位名称</th>
+                                                                                                            <th>统一社会信用代码</th>
+                                                                                                            <th>单位类型</th>
+                                                                                                            <th>负责人</th>
+                                                                                                            <th>负责人电话</th>
+                                                                                                        </tr>
+                                                                                                        </thead>
+                                                                                                        <tbody>
+                                                                                                        <tr v-for="item in Detailslist.unitList">
+                                                                                                            <td>
+                                                                                                                {{item.unitName}}
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                {{item.socialCreditCode}}
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                {{item.unitIndustryText}}
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                {{item.principal}}
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                {{item.principalPhone}}
+                                                                                                            </td>
+                                                                                                        </tr>
+
+                                                                                                        </tbody>
+                                                                                                    </table>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-12">
+                                                                                    <div class="ibox float-e-margins"
+                                                                                         style="margin-top: 25px">
+                                                                                        <p style="text-align: center;">
+                                                                                            <button type="button"
+                                                                                                    class="btn btn-outline btn-default">
+                                                                                                建会
+                                                                                            </button>
+                                                                                            <button type="button"
+                                                                                                    class="btn btn-outline btn-primary">
+                                                                                                转移
+                                                                                            </button>
+                                                                                            <button type="button"
+                                                                                                    class="btn btn-outline btn-info">
+                                                                                                合并
+                                                                                            </button>
+                                                                                            <button type="button"
+                                                                                                    class="btn btn-outline btn-danger">
+                                                                                                解散
+                                                                                            </button>
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--法人资格-->
+                                                                    <div id="tab-1-2" class="tab-pane">
+                                                                        <div class="panel-body">
+                                                                            <strong>移动设备优先</strong>
+                                                                            <p>在 Bootstrap 2 中，我们对框架中的某些关键部分增加了对移动设备友好的样式。而在
+                                                                                Bootstrap 3
+                                                                                中，我们重写了整个框架，使其一开始就是对移动设备友好的。这次不是简单的增加一些可选的针对移动设备的样式，而是直接融合进了框架的内核中。也就是说，Bootstrap
+                                                                                是移动设备优先的。针对移动设备的样式融合进了框架的每个角落，而不是增加一个额外的文件。</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--工会变更-->
+                                                                    <div id="tab-1-3" class="tab-pane" v-cloak>
+                                                                        <div class="panel-body">
+                                                                            <table class="table table-bordered">
+                                                                                <thead class="tab-fiexd">
+                                                                                <tr>
+                                                                                    <th>变更</th>
+                                                                                    <th>变更时间</th>
+                                                                                    <th>变更项</th>
+                                                                                    <th>操作备注</th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                <tr v-for="(item,name) in unionCh">
+                                                                                    <td>{{item.changeType}}</td>
+                                                                                    <td>{{item.applyTime}}</td>
+                                                                                    <td>{{item.changeConcent}}</td>
+                                                                                    <td>{{item.remark}}</td>
+
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--资质管理-->
+                                                                    <div id="tab-1-4" class="tab-pane">
+                                                                        <div class="panel-body">
+                                                                            <strong>移动设备优先</strong>
+                                                                            <p>在 Bootstrap 2 中，我们对框架中的某些关键部分增加了对移动设备友好的样式。而在
+                                                                                Bootstrap 3
+                                                                                中，我们重写了整个框架，使其一开始就是对移动设备友好的。这次不是简单的增加一些可选的针对移动设备的样式，而是直接融合进了框架的内核中。也就是说，Bootstrap
+                                                                                是移动设备优先的。针对移动设备的样式融合进了框架的每个角落，而不是增加一个额外的文件。</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--文件档案-->
+                                                                    <div id="tab-1-5" class="tab-pane" v-cloak>
+                                                                        <div class="file-add">
+                                                                            <div style="margin-left: 20px">
+                                                                                <button type="button" class="btn  btn-primary"
+                                                                                        onclick="addfile()">添加
+                                                                                </button>
+                                                                            </div>
+                                                                            <table class="table table-striped  table-hover ">
+
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th>文件名称</th>
+                                                                                    <th>文件</th>
+                                                                                    <th>文件分类</th>
+                                                                                    <th>操作</th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                <tr>
+                                                                                    <td>入会申请书</td>
+                                                                                    <td>file name</td>
+                                                                                    <td>分类1</td>
+                                                                                    <td class="butt-right">
+                                                                                        <ul class="file-operating">
+                                                                                            <li>
+                                                                                                <button type="button"
+                                                                                                        class="btn  btn-primary ">
+                                                                                                    查看
+                                                                                                </button>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <button type="button"
+                                                                                                        class="btn  btn-primary Vedit">
+                                                                                                    编辑
+                                                                                                </button>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <button type="button"
+                                                                                                        class="btn  btn-primary Vedit">删除
+                                                                                                </button>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>入会申请书</td>
+                                                                                    <td>file name</td>
+                                                                                    <td>分类1</td>
+                                                                                    <td class="butt-right">
+                                                                                        <ul class="file-operating">
+                                                                                            <li>
+                                                                                                <button type="button"
+                                                                                                        class="btn  btn-primary">
+                                                                                                    查看
+                                                                                                </button>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <button type="button"
+                                                                                                        class="btn  btn-primary Vedit">
+                                                                                                    编辑
+                                                                                                </button>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <button type="button"
+                                                                                                        class="btn  btn-primary Vedit">删除
+                                                                                                </button>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>入会申请书</td>
+                                                                                    <td>file name</td>
+                                                                                    <td>分类1</td>
+                                                                                    <td class="butt-right">
+                                                                                        <ul class="file-operating">
+                                                                                            <li>
+                                                                                                <button type="button"
+                                                                                                        class="btn  btn-primary">
+                                                                                                    查看
+                                                                                                </button>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <button type="button"
+                                                                                                        class="btn  btn-primary Vedit">
+                                                                                                    编辑
+                                                                                                </button>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <button type="button"
+                                                                                                        class="btn  btn-primary Vedit"
+                                                                                                        >删除
+                                                                                                </button>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--任职管理-->
+                                                                    <div id="tab-1-6" class="tab-pane">
+                                                                        <div class="panel-body">
+                                                                            <strong>移动设备优先</strong>
+                                                                            <p>在 Bootstrap 2 中，我们对框架中的某些关键部分增加了对移动设备友好的样式。而在
+                                                                                Bootstrap 3
+                                                                                中，我们重写了整个框架，使其一开始就是对移动设备友好的。这次不是简单的增加一些可选的针对移动设备的样式，而是直接融合进了框架的内核中。也就是说，Bootstrap
+                                                                                是移动设备优先的。针对移动设备的样式融合进了框架的每个角落，而不是增加一个额外的文件。</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--账户管理-->
+                                                                    <div id="tab-1-7" class="tab-pane">
+                                                                        <div class="panel-body">
+                                                                            <strong>移动设备优先</strong>
+                                                                            <p>在 Bootstrap 2 中，我们对框架中的某些关键部分增加了对移动设备友好的样式。而在
+                                                                                Bootstrap 3
+                                                                                中，我们重写了整个框架，使其一开始就是对移动设备友好的。这次不是简单的增加一些可选的针对移动设备的样式，而是直接融合进了框架的内核中。也就是说，Bootstrap
+                                                                                是移动设备优先的。针对移动设备的样式融合进了框架的每个角落，而不是增加一个额外的文件。</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--基层工会选项卡开始-->
+                                            <div id="tab-2" class="tab-pane">
+                                                <div class="panel-body">
+                                                    <div class="ibox float-e-margins">
+                                                        <div class="ibox-content">
+                                                            <div class="row" id="nameselect" v-cloak>
+                                                                <div class="col-sm-4 no-padding">
+                                                                    <div class="col-sm-4 lin-h40 wid27  no-padding client-link">
+                                                                        工会名称：
+                                                                    </div>
+                                                                    <div class="col-sm-8   no-padding UnionName">
+                                                                        <select class="input-sm form-control input-s-sm inline">
+                                                                            <option value="">请选择</option>
+                                                                            <option value="0" v-for="(item,name) in Ghlist">{{item.laborun_name}}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4 no-padding">
+                                                                    <div class="col-sm-4 wid27 no-padding lin-h40 client-link">工会编号：
+                                                                    </div>
+                                                                    <div class="col-sm-8  no-padding UnionCode">
+                                                                        <select class="input-sm form-control input-s-sm inline">
+                                                                            <option value="">请选择</option>
+                                                                            <option value="0" v-for="(item,name) in Ghlist">{{item.laborun_code}}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4 no-padding">
+                                                                    <div class="col-sm-12 no-padding">
+                                                                        <button type="button"
+                                                                                class="btn  btn-primary mar-r15"
+                                                                                onclick="Search()">
+                                                                            搜索
+                                                                        </button>
+                                                                        <button type="button"
+                                                                                class="btn  btn-primary mar-r15">
+                                                                            重置
+                                                                        </button>
+                                                                        <a href="javacript:void(0)" class="more"><span
+                                                                                class="lin-h40">高级搜索></span></a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12 no-padding disn morecheackboxo">
+                                                                    <div class="col-sm-1 wid9  no-padding  client-link lin-h40">
+                                                                        工会级别：
+                                                                    </div>
+                                                                    <div class="form-group lin-h40 col-sm-10">
+                                                                        <div class="col-sm-12">
+                                                                            <label class="checkbox-inline i-checks">
+                                                                                <input type="checkbox" value="option1"
+                                                                                       class="allCheck">全部
+                                                                            </label>
+                                                                            <label class="checkbox-inline i-checks">
+                                                                                <input type="checkbox"
+                                                                                       value="option2">基层工会委员会</label>
+                                                                            <label class="checkbox-inline i-checks">
+                                                                                <input type="checkbox" value="option3">基层工会联合委员会</label>
+                                                                            <label class="checkbox-inline i-checks">
+                                                                                <input type="checkbox" value="option4">联合基层工会委员会</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12 no-padding disn morecheackboxt">
+                                                                    <div class="col-sm-1 wid9  no-padding  client-link lin-h40">
+                                                                        工会类型：
+                                                                    </div>
+                                                                    <div class="form-group lin-h40 col-sm-10">
+                                                                        <div class="col-sm-12">
+                                                                            <label class="checkbox-inline i-checks">
+                                                                                <input type="checkbox" class="allCheck"
+                                                                                       value="option1">全部</label>
+                                                                            <label class="checkbox-inline i-checks">
+                                                                                <input type="checkbox"
+                                                                                       value="option2">组织工会</label>
+                                                                            <label class="checkbox-inline i-checks">
+                                                                                <input type="checkbox"
+                                                                                       value="option3">产业工会</label>
+                                                                            <label class="checkbox-inline i-checks">
+                                                                                <input type="checkbox"
+                                                                                       value="option4">企事业工会</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="ibox float-e-margins"
+                                                                         style="margin-top: 25px">
+                                                                        <p style="text-align: center;">
+                                                                            <a data-toggle="modal"
+                                                                               class="btn btn-outline btn-default"
+                                                                               href="#modal-formo">建会</a>
+                                                                            <button type="button"
+                                                                                    class="btn btn-outline btn-primary"
+                                                                                    onclick="bb()">
+                                                                                转移
+                                                                            </button>
+                                                                            <button type="button" onclick="cc()"
+                                                                                    class="btn btn-outline btn-info">
+                                                                                合并
+                                                                            </button>
+                                                                            <button type="button" onclick="dd()"
+                                                                                    class="btn btn-outline btn-danger">
+                                                                                解散
+                                                                            </button>
+
+                                                                            <button type="button"
+                                                                                    class="btn  btn-primary mar-r15">
+                                                                                导入
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                    class="btn  btn-primary mar-r15">
+                                                                                导入模板
+                                                                            </button>
+                                                                        </p>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <!--基层工会 表格-->
+                                                            <div class="table-responsive row">
+                                                                <table class="table table-striped  table-hover dataTables-example">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>
+                                                                            <label class="checkbox-inline i-checks"
+                                                                                   style="font-weight: 700">
+                                                                                <input type="checkbox" class="allCheckList"
+                                                                                       value="option1">全选
+                                                                            </label>
+                                                                        </th>
+                                                                        <th>工会名称</th>
+                                                                        <th>工会编号</th>
+                                                                        <th>行政区划</th>
+                                                                        <th>工会级别</th>
+                                                                        <th>工会类型</th>
+                                                                        <th>工会状态</th>
+                                                                        <th>操作</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+<!--建会 转移 跳转弹框-->
+<div id="modal-formo" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">请选择一种工会级别：</h4>
+            </div>
+            <small class="font-bold">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <div class="radio i-checks col-sm-4">
+                                <label class="">
+                                    <div class="iradio_square-green" style="position: relative;"><input type="radio"
+                                                                                                        value="option1"
+                                                                                                        name="a"
+                                                                                                        style="position: absolute; opacity: 0;">
+                                        <ins class="iCheck-helper"
+                                             style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                    </div>
+                                    <i></i>组织工会</label>
+                            </div>
+                            <div class="radio i-checks col-sm-4" style="margin: 10px 0">
+                                <label class="">
+                                    <div class="iradio_square-green " style="position: relative;">
+                                        <input type="radio"
+                                               checked=""
+                                               value="option2"
+                                               name="a"
+                                               style="position: absolute; opacity: 0;">
+                                        <ins class="iCheck-helper"
+                                             style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
+
+                                        </ins>
+                                    </div>
+                                    <i></i>产业工会</label>
+                            </div>
+                            <div class="radio i-checks col-sm-4" style="margin: 10px 0">
+                                <label class="">
+                                    <div class="iradio_square-green " style="position: relative;"><input type="radio"
+                                                                                                         checked=""
+                                                                                                         value="option2"
+                                                                                                         name="a"
+                                                                                                         style="position: absolute; opacity: 0;">
+                                        <ins class="iCheck-helper"
+                                             style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                    </div>
+                                    <i></i> 企事业工会</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a data-toggle="modal" class="btn btn-primary" onclick="aa()"
+                       href="#modal-formt">确定</a>
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                </div>
+            </small>
+        </div>
+        <small class="font-bold">
+        </small>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<!--vue axios-->
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+
+<script>
+
+
+    //    模糊搜索之树状图上方工会列表
+    var TrreeGhlist = new Vue({
+        el: "#treeGhlist",
+        data: {
+            Ghlist: [], //左侧工会名称
+            Detailslist: [], //工会详情信息
+            unionCh: [], //请求工会变更信息
+            code:'',    //左侧列表code
+            Ghhlist: [], //模糊列表
+            unioncode:'140000000000', //详情字段
+            searchVal:'', //默认输入为空
+            letter:'', //默认不排序
+            original:false //默认从小到大排列
+
+        },
+        methods:{
+            /*点击左侧  右侧详情改变*/
+            showDetails:function (code) {
+               this.unioncode = code
+               console.log(this.unioncode)
+               var __this = this;
+               axios({
+                   method: 'post',
+                   url: "http://112.35.92.177:90/passLaborweb/api/laborun/union/query",
+                    data: {
+                       "laborunCode":this.unioncode
+                   }
+               }).then(function (data) {
+                   __this.Detailslist = data.data.data;
+                   console.log(__this.Detailslist)
+               });
+
+
+
+           },
+        },
+        mounted() {
+            /*查看工会详情*/
+            var __this = this;
+            axios({
+                method: 'post',
+                url: "http://112.35.92.177:90/passLaborweb/api/laborun/union/query",
+                data: {
+                    "laborunCode":this.unioncode
+                }
+            }).then(function (data) {
+                __this.Detailslist = data.data.data;
+                console.log(__this.Detailslist)
+            });
+
+            /*工会变更查询*/
+            var that = this;
+            axios({
+                method: 'post',
+                url: "http://112.35.92.177:90/passLaborweb/api/laborun/laborunChRecord/queryPage",
+                data: {
+                    "laborunCode": ""
+                }
+            }).then(function (data) {
+                /*   console.log(data.data.data)*/
+                that.unionCh = data.data.data.content;
+
+
+            });
+            /*获取工会名称编号*/
+            var ___this = this;
+            axios({
+                method: 'get',
+                url: "http://112.35.92.177:90/passLaborweb/api/laborun/union/getLaborunList",
+                data: {
+                    "laborunName": ""
+                }
+            }).then(function (data) {
+                /* console.log(data.data);*/
+                ___this.Ghlist = data.data.data;
+                console.log(___this.Ghlist)
+
+            });
+            //模糊搜索之工会列表,工会编号
+            var thiss = this;
+            axios({
+                method: 'get',
+                url: "http://112.35.92.177:90/passLaborweb/api/laborun/union/getLaborunList",
+                data: {
+                    "laborunName": ""
+                }
+            }).then(function (data) {
+                /* console.log(data.data);*/
+                thiss.Ghhlist = data.data.data;
+                /*console.log(thiss.Ghlist)*/
+
+            });
+        },
+        computed:{
+         /*   filterGhlist: function(){
+                var _this = this;
+                var arrByZM = [];
+                for (var i=0;i<this.Ghlist.length;i++){
+                    if(this.Ghlist[i].name.search(this.searchVal) != -1){
+                        arrByZM.push(this.Ghlist[i]);
+                    }
+                }
+                if(this.letter != ''){
+                    arrByZM.sort(function( a , b){
+                        if(_this.original){
+                            return b[_this.letter] - a[_this.letter];
+                        }else{
+                            return a[_this.letter] - b[_this.letter];
+                        }
+                    });
+                }
+                return arrByZM;
+            }*/
+            list: function(){
+                var _this = this;
+                var arrByZM = [];
+                for (var i=0;i<this.Ghlist.length;i++){
+
+                    if(this.Ghlist[i].laborun_name.search(this.searchVal) != -1){
+
+                        arrByZM.push(this.Ghlist[i]);
+
+                    }
+                }
+
+                if(this.letter != ''){
+                    arrByZM.sort(function( a , b){
+                        if(_this.original){
+                            return b[_this.letter] - a[_this.letter];
+                        }else{
+                            return a[_this.letter] - b[_this.letter];
+                        }
+                    });
+                }
+                return arrByZM;
+            }
+        },
+
+
+
+    });
+</script>
+<!--模糊搜索
+<script src="js/jquery.combo.select.js"></script>-->
+
+
+
+<!--高级搜索-->
+<script>
+    $('.more').on('click', function () {
+        $(this).toggleClass("moreup");
+        $('.morecheackboxo').slideToggle('slow');
+        $('.morecheackboxt').slideToggle('slow');
+        if ($(this).attr('class') == 'more moreup') {
+            $(this).children('span').text('点击收起∨');
+        } else {
+            $(this).children('span').text('高级搜索>');
+        }
+
+    })
+</script>
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+
+<!-- layer javascript -->
+<script src="js/plugins/layer/layer.min.js"></script>
+<script>
+    layer.config({skin: 'my-skin'})
+</script>
+<!--建会，转移 点击弹框-->
+<script>
+    function aa() {
+        $($('.modal-backdrop')[0]).hide('slow');
+        $("#modal-formo").modal('hide');
+        //自定页
+        layer.open({
+            type: 2,
+            title: '建会',
+            skin: 'my-skin',
+            fixed: false,
+            shadeClose: true, //点击遮罩关闭层
+            area: ['100%', '100%'],
+            content: 'union_addinfo.html',
+            shift: 0,
+            offset: 0
+        })
+    }
+    function bb() {
+        //自定页
+        layer.open({
+            type: 2,
+            title: '转移',
+            fixed: false,
+            shadeClose: true, //点击遮罩关闭层
+            area: ['100%', '100%'],
+            content: 'union_transfer.html',
+            shift: 0,
+            offset: 0
+        })
+    }
+    function cc() {
+        //自定页
+        layer.open({
+            type: 2,
+            title: '合并',
+            fixed: false,
+            shadeClose: true, //点击遮罩关闭层
+            area: ['100%', '100%'],
+            content: 'union_merge.html',
+            shift: 0,
+            offset: 0
+        })
+    }
+    function dd() {
+        //自定页
+        layer.open({
+            type: 2,
+            title: '解散',
+            fixed: false,
+            shadeClose: true, //点击遮罩关闭层
+            area: ['100%', '100%'],
+            content: 'union-dissolution.html',
+            shift: 0,
+            offset: 0
+        })
+    }
+
+    /*文件档案  添加文件*/
+    function addfile() {
+        layer.open({
+            type: 2,
+            title: '新增',
+            fixed: false,
+            shadeClose: false, //点击遮罩关闭层
+            area: ['60%', '60%'],
+            content: 'union-addfliemask.html',
+            shift: 0,
+            offset: 0
+        })
+    }
+
+</script>
+<!-- jQuery UI -->
+<script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+<!--树状图-->
+<script src="js/plugins/treeview/bootstrap-treeview.js"></script>
+<script src="js/demo/treeview-demo.js"></script>
+<!-- iCheck -->
+<script src="js/plugins/iCheck/icheck.min.js"></script>
+
+<!--动态生成表格-->
+<script>
+    var $table;
+    window.onload = function () {
+
+        //提示信息
+        var lang = {
+            "sProcessing": "处理中...",
+            "sLengthMenu": "每页 _MENU_ 项",
+            "sZeroRecords": "没有匹配结果",
+            "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
+            "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
+            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+            "sInfoPostFix": "",
+            "sSearch": "搜索:",
+            "sUrl": "",
+            "sEmptyTable": "表中数据为空",
+            "sLoadingRecords": "载入中...",
+            "sInfoThousands": ",",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "上页",
+                "sNext": "下页",
+                "sLast": "末页",
+                "sJump": "跳转"
+            },
+            "oAria": {
+                "sSortAscending": ": 以升序排列此列",
+                "sSortDescending": ": 以降序排列此列"
+            }
+        };
+
+        //初始化table
+        $table = $('.dataTables-example').dataTable({
+            sDom: '"top"i',   //去掉搜索框方法二：这种方法可以，动态获取数据时会引起错误
+            ordering: false,
+            bLengthChange: false,   //去掉每页显示多少条数据方法
+            language: lang,  //提示信息
+            autoWidth: true,  //禁用自动调整列宽
+            stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
+            processing: true,  //隐藏加载提示,自行处理
+            serverSide: true,  //启用服务器端分页
+            searching: false,  //禁用原生搜索
+            orderMulti: false,  //启用多列排序
+            order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
+            renderer: "bootstrap",  //渲染样式：Bootstrap和jquery-ui
+            pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
+            columnDefs: [{
+                "targets": 'nosort',  //列的样式名
+                "orderable": false    //包含上样式名‘nosort’的禁止排序
+            }],
+            ajax: function (data, callback, settings) {
+                //封装请求参数
+
+                var param = {};
+                param.size = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+//                    param.start = data.start;//开始的记录序号
+                param.page = (data.start / data.length) + 1;//当前页码
+                if ($(".UnionName select option:selected").val() != "") {
+                    param.laborunName = $(".UnionName select option:selected").text();
+                }
+
+                if ($(".UnionCode select option:selected").val() != "") {
+                    param.laborunName = $(".UnionCode select option:selected").text();
+                }
+//                    param.order = data.order[0]
+                //console.log(param);
+                //ajax请求数据
+                $.ajax({
+                    type: "post",
+                    url: "http://112.35.92.177:90/passLaborweb/api/laborun/union/queryPage",
+                    cache: false,  //禁用缓存
+                    data: JSON.stringify(param),  //传入组装的参数
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (result) {
+                        /*     console.log(result);*/
+                        //setTimeout仅为测试延迟效果
+                        //封装返回数据
+                        var returnData = {};
+                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.data.total;//返回数据全部记录
+                        returnData.recordsFiltered = result.data.total;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.data.content;//返回的数据列表
+                       /* console.log(returnData);*/
+                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        callback(returnData);
+                        $('.i-checks').iCheck({
+                            checkboxClass: 'icheckbox_square-green',
+                            radioClass: 'iradio_square-green',
+                        });
+                        $('select').comboSelect();
+                        $(".allCheck").on('ifChanged', function (event) {
+//                            console.log($(this));
+                            var selectThis = $(this).parents('label').nextAll().find('input[type=checkbox]');
+//                            console.log(selectThis);
+                            selectThis.prop("checked", $(this).prop("checked"));
+                            if ($(this)[0].checked) {
+                                selectThis.parent().addClass("checked");
+                            } else {
+                                selectThis.parent().removeClass("checked");
+                            }
+                        });
+                        //        列表全选功能
+                        $(".allCheckList").on('ifChanged', function (event) {
+//                            console.log($(this));
+                            var selectThis = $(this).parents('thead').next('tbody').find('input[type=checkbox]');
+//                            console.log(selectThis);
+                            selectThis.prop("checked", $(this).prop("checked"));
+                            if ($(this)[0].checked) {
+                                selectThis.parent().addClass("checked");
+                            } else {
+                                selectThis.parent().removeClass("checked");
+                            }
+                        });
+
+                        $('.dataTables-example tr td:first-child').css({"text-align": 'left'});
+                        $('.dataTables-example tr th:first-child').css({"text-align": 'left'});
+
+                    }
+                });
+            },
+            //列表表头字段
+
+
+            columns: [
+                {
+                    "render": function () {
+                        return '<input type="checkbox" class="i-checks iCheck-helper" name="input[]">';
+                    },
+                    "bSortable": false
+                },
+                {"data": "laborunName"},
+                {"data": "laborunCode"},
+                {"data": "administratName"},
+                {"data": "laborunLevelText"},
+                {"data": "laborunTypeText"},
+                {"data": "laborunStatusText"},
+                {
+                    "render": function () {
+                        return ' <button type="button" class="btn  btn-primary " onclick="Vlook(this)" >查看</button> <button type="button" class="btn  btn-primary Vedit" onclick="Vedit(this)" >编辑 </button>';
+                    },
+                    "bSortable": false
+                },
+            ]
+        }).api();//此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
+    };
+    function Search() {
+        $table.draw(false);
+
+    }
+</script>
+<!--基层工会表格 查看 编辑-->
+<script>
+    //    查看功能
+    function Vlook(obj) {
+        var SeaCode = $(obj).parents('tr').children().eq(2).text();
+        window.location.href = 'union_basicinfo.html?seacode=' + SeaCode
+    }
+    /*编辑功能*/
+    function Vedit(obj) {
+        var SeaCode = $(obj).parents('tr').children().eq(2).text();
+        window.location.href = 'union_detailsedit.html?seacode=' + SeaCode
+    }
+    /*$('select').comboSelect();
+    $('select').change(function (e) {
+        alert('你选中了第'+(e.target.selectedIndex+1) + '项, ' + '值为: ' + e.target.value );
+        $.ajax({
+            type: "post",
+            url: "http://112.35.92.177:90/passLaborweb/api/laborun/union/queryPage",
+            cache: false,  //禁用缓存
+            data: e.target.value,  //传入组装的参数
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                console.log(result);
+
+            }
+        });
+    });*/
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工会底层平台</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="css/plugins/footable/footable.core.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+    <style>
+        .noread{
+            font-size: 12px;
+            background-color: red;
+            color: white;
+            border-radius: 2px;
+            padding: 2px 2px;
+        }
+        .yesread{
+            font-size: 12px;
+            background-color: grey;
+            color: white;
+            border-radius: 2px;
+            padding: 2px 2px;
+        }
+        .wrapper{
+            width: 645px;
+        }
+        .ibox{
+
+        }
+        *{
+            border-top:none !important;
+
+        }
+        .select{
+            background-color: rgba(251,251,251,1) !important;
+            height: 50px;
+            border-bottom: 1px dashed  #e6e6e6;
+
+        }
+        .noread{
+            font-size: 12px;
+            background-color: red;
+            color: white;
+            border-radius: 2px;
+            padding: 2px 2px;
+        }
+        .dateli{
+            font-size: 16px;
+            margin-right: -9px;
+
+        }
+        .marlef{
+            width: 200px;
+            border-top: none !important;
+
+        }
+        span{
+            border-bottom: none !important;
+        }
+        .ibox-content {
+            background-color: rgba(251,251,251,1) !important;
+            overflow-x: hidden !important;
+        }
+        .addwid{
+            width: 308px;
+        }
+        .ibox-title{
+            border-bottom: 1px solid #e6e6e6;
+
+        }
+        .ibox-title h5{
+            border-bottom:none;
+            color: red;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight" id="indexVue">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>通知&nbsp;<i class="fa fa-volume-up"></i></h5>
+                            </div>
+                            <div class="ibox-content">
+                                <table class="footable table " data-page-size="8" data-filter=#filter>
+
+                                    <tbody>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">{{}}</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    <tr class="select">
+                                        <td class="addwid"><span class="noread">未读</span>
+                                            <span style="padding-left: 10px">标题</span></td>
+                                        <td><span class="dateli pull-right">2019-02-14 09:41:44</span></td>
+
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td colspan="5">
+                                            <ul class="pagination pull-right"></ul>
+                                        </td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+
+</div>
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+<!-- Data Tables -->
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<!--vue axios-->
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+<script src="js/plugins/footable/footable.all.min.js"></script>
+<!-- 自定义js -->
+<script src="js/baseaddr.js"></script>
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+<script>
+    $(document).ready(function() {
+        $('.footable').footable();
+    });
+
+</script>
+<!--模糊搜索-->
+<script src="js/jquery.combo.select.js"></script>
+<!-- jQuery UI -->
+<script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+<script>
+    var vm = new Vue({
+        el: "#indexVue",
+        data: {
+            messages: []
+        },
+        mounted() {
+            var that = this;
+            that.getMessage();
+        },
+        methods: {
+            getMessage(){
+                var that = this
+                axios({
+                    method: 'post',
+                    url: baseUrl + "/passLaborweb/api/laborun/message/getHomePD",
+                    data: Qs.stringify({
+                        "size": 5
+                    })
+                }).then(function (res) {
+                    if(res.data.code === '0'){
+                        that.messages = res.data.data;
+                        console.log(that.messages)
+                    }
+                });
+            },
+            getMoreMessage(){
+
+            }
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+</body>
+
+</html>

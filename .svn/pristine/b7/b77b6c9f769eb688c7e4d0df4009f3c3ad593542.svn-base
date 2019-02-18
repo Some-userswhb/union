@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<style>
+    .col-sm-8 input.form-control, .col-sm-8 select.form-control {
+        width: 50%;
+        display: inline-block;
+    }
+
+    .help-block.m-b-none {
+        display: inline;
+        margin-left: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .uoloadfile {
+        width: 200px;
+        height: 100px;
+        position: relative;
+        margin: .2rem;
+        /*border:1px solid #000;*/
+        overflow: hidden;
+    }
+
+    .uoloadfile img {
+        position: absolute;
+        top: 0rem;
+        z-index: 9998;
+    }
+
+    .change {
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    .completed span:first-child,.proceeding span:first-child,.undone span:first-child{
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+    }
+    .completed,.proceeding,.undone{
+        width: 90px;
+    }
+    .completed span:first-child{
+        background: #bbb;
+    }
+    .proceeding span:first-child{
+        background:rgba(139, 195, 74, 0.58);
+    }
+    .undone span:first-child{
+        background:rgba(255, 152, 0, 0.64);
+    }
+
+    .completed span:last-child,.proceeding span:last-child,.undone span:last-child{
+        display: inline-block;
+        width: 50px;
+        height: 20px;
+        margin-bottom: 10px;
+        vertical-align:middle;
+    }
+    .completed span:last-child{
+        color: #bbb;
+    }
+    .proceeding span:last-child{
+        color:rgba(139, 195, 74, 0.58);
+    }
+    .undone span:last-child{
+        color:rgba(255, 152, 0, 0.64);
+    }
+    .col-sm-12 .process-list{
+        margin-left: -20px;
+        width: 140px;
+        float: left;
+
+    }
+    .col-sm-12 .process-list li{
+        text-align: center;
+        line-height: 43.5px;
+    }
+    .process-list li:nth-child(odd){
+        width: 140px;
+        height: 43.5px;
+        color: #000;
+        background: aquamarine;
+    }
+    .process-list li:nth-child(even){
+        width: 1px;
+        height: 43px;
+        margin: 0  70px;
+        background-color:#bbb ;
+    }
+
+    .col-sm-12 .audit-results{
+        float: left;
+        margin-left: 50px;
+        font-size: 10px;
+
+    }
+    .col-sm-12 .audit-results li{
+        margin-bottom: 3px;
+    }
+    .nav>li>a:focus, .nav>li>a:hover{
+        background: none;
+    }
+    .nav > li > a{
+        color: #333;
+    }
+    .nav > li.active{
+        background: none;
+    }
+</style>
+
+
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content" style="overflow: hidden">
+                <h5 class="alert ">申请信息</h5>
+                <div class="col-sm-12 form-group">
+                    <span class="client-link text-right col-sm-2">所属工会：</span>
+                    <span class="col-sm-8">小店区工会</span>
+                </div>
+                <div class="col-sm-12 form-group">
+                    <span class="client-link text-right col-sm-2">所属单位：</span>
+                    <span class="col-sm-8">山西普罗迪克科技有限公司</span>
+                </div>
+                <div class="col-sm-12 form-group">
+                    <span class="client-link text-right col-sm-2">姓名：</span>
+                    <span class="col-sm-8">栋梁哥</span>
+                </div>
+                <div class="col-sm-12 form-group">
+                    <span class="client-link text-right col-sm-2">联系电话：</span>
+                    <span class="col-sm-8">13835212225</span>
+                </div>
+                <div class="col-sm-12 form-group">
+                    <span class="client-link text-right col-sm-2">证件照片：</span>
+                    <div class="col-sm-8">
+                        <img src="img/a7.jpg" alt="" class="imgsize">
+                        <img src="img/a6.jpg" alt="" class="imgsize">
+                    </div>
+                </div>
+                <div class="col-sm-12 form-group">
+                    <span class="client-link text-right col-sm-2">人像采集：</span>
+                    <span class="col-sm-8">
+                           <img src="img/a6.jpg" alt="" class="imgsize">
+                    </span>
+                </div>
+                <div class="col-sm-12 mart50">
+                    <div class="tabs-container">
+                        <ul class="nav  nav-pills">
+                            <li class="active">
+                                <a data-toggle="tab" href="#tab-1" aria-expanded="true">入会信息</a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#tab-2" aria-expanded="false">业务监控</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <!--工会详情选项卡开始-->
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body no-borders">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-content no-borders">
+                                                    <form class="form-horizontal m-t" id="signupForm">
+                                                        <!-- <div class="form-group">
+                                                            <label class="col-sm-3 control-label">上级工会：</label>
+                                                            <div class="col-sm-8">
+                                                                <input id="firstname" name="firstname" class="form-control" type="text" value="山西省总工会"
+                                                                       disabled>
+                                                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 上级工会</span>
+                                                            </div>
+                                                        </div> -->
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;会员证号：</label>
+                                                            <div class="col-sm-8">
+                                                                <input id="lastname" name="lastname"
+                                                                       class="form-control" type="text"
+                                                                       aria-required="true"
+                                                                       aria-invalid="false" class="valid">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;入会时间：</label>
+                                                            <div class="col-sm-8">
+                                                                <input id="hello"
+                                                                       class="laydate-icon form-control layer-date">
+                                                                <!-- 普通的input日期 -->
+                                                                <!-- <input class="form-control layer-date" placeholder="YYYY-MM-DD hh:mm:ss" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"> -->
+                                                                <!-- <label class="laydate-icon"></label> -->
+                                                                <!-- <label class="laydate-icon" style="background-image: url(js/plugins/layer/laydate/skins/default/icon1.png);"></label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;所属公会：</label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control" id='' name="#">
+                                                                    <option></option>
+                                                                    <option>公会 1</option>
+                                                                    <option>公会 2</option>
+                                                                    <option>公会 3</option>
+                                                                    <option>公会 4</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;所属单位：</label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control" id='' name="#">
+                                                                    <option></option>
+                                                                    <option>单位 1</option>
+                                                                    <option>单位 2</option>
+                                                                    <option>单位 3</option>
+                                                                    <option>单位 4</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;证件类型：</label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control" id='' name="#">
+                                                                    <option></option>
+                                                                    <option>证件 1</option>
+                                                                    <option>证件 2</option>
+                                                                    <option>证件 3</option>
+                                                                    <option>证件 4</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;证件照片：</label>
+                                                            <!-- 身份证正面 -->
+                                                            <div class="col-sm-8">
+                                                                <div style="float:left">
+                                                                    <h1 style="text-align:center">正面</h1>
+                                                                    <div class="uoloadfile">
+                                                                        <input type="file" onchange="imgfile(this,this)"
+                                                                               class="change"
+                                                                               style="position: absolute;z-index: 9998;"
+                                                                               accept="image/*"/>
+                                                                        <img style="width:100%;height:100%;z-index:1;"
+                                                                             src="js/plugins/layer/laydate/skins/default/20180926100023.png"/>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- 身份证反面 -->
+                                                                <div style="float:left">
+                                                                    <h1 style="text-align:center">反面</h1>
+                                                                    <div class="uoloadfile">
+                                                                        <input type="file" onchange="imgfile(this,this)"
+                                                                               class="change"
+                                                                               style="position: absolute;z-index: 9998;"
+                                                                               accept="image/*"/>
+                                                                        <img style="width:100%;height:100%;z-index:1;"
+                                                                             src="js/plugins/layer/laydate/skins/default/20180926100023.png"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;姓名：</label>
+                                                            <div class="col-sm-8">
+                                                                <input id="address" name="address" class="form-control"
+                                                                       type="text">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;性别：</label>
+                                                            <div class="col-sm-8">
+                                                                <!-- <select class="form-control" id='copsty' name="copsty">
+                                                                    <option>选项 1</option>
+                                                                    <option>选项 2</option>
+                                                                    <option>选项 3</option>
+                                                                    <option>选项 4</option>
+                                                                </select>
+                                                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 单位类型</span> -->
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;民族：</label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control" id='' name="#">
+                                                                    <option></option>
+                                                                    <option>民族 1</option>
+                                                                    <option>民族 2</option>
+                                                                    <option>民族 3</option>
+                                                                    <option>民族 4</option>
+                                                                </select>
+                                                                <!--                             <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 社会保险缴纳</span> -->
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;出生日期：</label>
+                                                            <div class="col-sm-8">
+                                                                <input id="hello2"
+                                                                       class="laydate-icon form-control layer-date">
+                                                                <!-- <input class="form-control layer-date" placeholder="YYYY-MM-DD hh:mm:ss" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"> -->
+                                                                <!-- <label class="laydate-icon"></label> -->
+                                                                <!-- <label class="laydate-icon" style="background-image: url(js/plugins/layer/laydate/skins/default/icon1.png);"></label> -->
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;籍贯：</label>
+                                                            <div class="col-sm-8">
+                                                                <input id="coper" name="coper" class="form-control"
+                                                                       type="text" aria-required="true"
+                                                                       aria-invalid="true" class="error"
+                                                                       placeholder="最多输入50个字">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;农民工：</label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control" id='' name="#">
+                                                                    <option>是</option>
+                                                                    <option>否</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;困难职工：</label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control" id='' name="#">
+                                                                    <option>是</option>
+                                                                    <option>否</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;困难职工档案号：</label>
+                                                            <div class="col-sm-8">
+                                                                <input id="emailq" name="emailq" class="form-control"
+                                                                       type="number">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;证件号码：</label>
+                                                            <div class="col-sm-8">
+                                                                <input id="emailq" name="emailq" class="form-control"
+                                                                       type="number">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;联系电话：</label>
+                                                            <div class="col-sm-8">
+                                                                <input id="emailq" name="emailq" class="form-control"
+                                                                       type="number">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;人像采集：</label>
+                                                            <div class="col-sm-8">
+                                                                <div style="float:left">
+                                                                    <div class="uoloadfile">
+                                                                        <input type="file" onchange="imgfile(this,this)"
+                                                                               class="change"
+                                                                               style="position: absolute;z-index: 9998;"
+                                                                               accept="image/*"/>
+                                                                        <img style="width:100%;height:100%;z-index:1;"
+                                                                             src="js/plugins/layer/laydate/skins/default/20180926100023.png"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">*&nbsp;政治面貌：</label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control" id='' name="#">
+                                                                    <option></option>
+                                                                    <option>面貌 1</option>
+                                                                    <option>面貌 2</option>
+                                                                    <option>面貌 3</option>
+                                                                    <option>面貌 4</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">文化程度：</label>
+                                                            <div class="col-sm-8">
+                                                                <select class="form-control" id='' name="#">
+                                                                    <option></option>
+                                                                    <option>文化 1</option>
+                                                                    <option>文化 2</option>
+                                                                    <option>文化 3</option>
+                                                                    <option>文化 4</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">专业技能：</label>
+                                                            <div class="col-sm-8">
+                                                                <input id="emailq" name="emailq" class="form-control"
+                                                                       type="number">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-3 control-label">薪资：</label>
+                                                            <div class="col-sm-8">
+                                                                <input id="emailq" name="emailq" class="form-control"
+                                                                       type="number">元
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-sm-8 col-sm-offset-3">
+                                                                <button class="btn btn-primary" type="submit">保存
+                                                                </button>
+                                                                <button class="btn btn-default" type="button">关闭
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--基层工会选项卡开始-->
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body no-borders">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div class="ibox float-e-margins">
+                                                <!--<div class="ibox-title">
+                                                    <h5>工会管理</h5>
+                                                </div>-->
+                                                <div class="col-sm-12">
+                                                    <div class="ibox float-e-margins" style="margin-top: 25px">
+                                                        <p class="completed">
+                                                            <span></span>
+                                                            <span>已完成</span>
+                                                        </p>
+                                                        <p class="proceeding">
+                                                            <span></span>
+                                                            <span>进行中</span>
+                                                        </p>
+                                                        <p class="undone">
+                                                            <span></span>
+                                                            <span>未完成</span>
+                                                        </p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <div class="ibox float-e-margins">
+                                               <!-- <div class="ibox-title">
+                                                    <h5 style="margin-left: 20px">业务流程</h5>
+                                                </div>-->
+                                                <div class="col-sm-12" style="margin-top: 23px">
+                                                    <ul class="process-list">
+                                                        <li style="background: #bbb">所属工会审批</li>
+                                                        <li></li>
+                                                        <li style="background:rgba(139, 195, 74, 0.58) ">属地业务受理</li>
+                                                        <li></li>
+                                                        <li style="background:rgba(255, 152, 0, 0.64)">入会</li>
+                                                        <li></li>
+                                                        <li style="background:rgba(255, 152, 0, 0.64)">上级工会审批</li>
+                                                        <li></li>
+                                                        <li style="background:rgba(255, 152, 0, 0.64)">各级工会业务备案</li>
+                                                    </ul>
+
+                                                    <ul class="audit-results">
+                                                        <li>审批结果:已通过</li>
+                                                        <li>审批备注:该会员为本单位员工，会员信息正确</li>
+                                                        <li>审批时间:2018-12-21 12:00</li>
+                                                    </ul>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+
+<!-- jQuery Validation plugin javascript-->
+<script src="js/plugins/validate/jquery.validate.min.js"></script>
+<script src="js/plugins/validate/messages_zh.min.js"></script>
+<script src="js/demo/form-validate-demo.js"></script>
+<!-- 日期插件 -->
+<script src="js/plugins/layer/laydate/laydate.js"></script>
+<script>
+    //外部js调用
+    laydate({
+        elem: '#hello', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+        event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+    });
+    laydate({
+        elem: '#hello2', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+        event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+    });
+</script>
+<!-- 图片上传js -->
+<script>
+    function imgfile(obj, file) {
+        if (file.files && file.files[0]) {
+            if (file.files.length === 1) {
+                console.log(file.files);
+                var reader = new FileReader();
+                reader.onload = function (evt) {
+                    $(obj).after('<img style="width:100%;height:100%;z-index:10"  src="' + evt.target.result + '" />');
+                    $(obj).after('<img style="z-index:9999;top: 0;right: 0;width: .6rem;"  src="js/plugins/layer/laydate/skins/default/20180926100023.png" onclick="del(this)"/>')
+                    $(obj).parent().find("img:last").remove();
+                }
+                reader.readAsDataURL(file.files[0]);
+            }
+        }
+    }
+    // 图片删除
+    function del(obj) {
+        $(obj).parent().find("img:last").replaceWith('<img style="width:100%;height:100%;z-index:1;"  src="js/plugins/layer/laydate/skins/default/20180926100023.png" />');
+        $(obj).remove();
+    }
+</script>
+</body>
+
+</html>

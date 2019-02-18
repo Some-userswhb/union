@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<style>
+    .col-sm-8 input.form-control, .col-sm-8 select.form-control {
+        width: 50%;
+        display: inline-block;
+    }
+    .help-block.m-b-none {
+        display: inline;
+        margin-left: 10px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .selefile{
+        display: block;
+        border:none;
+        background-color: #fff;
+        float: left;
+    }
+    .selefiledele{
+        margin-top: 3px;
+        display: none;
+    }
+
+</style>
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="transfer">
+
+                    <!--文件名称-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">文件名称：</label>
+                        <div class="col-sm-8">
+                            <input id="emailqq" name="emailqq" class="form-control"
+                                   type="text" placeholder="最多输入20个字">
+                        </div>
+                    </div>
+                    <!--选择上传文件-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">文件：</label>
+                        <div class="col-sm-8">
+                          <!--  <input type="file" ref="file" name="emailqq" style="width: 170px" multiple="multiple" />-->
+                            <input name="file" type="file"  @change="update"/>
+                            <input type="button" value="删除" class="selefile selefiledele">
+                        </div>
+                    </div>
+                    <!--文件类型-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">文件分类：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='area' name="area">
+                                <option>办公文件</option>
+                                <option>申请文件</option>
+                                <option>审批文件</option>
+                                <option>流程文件</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <!--备注-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工会备注：</label>
+                        <div class="col-sm-8">
+                            <textarea id="ccomment" name="comment"
+                                      class="form-control" required=""
+                                      aria-required="true" style="resize: none">
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <input type="button" class="btn btn-primary"  value="保存" @click="postFile">
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<!--<script src="https://cdn.bootcss.com/qs/6.6.0/qs.min.js"></script>-->
+<script>
+    new Vue({
+        el:'#transfer',
+        data:{
+            flieList:[],
+            filecode:{}
+        },
+        methods: {
+
+            postFile:function () {
+                alert('上传成功')
+            },
+            // 创建form对象
+            /*上传文件*/
+
+            update (e){  // 上传照片
+                var self = this;
+                let file = e.target.files[0];
+                /* eslint-disable no-undef */
+                var param = new FormData()
+                param.append('file', file, file.name);// 通过append向form对象添加数据
+                //param.append('chunk', '0') // 添加form表单中其他数据
+                console.log(param.get('file')); // FormData私有类对象，访问不到，可以通过get判断值是否传进去
+                let config = {
+                    headers: {'Content-Type': 'multipart/form-data'}
+                };
+                axios.post('http://112.35.92.177:90/passLaborweb/api/laborun/file/upload', param, config)
+
+                    .then(response => {
+                        if (response.data.code === 0) {
+                            self.ImgUrl = response.data.data
+                        }
+                        if (response.data.msg === 'success') {
+                            alert('上传成功')
+                        }
+                        console.log(response.data.msg)
+                    })
+            }
+        }
+    })
+</script>
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+<!-- jQuery Validation plugin javascript-->
+<script src="js/plugins/validate/jquery.validate.min.js"></script>
+<script src="js/plugins/validate/messages_zh.min.js"></script>
+
+<script src="js/demo/form-validate-demo.js"></script>
+
+</body>
+
+</html>

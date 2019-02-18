@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<style>
+    .col-sm-8 input.form-control, .col-sm-8 select.form-control {
+        width: 50%;
+        display: inline-block;
+    }
+    .help-block.m-b-none {
+        display: inline;
+        margin-left: 10px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+</style>
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="transfer">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">* 就业状态变更：</label>
+                        <div class="col-sm-8">
+                            <select class="input-sm form-control input-s-sm inline" v-model="jobStatus" id="jobStatus">
+                                <option v-for="item in jobStatuses" v-bind:value="item.value">{{item.name}}</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <!--工会编号-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">会员证号：</label>
+                        <div class="col-sm-8">
+                            <input id="memNumber" name="memNumber" v-model="memNumber" class="form-control" type="text" placeholder="精确查询">
+                            <button class="btn btn-primary" type="button" @click="getMemInfo">添加</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">保留会员：</label>
+                        <div class="col-sm-8">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>会员姓名</th>
+                                        <th>会员证号</th>
+                                        <th>所属工会</th>
+                                        <th>证件号</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="item in addmsg">
+                                            <td>{{item.memName}}</td>
+                                            <td>{{item.memNumber}}</td>
+                                            <td>{{item.laborName}}</td>
+                                            <td>{{item.cardNo}}</td>
+                                        <td>
+                                            <i class="fa fa-trash" @click="deleteMem"></i>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">操作备注：</label>
+                        <div class="col-sm-8">
+                            <textarea id="remark" name="remark" v-model="remark" class="form-control" required="" aria-required="true" style="resize: none" placeholder="最多输入200字">
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <input type="button" class="btn btn-primary" @click="memOperate" value="保存">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/baseaddr.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+<!-- jQuery Validation plugin javascript-->
+<script src="js/plugins/validate/jquery.validate.min.js"></script>
+<script src="js/plugins/validate/messages_zh.min.js"></script>
+<script src="js/demo/form-validate-demo.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#transfer',
+        data:{
+            addmsg:[],
+            jobStatus:'',
+            memNumber:'',
+            remark:'',
+            jobStatuses:[]
+
+
+        },
+        methods:{
+            getMemInfo() {
+                var that = this;
+                var isAdd = false;
+                that.addmsg.forEach(item => {
+                    if (item.memNumber == that.memNumber) {
+                        isAdd = true;
+                        return;
+                    }
+                });
+                if(isAdd){
+                    layer.confirm("会员已添加，请不要重复添加", {icon: 2, btn :[ '确定' ]})
+                    return ;
+                }
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    url: baseUrl + "/passLaborweb/api/laborun/a10BaseInfo/getA10SimInfo",
+                    data: JSON.stringify({
+                        "memNumber": $('#memNumber').val(),
+                    })
+                }).then((res) => {
+                    if (res.data.code === '0') {
+                        if (res.data.data === null || res.data.data.length === 0) {
+                            layer.msg("会员不存在", {icon: 2, time: 1000})
+                        } else {
+                            that.addmsg.push(res.data.data)
+                        }
+                    } else {
+                        layer.msg(res.data.msg, {icon: 2, time: 1000})
+                    }
+                });
+            },
+            memOperate () {
+                var that = this
+                var memNumbers = "";
+                that.addmsg.forEach(item => {
+                    if(memNumbers ===''){
+                        memNumbers = item.memNumber;
+                    }else{
+                        memNumbers = memNumbers + "," + item.memNumber;
+                    }
+                });
+                axios({
+                    method: 'post',
+                    url: baseUrl + "/passLaborweb/api/laborun/a10BaseInfo/memOperate",
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    data: Qs.stringify({
+                        "memOperateType":1,
+                        "jobStatus": that.jobStatus,
+                        "memNumberList": memNumbers,
+                        "remark": that.remark
+                    })
+                }).then((res) => {
+                    if(res.data.code ==='0'){
+                        layer.msg("会籍保留成功", {icon: 1, time: 1000})
+                    }else{
+                        layer.msg(res.data.msg, {icon: 2, time: 1000})
+                    }
+                }).catch(error => {
+                        layer.msg(res.data.msg, {icon: 2, time: 1000})
+                    })
+            },
+            deleteMem(){
+                var that  = this
+                that.addmsg = [];
+            },
+            getSystemDictionary(){
+                var that = this;
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    url: baseUrl+"/passLaborweb/api/laborun/systemDictionary/query",
+                    data: {
+                        "sn": "memRetainStatus"
+                    }
+                }).then(function (res) {
+                    if(res.data.code ==='0'){
+                        $.each(res.data.data, function (index, item) {
+                            if(item.memRetainStatus !== undefined){
+                                that.jobStatuses = item.memRetainStatus;
+                            }
+                        })
+                    }
+
+                });
+            }
+        },
+        mounted(){
+            var that = this;
+            that.getSystemDictionary();
+        }
+    })
+</script>
+</body>
+</html>

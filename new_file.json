@@ -1,0 +1,161 @@
+{
+  "name": "一级菜单",
+  "type": "1",
+  "number": "904",
+  "children": [
+    {
+      "name": "二级菜单",
+      "type": "1",
+      "children": [
+        {
+          "name": "三级菜单计划111",
+          "type": "1",
+          "children": [
+            {
+              "name": "2017年",
+              "type": "1",
+              "children": [
+                {
+                  "name": "业务1",
+                  "type": "1",
+                  "children": [],
+                  "number": "2"
+                },
+                {
+                  "name": "业务2",
+                  "type": "1",
+                  "children": [],
+                  "number": "0"
+                },
+                {
+                  "name": "业务3",
+                  "type": "1",
+                  "children": [],
+                  "number": "1"
+                }
+              ],
+              "number": "3"
+            }
+          ],
+          "number": "4"
+        },
+        {
+          "name": "三级菜单计划222",
+          "type": "1",
+          "children": [
+            {
+              "name": "2017年",
+              "type": "1",
+              "children": [
+                {
+                  "name": "业务1",
+                  "type": "1",
+                  "children": [],
+                  "number": "2"
+                },
+                {
+                  "name": "业务2",
+                  "type": "1",
+                  "children": [],
+                  "number": "0"
+                },
+                {
+                  "name": "业务3",
+                  "type": "1",
+                  "children": [],
+                  "number": "1"
+                }
+              ],
+              "number": "3"
+            }
+          ],
+          "number": "4"
+        },
+        {
+          "name": "三级菜单计划333",
+          "type": "1",
+          "children": [
+            {
+              "name": "2017年",
+              "type": "1",
+              "children": [
+                {
+                  "name": "业务1",
+                  "type": "1",
+                  "children": [],
+                  "number": "2"
+                },
+                {
+                  "name": "业务2",
+                  "type": "1",
+                  "children": [],
+                  "number": "0"
+                },
+                {
+                  "name": "业务3",
+                  "type": "1",
+                  "children": [],
+                  "number": "1"
+                }
+              ],
+              "number": "3"
+            }
+          ],
+          "number": "4"
+        },
+        {
+          "name": "业务1",
+          "type": "1",
+          "children": [
+            {
+              "name": "2017年",
+              "type": "1",
+              "children": [
+                {
+                  "name": "业务1",
+                  "type": "1",
+                  "children": [],
+                  "number": "2"
+                },
+                {
+                  "name": "业务2",
+                  "type": "1",
+                  "children": [],
+                  "number": "0"
+                },
+                {
+                  "name": "业务3",
+                  "type": "1",
+                  "children": [],
+                  "number": "1"
+                }
+              ],
+              "number": "3"
+            }
+          ],
+          "number": "1"
+        }
+      ],
+      "number": "616"
+    },
+    {
+      "name": "二级菜单",
+      "type": "1",
+      "children": [
+        {
+          "name": "业务1",
+          "type": "1",
+          "children": [],
+          "number": "10"
+        },
+        {
+          "name": "业务2",
+          "type": "1",
+          "children": [],
+          "number": "0"
+        }
+      ],
+      "number": "288"
+    }
+  ]
+}

@@ -1,0 +1,212 @@
+/*
+ *
+ *   H+ - 后台主题UI框架
+ *   version 4.9
+ *
+*/
+
+html {
+    height: 100%;
+}
+
+body.signin {
+    overflow: hidden;
+    background: #18c8f6;
+    height: auto;
+    background: url("../img/login-background.jpg") no-repeat center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: rgba(255, 0, 0, 0.95);
+}
+
+.signinpanel {
+    width: 28%;
+    margin: 3% auto 0 auto;
+}
+
+.signinpanel .form-control {
+    display: block;
+    margin-top: 15px;
+}
+
+.signinpanel .uname {
+    background: #fff url(../img/user.png) no-repeat 3% center;
+    padding-left: 30px;
+    color: #333;
+    outline-color: #ffccc7;
+}
+
+.signinpanel .pword {
+    background: #fff url(../img/locked.png) no-repeat 3% center;
+    padding-left: 30px;
+    color: #333;
+}
+
+.signinpanel .btn {
+    margin-top: 15px;
+    border-radius: 27px;
+    border: solid 2px #f15944;
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+
+.signinpanel form {
+    margin-top: 15%;
+    padding: 10% 18%;
+    background-color: #ffffff;
+    box-shadow: 0 3px 10px 0 rgba(255, 131, 120, 0.8);
+    -moz-box-shadow: 0 3px 10px 0 rgba(255, 131, 120, 0.8);
+    -webkit-box-shadow: 0 3px 10px 0 rgba(255, 131, 120, 0.8);
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+
+}
+
+.signup-footer {
+    border-top: solid 1px rgba(199, 52, 0, .3);
+    margin: 20px 0;
+    padding-top: 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .signinpanel,
+    .signuppanel {
+        margin: 0 auto;
+        width: 420px !important;
+        padding: 20px;
+    }
+
+    .signinpanel form {
+        margin-top: 20px;
+    }
+
+    .signup-footer {
+        margin-bottom: 10px;
+    }
+
+    .signuppanel .form-control {
+        margin-bottom: 10px;
+    }
+
+    .signup-footer .pull-left,
+    .signup-footer .pull-right {
+        float: none !important;
+        text-align: center;
+    }
+
+    .signinpanel .signin-info ul {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .signinpanel,
+    .signuppanel {
+        margin: 0 20px;
+        width: auto;
+    }
+}
+/** 遮罩层 */
+.loaderbox {
+	display: inline-block;
+	min-width: 125px;
+	padding: 10px;
+	margin: 0 auto;
+	color: #000 !important;
+	font-size: 13px;
+	font-weight: 400;
+	text-align: center;
+	vertical-align: middle;
+	border: 1px solid #ddd;
+	background-color: #eee;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-ms-border-radius: 2px;
+	-o-border-radius: 2px;
+	border-radius: 2px;
+	-webkit-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+}
+
+.loaderbox .loading-activity {
+	float: left;
+	width: 18px;
+	height: 18px;
+	border: solid 2px transparent;
+	border-top-color: #000;
+	border-left-color: #000;
+	border-radius: 10px;
+	-webkit-animation: pace-spinner 400ms linear infinite;
+	-moz-animation: pace-spinner 400ms linear infinite;
+	-ms-animation: pace-spinner 400ms linear infinite;
+	-o-animation: pace-spinner 400ms linear infinite;
+	animation: pace-spinner 400ms linear infinite;
+}
+/*
+登录界面check样式
+*/ 
+.checkbox-custom {
+    position: relative;
+    padding: 0 5px 0 25px;
+    margin-bottom: 7px;
+    margin-top: 0;
+    display: inline-block;
+    width: 100%;
+}
+/*
+将初始的checkbox的样式改变
+*/
+.checkbox-custom input[type="checkbox"] {
+    opacity: 0;/*将初始的checkbox隐藏起来*/
+    position: absolute;
+    cursor: pointer;
+    z-index: 2;
+    margin: -6px 0 0 0;
+    top: 50%;
+    left: 3px;
+}
+/*
+设计新的checkbox，位置
+*/
+.checkbox-custom label:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin-top: -9px;
+    width: 18px;
+    height: 17px;
+    display: inline-block;
+    border-radius: 2px;
+    border: 1px solid #bbb;
+    background: #fff;
+}
+/*
+点击初始的checkbox，将新的checkbox关联起来
+*/
+.checkbox-custom input[type="checkbox"]:checked +label:after {
+    position: absolute;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    content: "\e013";
+    top: 42%;
+    left: 3px;
+    margin-top: -5px;
+    font-size: 11px;
+    line-height: 1;
+    width: 16px;
+    height: 16px;
+    color: #333;
+}
+.checkbox-custom label {
+    cursor: pointer;
+    line-height: 1.2;
+    font-weight: normal;/*改变了rememberme的字体*/
+    margin-bottom: 0;
+    text-align: left;
+    color: black;
+}

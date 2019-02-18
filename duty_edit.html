@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<style>
+    .col-sm-8 input.form-control, .col-sm-8 select.form-control {
+        width: 50%;
+        display: inline-block;
+    }
+    .help-block.m-b-none {
+        display: inline;
+        margin-left: 10px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+</style>
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="transfer">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工会职务：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control"  id="dutyType" v-model="laborunDuty.dutyType">
+                                <option v-for="item in laborunDutyTypes" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--工会编号-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">会员证号：</label>
+                        <div class="col-sm-8">
+                            <input id="memNumber" name="memNumber" v-model="laborunDuty.memNumber"  class="form-control" type="text" >
+                            <button class="btn btn-primary" type="button" @click="getMemInfo">添加</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">组织会员：</label>
+                        <div class="col-sm-8">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>会员姓名</th>
+                                        <th>会员证号</th>
+                                        <th>联系电话</th>
+                                        <th>证件号</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="item in addmsg">
+                                            <td>{{item.memName}}</td>
+                                            <td>{{item.memNumber}}</td>
+                                            <td>{{item.contactPhone}}</td>
+                                            <td>{{item.cardNo}}</td>
+                                        <td>
+                                            <i class="fa fa-trash" @click="deleteMem"></i>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">备注：</label>
+                        <div class="col-sm-8">
+                            <textarea id="remark" name="remark" v-model="laborunDuty.remark" class="form-control" required="" aria-required="true" style="resize: none" placeholder="最多输入200字">
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <input type="button" class="btn btn-primary" @click="saveDuty" value="保存">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/baseaddr.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<!-- jQuery Validation plugin javascript-->
+<script src="js/plugins/validate/jquery.validate.min.js"></script>
+<script src="js/plugins/validate/messages_zh.min.js"></script>
+<script src="js/demo/form-validate-demo.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#transfer',
+        data:{
+            addmsg:[],
+            id:'',
+            laborunDuty:{},
+            laborunDutyTypes:[]
+        },
+        methods:{
+            getMemInfo() {
+                var that = this;
+                if(that.addmsg.length === 1){
+                    layer.confirm("会员已添加，请删除后重新添加", {icon: 2, btn :[ '确定' ]})
+                    return ;
+                }
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    url: baseUrl + "/passLaborweb/api/laborun/a10BaseInfo/getA10SimInfo",
+                    data: JSON.stringify({
+                        "memNumber": that.laborunDuty.memNumber
+                    })
+                }).then((res) => {
+                    if (res.data.code === '0') {
+                        if (res.data.data === null || res.data.data.length === 0) {
+                            layer.msg("会员不存在", {icon: 2, time: 1000})
+                        } else {
+                            that.addmsg.push(res.data.data)
+                            console.log( that.addmsg)
+                        }
+                    } else {
+                        layer.msg(res.data.msg, {icon: 2, time: 1000})
+                    }
+                });
+            },
+            saveDuty () {
+                var that = this
+                axios({
+                    method: 'post',
+                    url: baseUrl + "/passLaborweb/api/laborun/laborunDuty/add",
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    data: {
+                        "id":that.id,
+                        "dutyType": that.laborunDuty.dutyType,
+                        "memNumber": that.laborunDuty.memNumber,
+                        "remark": that.laborunDuty.remark
+                    }
+                }).then((res) => {
+                    if(res.data.code ==='0'){
+                        layer.msg("添加成功", {icon: 1, time: 1000})
+                    }else{
+                        layer.msg(res.data.msg, {icon: 2, time: 1000})
+                    }
+                }).catch(error => {
+                        layer.msg(res.data.msg, {icon: 2, time: 1000})
+                    })
+            },
+            deleteMem(){
+                var that  = this
+                that.addmsg = [];
+            },
+            getSystemDictionary(){
+                var that = this
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    url: baseUrl + "/passLaborweb/api/laborun/systemDictionary/query",
+                    data: {
+                        "sn": "laborunDutyType"
+                    }
+                }).then(function (res) {
+                    if (res.data.code === '0') {
+                        $.each(res.data.data, function (index, item) {
+                            if(item.laborunDutyType !== undefined){
+                                that.laborunDutyTypes = item.laborunDutyType;
+                            }
+                        })
+                    }
+                });
+            },
+            getDutyDetail(){
+                var that = this
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    url: baseUrl+"/passLaborweb/api/laborun/laborunDuty/query",
+                    data: JSON.stringify({
+                        "id":that.id
+                    })
+                }).then(function (res) {
+                    if (res.data.code === '0') {
+                        that.laborunDuty = res.data.data
+                        that.addmsg.push(that.laborunDuty)
+                    }else{
+                        layer.msg(res.data.msg, {icon: 2, time: 1000})
+                    }
+                });
+            }
+        },
+        mounted(){
+            var that = this
+            var url = location.search; //获取url中"?"符后的字串
+            console.log(url);
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                that.id= decodeURIComponent(strs[0].split("=")[1]);
+            }
+            that.getDutyDetail();
+            that.getSystemDictionary();
+        }
+    })
+</script>
+</body>
+</html>

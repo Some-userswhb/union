@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工会底层平台</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="css/plugins/footable/footable.core.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+    <style>
+        .noread{
+            font-size: 12px;
+            background-color: red;
+            color: white;
+            border-radius: 2px;
+            padding: 2px 2px;
+        }
+        .yesread{
+            font-size: 12px;
+            background-color: grey;
+            color: white;
+            border-radius: 2px;
+            padding: 2px 2px;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight" id="indexVue">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>通知&nbsp;<i class="fa fa-volume-up"></i></h5>
+                </div>
+                <div class="ibox-content">
+                    <table class="footable table " id="messagesTable">
+                        <thead class="tab-fiexd" style="display:none">
+                        <tr>
+                            <th>标题</th>
+                            <th>时间</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+<!-- Data Tables -->
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<!--vue axios-->
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+<script src="js/plugins/footable/footable.all.min.js"></script>
+<!-- 自定义js -->
+<script src="js/baseaddr.js"></script>
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+<script>
+    $(document).ready(function () {
+        $('.footable').footable();
+    });
+
+</script>
+<!--模糊搜索-->
+<script src="js/jquery.combo.select.js"></script>
+<!-- jQuery UI -->
+<script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+<script>
+    var vm = new Vue({
+        el: "#indexVue",
+        data: {
+            messages: [],
+            messagesTable: null
+        },
+        mounted() {
+            var that = this;
+            that.getMessage();
+        },
+        methods: {
+            getMessage() {
+                var that = this
+                if (that.messagesTable === null) {
+                    that.messagesTable = $('#messagesTable').dataTable({
+                        sDom: '"top"i',   //去掉搜索框方法二：这种方法可以，动态获取数据时会引起错误
+                        ordering: false,
+                        language: lang,  //提示信息
+                        bLengthChange: false,   //去掉每页显示多少条数据方法
+                        autoWidth: true,  //禁用自动调整列宽
+                        stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
+                        processing: true,  //隐藏加载提示,自行处理
+                        serverSide: true,  //启用服务器端分页
+                        searching: false,  //禁用原生搜索
+                        orderMulti: false,  //启用多列排序
+                        order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
+                        renderer: "bootstrap",  //渲染样式：Bootstrap和jquery-ui
+                        pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
+                        columnDefs: [{
+                            "targets": 'nosort',  //列的样式名
+                            "orderable": false    //包含上样式名‘nosort’的禁止排序
+                        }],
+                        ajax: function (data, callback, settings) {
+                            //封装请求参数
+                            var param = {};
+                            param.size = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+                            param.page = (data.start / data.length) + 1;
+                            $.ajax({
+                                type: "post",
+                                url: baseUrl + "/passLaborweb/api/laborun/message/getHomeMessagePage",
+                                cache: false,  //禁用缓存
+                                data: JSON.stringify(param),  //传入组装的参数
+                                dataType: "json",
+                                contentType: "application/json",
+                                success: function (result) {
+                                    var returnData = {};
+                                    returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                                    returnData.recordsTotal = result.data.total;//返回数据全部记录
+                                    returnData.recordsFiltered = result.data.total;//后台不实现过滤功能，每次查询均视作全部结果
+                                    returnData.data = result.data.content;//返回的数据列表
+                                    callback(returnData);
+                                }
+                            });
+                        },
+                        columns: [
+                            {
+                                "data": "title",
+                                "render": function (data, type, row, meta) {
+                                    if (row.messageStatus === '1') {
+                                        return '<span class="yesread">已读</span><span style="padding-left: 10px">' + data + '</span>'
+                                    } else {
+                                        return '<span class="noread">未读</span><span style="padding-left: 10px">' + data + '</span>'
+                                    }
+                                },
+                                "bSortable": false
+                            },
+                            {
+                                "data": "noticeTime",
+                                "render": function (data, type, row, meta) {
+                                    return ' <span class="dateli pull-right">' + data + '</span>'
+                                },
+                                "bSortable": false
+                            }
+                        ]
+                    }).api();//此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
+                } else {
+                    that.messagesTable.draw(false);
+                }
+            }
+
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+</body>
+
+</html>

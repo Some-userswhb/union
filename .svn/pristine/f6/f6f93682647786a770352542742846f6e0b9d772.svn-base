@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<style>
+    .col-sm-8 input.form-control, .col-sm-8 select.form-control {
+        width: 50%;
+        display: inline-block;
+    }
+    .help-block.m-b-none {
+        display: inline;
+        margin-left: 10px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+</style>
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="transfer">
+
+                    <!--工会编号-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工会编号：</label>
+                        <div class="col-sm-8">
+                            <input id="emailqq" name="emailqq" class="form-control"
+                                   type="text" v-model="laborunCodes" placeholder="精确查询">
+                            <button class="btn btn-primary" type="button" @click="add">添加</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">解散工会：</label>
+                        <div class="col-sm-8">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>工会名称</th>
+                                        <th>工会编号</th>
+                                        <th>职工人数</th>
+                                        <th>会员人数</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>初始化</td>
+                                        <td>工会姓名</td>
+                                        <td>工会姓名</td>
+                                        <td>工会姓名</td>
+                                        <td>
+                                            <i class="fa fa-trash"></i>
+                                        </td>
+                                    </tr>
+                                    <tr v-for="item in addmsg">
+                                            <td>{{item.laborunName}}</td>
+                                            <td>{{item.laborunCode}}</td>
+                                            <td>{{item.administratName}}</td>
+                                            <td>{{item.laborunLevelText}}</td>
+                                        <td>
+                                            <i class="fa fa-trash"></i>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工会备注：</label>
+                        <div class="col-sm-8">
+                            <textarea id="ccomment" name="comment"
+                                      class="form-control" required=""
+                                      aria-required="true" style="resize: none"
+                                      v-model="remark">
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <input type="button" class="btn btn-primary" @click="transfer" value="保存">
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<script src="https://cdn.bootcss.com/qs/6.6.0/qs.min.js"></script>
+<script>
+    new Vue({
+        el:'#transfer',
+        data:{
+            addmsg:[],
+            laborunCode:[],
+            laborunCodes:'', /*工会编号列表1  140000000000*/
+            remark:''
+        },
+        methods:{
+
+            /*添加按钮逻辑*/
+            add:function () {
+                const inpValue = this.laborunCodes;
+                if(inpValue === ''){
+                    alert('您的输入为空')
+                }else if(inpValue !== '140000000000' && inpValue !== '1400000000001'){
+                    alert('您的输入无效')
+                }else{
+                    axios({
+                        method: 'post',
+                        url: "http://112.35.92.177:90/passLaborweb/api/laborun/union/query",
+                        data: {
+                            "laborunCode":this.laborunCodes
+                        }
+                    }).then((res) => {
+                        /*  console.log(res.data)*/
+                        this.addmsg .push(res.data.data)
+
+                    });
+                }
+
+
+
+            },
+            /*保存按钮*/
+            transfer:function () {
+                const that = this;
+                axios({
+                    method: 'post',
+                    url: "http://112.35.92.177:90/passLaborweb/api/laborun/union/dissolve",
+                    contentType:'x-www-form-urlencoded',
+                    data:Qs.stringify({
+                        "laborunCodes":that.laborunCodes,
+                        "remark":that.remark
+                    })
+                }).then((res) => {
+                    console.log(res.data);
+                    console.log('解散成功'+this.remark+this.laborunCodes)
+                })
+
+
+            }
+        },
+    })
+</script>
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+
+<!-- jQuery Validation plugin javascript-->
+<script src="js/plugins/validate/jquery.validate.min.js"></script>
+<script src="js/plugins/validate/messages_zh.min.js"></script>
+
+<script src="js/demo/form-validate-demo.js"></script>
+
+</body>
+
+</html>

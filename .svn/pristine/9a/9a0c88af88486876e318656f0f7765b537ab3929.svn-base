@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <!-- Morris -->
+    <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="css/combo.select.css" rel="stylesheet">
+    <link href="css/plugins/treeview/bootstrap-treeview.css" rel="stylesheet">
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+</head>
+<body class="gray-bg sidebar-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins" id="unionDetails">
+                <div class="ibox-content" >
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover no-bottom">
+                                    <tbody>
+                                    <tr class="nback">
+                                        <td class="client-link no-top-border col-sm-1">
+                                            工会名称：
+                                        </td>
+                                        <td class="no-top-border">
+                                            {{Detailslist.laborunName}}
+                                        </td>
+                                    </tr>
+                                    <tr class="nback">
+                                        <td class="client-link no-top-border col-sm-1">
+                                            工会编号:
+                                        </td>
+                                        <td class="no-top-border">
+                                            {{Detailslist.laborunCode}}
+                                        </td>
+                                    </tr>
+                                    <tr class="nback">
+                                        <td class="client-link no-top-border col-sm-1">
+                                            工会级别:
+                                        </td>
+                                        <td class="no-top-border">
+                                            {{Detailslist.laborunLevelText}}
+                                        </td>
+                                    </tr>
+                                    <tr class="nback">
+                                        <td class="client-link no-top-border col-sm-1">
+                                            建会时间:
+                                        </td>
+                                        <td class="no-top-border">
+                                            {{Detailslist.establishTime}}
+                                        </td>
+                                    </tr>
+                                    <tr class="nback">
+                                        <td class="client-link no-top-border col-sm-1">
+                                            行政区划:
+                                        </td>
+                                        <td class="no-top-border">
+                                            {{Detailslist.administratName}}
+                                        </td>
+                                    </tr>
+                                    <tr class="nback">
+                                        <td class="client-link no-top-border col-sm-1">
+                                            工会地址:
+                                        </td>
+                                        <td class="no-top-border">
+                                            {{Detailslist.laborunAddr}}
+                                        </td>
+                                    </tr>
+                                    <tr class="nback">
+                                        <td class="client-link no-top-border col-sm-1">
+                                            单位名称:
+                                        </td>
+                                        <td class="no-top-border">
+                                            {{Detailslist.unitName}}
+                                        </td>
+                                    </tr>
+                                    <tr class="nback">
+                                        <td class="client-link no-top-border col-sm-3">
+                                            营业执照:
+                                        </td>
+                                        <td class="no-top-border">
+                                            {{Detailslist.businessLicensePic}}
+                                        </td>
+                                    </tr>
+                                    <tr class="nback">
+                                        <td class="client-link no-top-border col-sm-3">
+                                            统一社会信用代码:
+                                        </td>
+                                        <td class="no-top-border">
+                                            {{Detailslist.socialCreditCode}}
+                                        </td>
+                                    </tr>
+                                    <tr class="nback">
+                                        <td class="client-link no-top-border col-sm-3">
+                                            行政区划:
+                                        </td>
+                                        <td class="no-top-border">
+                                            {{Detailslist.administratName}}
+                                        </td>
+                                    </tr>
+                                    <tr class="nback">
+                                        <td class="client-link no-top-border col-sm-3">
+                                            负责人:
+                                        </td>
+                                        <td class="no-top-border">
+                                            {{Detailslist.principal}}
+                                        </td>
+                                    </tr>
+                                    <tr class="nback">
+                                        <td class="client-link no-top-border col-sm-3">
+                                            负责人电话:
+                                        </td>
+                                        <td class="no-top-border">
+                                            {{Detailslist.principalPhone}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="js/baseaddr.js"></script>
+<!--模糊搜索-->
+<!-- jQuery UI -->
+<script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- iCheck -->
+<script src="js/plugins/iCheck/icheck.min.js"></script>
+<!--vue axios-->
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+
+<script>
+    var vm = new Vue({
+        el: "#unionDetails",
+        data: {
+            Detailslist: {},
+            id: ''
+        },
+        mounted() {
+            var that = this;
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                that.id = decodeURIComponent(strs[0].split("=")[1]);
+            }
+            axios({
+                method: 'post',
+                url:  baseUrl +"/passLaborweb/api/laborun/laborunApplyInfo/query",
+                data: {
+                    "id": that.id
+                }
+            }).then(function (res) {
+                if(res.data.code ==='0'){
+                    that.Detailslist = res.data.data;
+                }
+            });
+        }
+    });
+</script>
+
+<script>
+
+</script>
+</body>
+</html>

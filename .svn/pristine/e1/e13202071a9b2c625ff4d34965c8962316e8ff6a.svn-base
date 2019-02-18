@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <!-- Morris -->
+    <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="css/combo.select.css" rel="stylesheet">
+    <link href="css/plugins/treeview/bootstrap-treeview.css" rel="stylesheet">
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+
+
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+</head>
+<body class="gray-bg sidebar-content">
+<div class="sidebard-panel">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>工会列表</h5>
+            </div>
+            <div>
+                <select>
+                    <option value="">请选择工会</option>
+                    <option value="阳泉总工会">阳泉总工会</option>
+                    <option value="太原总工会">太原总工会</option>
+                    <option value="山西总工会">山西总工会</option>
+                    <option value="普罗迪克工会">普罗迪克工会</option>
+                    <option value="阳泉总工会">阳泉总工会</option>
+                    <option value="太原总工会">太原总工会</option>
+                    <option value="山西总工会">山西总工会</option>
+                    <option value="普罗迪克工会">普罗迪克工会</option>
+                    <option value="阳泉总工会">阳泉总工会</option>
+                    <option value="太原总工会">太原总工会</option>
+                    <option value="山西总工会">山西总工会</option>
+                    <option value="普罗迪克工会">普罗迪克工会</option>
+                </select>
+            </div>
+            <div class="ibox-content">
+                <div id="treeview5" class="test"></div>
+                <div class="iconshow">
+                    <ul class="no-padding">
+                        <li>
+                            <i class="fa fa fa-sitemap"></i>
+                            <span class="nav-label">组织工会</span>
+                        </li>
+                        <li><i class="fa fa fa-database"></i>
+                            <span class="nav-label">产业工会</span></li>
+                        <li><i class="fa fa fa-building"></i>
+                            <span class="nav-label">企事业工会</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>小店区总工会</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="tabs-container">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> 工会详情</a>
+                                    </li>
+                                    <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">基层工会</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <!--工会详情选项卡开始-->
+                                    <div id="tab-1" class="tab-pane active">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="tabs-container">
+                                                        <ul class="nav nav-tabs">
+                                                            <li class="active"><a data-toggle="tab" href="#tab-1-1"
+                                                                                  aria-expanded="true"> 基本信息</a></li>
+                                                            <li class=""><a data-toggle="tab" href="#tab-1-2"
+                                                                            aria-expanded="false">法人资格</a></li>
+                                                            <li class=""><a data-toggle="tab" href="#tab-1-3"
+                                                                            aria-expanded="false">工会变更</a></li>
+                                                            <li class=""><a data-toggle="tab" href="#tab-1-4"
+                                                                            aria-expanded="false">资质管理</a></li>
+                                                            <li class=""><a data-toggle="tab" href="#tab-1-5"
+                                                                            aria-expanded="false">文件档案</a></li>
+                                                            <li class=""><a data-toggle="tab" href="#tab-1-6"
+                                                                            aria-expanded="false">任职管理</a></li>
+                                                            <li class=""><a data-toggle="tab" href="#tab-1-7"
+                                                                            aria-expanded="false">账户管理</a></li>
+                                                        </ul>
+                                                        <div class="tab-content">
+                                                            <div id="tab-1-1" class="tab-pane active">
+                                                                <div class="panel-body" id="unionDetails">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-6">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-striped table-hover no-bottom">
+                                                                                    <tbody>
+                                                                                    <tr class="nback">
+                                                                                        <td class="client-link no-top-border col-sm-3">
+                                                                                            工会名称：
+                                                                                        </td>
+                                                                                        <td class="no-top-border">
+                                                                                            {{Detailslist.laborunAddr}}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr class="nback">
+                                                                                        <td class="client-link no-top-border col-sm-3">
+                                                                                            工会编号:
+                                                                                        </td>
+                                                                                        <td class="no-top-border">
+                                                                                            {{Detailslist.administratCode}}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr class="nback">
+                                                                                        <td class="client-link no-top-border col-sm-3">
+                                                                                            建会时间:
+                                                                                        </td>
+                                                                                        <td class="no-top-border">
+                                                                                            {{Detailslist.establishTime}}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr class="nback">
+                                                                                        <td class="client-link no-top-border col-sm-3">
+                                                                                            行政区划:
+                                                                                        </td>
+                                                                                        <td class="no-top-border">
+                                                                                            {{Detailslist.administratName}}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr class="nback">
+                                                                                        <td class="client-link no-top-border col-sm-3">
+                                                                                            工会地址:
+                                                                                        </td>
+                                                                                        <td class="no-top-border">
+                                                                                            {{Detailslist.laborunAddr}}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr class="nback">
+                                                                                        <td class="client-link no-top-border col-sm-3">
+                                                                                            工会状态:
+                                                                                        </td>
+                                                                                        <td class="no-top-border">
+                                                                                            {{Detailslist.laborunStatusText}}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr class="nback">
+                                                                                        <td class="client-link no-top-border col-sm-3">
+                                                                                            工会备注:
+                                                                                        </td>
+                                                                                        <td class="no-top-border">
+                                                                                            {{Detailslist.laborunCode}}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--工会编号-->
+                                                                        <div class="col-sm-6">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-striped table-hover no-bottom">
+                                                                                    <tbody>
+                                                                                    <tr class="nback">
+                                                                                        <td class="client-link no-top-border col-sm-3">
+                                                                                            工会级次:
+                                                                                        </td>
+                                                                                        <td class="no-top-border">
+                                                                                            {{Detailslist.laborunLevelText}}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr class="nback">
+                                                                                        <td class="client-link no-top-border col-sm-3">
+                                                                                            工会类型:
+                                                                                        </td>
+                                                                                        <td class="no-top-border">
+                                                                                            {{Detailslist.unitTypeText}}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr class="nback">
+                                                                                        <td class="client-link no-top-border col-sm-3">
+                                                                                            上级工会:
+                                                                                        </td>
+                                                                                        <td class="no-top-border">
+                                                                                            {{Detailslist.parentLaborunName}}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr class="nback">
+                                                                                        <td class="client-link no-top-border col-sm-3">
+                                                                                            组建方式:
+                                                                                        </td>
+                                                                                        <td class="no-top-border">
+                                                                                            {{Detailslist.buildWayText}}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr class="nback">
+                                                                                        <td class="client-link no-top-border col-sm-3">
+                                                                                            负责人:
+                                                                                        </td>
+                                                                                        <td class="no-top-border">
+                                                                                            {{Detailslist.principal}}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr class="nback">
+                                                                                        <td class="client-link no-top-border col-sm-3">
+                                                                                            负责人电话:
+                                                                                        </td>
+                                                                                        <td class="no-top-border">
+                                                                                            {{Detailslist.principalPhone}}
+                                                                                        </td>
+                                                                                    </tr>
+
+
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-striped table-hover">
+                                                                                    <tbody>
+                                                                                    <tr class="nback">
+                                                                                        <td class="client-link no-top-border"
+                                                                                            style="width: 12%">
+                                                                                            工会状态:
+                                                                                        </td>
+                                                                                        <td class="no-top-border">
+                                                                                            <table class="table table-bordered">
+                                                                                                <thead>
+                                                                                                <tr>
+                                                                                                    <th>单位名称</th>
+                                                                                                    <th>统一社会信用代码</th>
+                                                                                                    <th>单位类型</th>
+                                                                                                    <th>负责人</th>
+                                                                                                    <th>负责人电话</th>
+                                                                                                </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                <tr v-for="item in Detailslist.unitList">
+                                                                                                    <td>
+                                                                                                        {{item.unitName}}
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        {{item.socialCreditCode}}
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        {{item.unitIndustryText}}
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        {{item.principal}}
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        {{item.principalPhone}}
+                                                                                                    </td>
+                                                                                                </tr>
+
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-12">
+                                                                            <div class="ibox float-e-margins"
+                                                                                 style="margin-top: 25px">
+                                                                                <p style="text-align: center;">
+                                                                                    <button type="button"
+                                                                                            class="btn btn-outline btn-default">
+                                                                                        建会
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                            class="btn btn-outline btn-primary">
+                                                                                        转移
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                            class="btn btn-outline btn-info">
+                                                                                        合并
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                            class="btn btn-outline btn-danger">
+                                                                                        解散
+                                                                                    </button>
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div id="tab-1-2" class="tab-pane">
+                                                                <div class="panel-body">
+                                                                    <strong>移动设备优先</strong>
+                                                                    <p>在 Bootstrap 2 中，我们对框架中的某些关键部分增加了对移动设备友好的样式。而在
+                                                                        Bootstrap 3
+                                                                        中，我们重写了整个框架，使其一开始就是对移动设备友好的。这次不是简单的增加一些可选的针对移动设备的样式，而是直接融合进了框架的内核中。也就是说，Bootstrap
+                                                                        是移动设备优先的。针对移动设备的样式融合进了框架的每个角落，而不是增加一个额外的文件。</p>
+                                                                </div>
+                                                            </div>
+                                                            <div id="tab-1-3" class="tab-pane">
+                                                                <div class="panel-body" id="unionChange">
+                                                                    <!--ddd-->
+                                                                    <table class="table table-striped table-hover">
+                                                                        <tbody>
+                                                                        <tr class="nback">
+
+                                                                            <td class="no-top-border">
+                                                                                <table class="table table-bordered">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th>变更</th>
+                                                                                        <th>变更时间</th>
+                                                                                        <th>变更项</th>
+                                                                                        <th>操作备注</th>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    <tr v-for="(item,name) in unionCh">
+                                                                                        <td>{{item.changeType}}</td>
+                                                                                        <td>{{item.applyTime}}</td>
+                                                                                        <td>{{item.changeConcent}}</td>
+                                                                                        <td>{{item.remark}}</td>
+
+                                                                                    </tr>
+
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            <div id="tab-1-4" class="tab-pane">
+                                                                <div class="panel-body">
+                                                                    <strong>移动设备优先</strong>
+                                                                    <p>在 Bootstrap 2 中，我们对框架中的某些关键部分增加了对移动设备友好的样式。而在
+                                                                        Bootstrap 3
+                                                                        中，我们重写了整个框架，使其一开始就是对移动设备友好的。这次不是简单的增加一些可选的针对移动设备的样式，而是直接融合进了框架的内核中。也就是说，Bootstrap
+                                                                        是移动设备优先的。针对移动设备的样式融合进了框架的每个角落，而不是增加一个额外的文件。</p>
+                                                                </div>
+                                                            </div>
+                                                            <div id="tab-1-5" class="tab-pane">
+                                                                <div class="panel-body">
+                                                                    <strong>移动设备优先</strong>
+                                                                    <p>在 Bootstrap 2 中，我们对框架中的某些关键部分增加了对移动设备友好的样式。而在
+                                                                        Bootstrap 3
+                                                                        中，我们重写了整个框架，使其一开始就是对移动设备友好的。这次不是简单的增加一些可选的针对移动设备的样式，而是直接融合进了框架的内核中。也就是说，Bootstrap
+                                                                        是移动设备优先的。针对移动设备的样式融合进了框架的每个角落，而不是增加一个额外的文件。</p>
+                                                                </div>
+                                                            </div>
+                                                            <div id="tab-1-6" class="tab-pane">
+                                                                <div class="panel-body">
+                                                                    <strong>移动设备优先</strong>
+                                                                    <p>在 Bootstrap 2 中，我们对框架中的某些关键部分增加了对移动设备友好的样式。而在
+                                                                        Bootstrap 3
+                                                                        中，我们重写了整个框架，使其一开始就是对移动设备友好的。这次不是简单的增加一些可选的针对移动设备的样式，而是直接融合进了框架的内核中。也就是说，Bootstrap
+                                                                        是移动设备优先的。针对移动设备的样式融合进了框架的每个角落，而不是增加一个额外的文件。</p>
+                                                                </div>
+                                                            </div>
+                                                            <div id="tab-1-7" class="tab-pane">
+                                                                <div class="panel-body">
+                                                                    <strong>移动设备优先</strong>
+                                                                    <p>在 Bootstrap 2 中，我们对框架中的某些关键部分增加了对移动设备友好的样式。而在
+                                                                        Bootstrap 3
+                                                                        中，我们重写了整个框架，使其一开始就是对移动设备友好的。这次不是简单的增加一些可选的针对移动设备的样式，而是直接融合进了框架的内核中。也就是说，Bootstrap
+                                                                        是移动设备优先的。针对移动设备的样式融合进了框架的每个角落，而不是增加一个额外的文件。</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/><br/><br/>
+                                    <!--
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            查询条件
+                                        </div>
+                                        <div class="panel-body form-group" style="margin-bottom:0px;">
+                                            <label class="col-sm-1 control-label" style="text-align: right; margin-top:5px">姓名：</label>
+                                            <div class="col-sm-2">
+                                                <input type="text" class="form-control" name="Name" id="search_name"/>
+                                            </div>
+                                            <label class="col-sm-1 control-label" style="text-align: right; margin-top:5px">手机号：</label>
+                                            <div class="col-sm-2">
+                                                <input type="text" class="form-control" name="Name" id="search_tel"/>
+                                            </div>
+                                            <div class="col-sm-1 col-sm-offset-4">
+                                                <button class="btn btn-primary" id="search_btn">查询</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="mytab" class="table table-hover"></table>
+                                    -->
+
+                                    <!--基层工会选项卡开始-->
+                                    <div id="tab-2" class="tab-pane">
+                                        <div class="panel-body">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-content">
+                                                    <div class="row" id="nameselect">
+                                                        <div class="col-sm-4 no-padding">
+                                                            <div class="col-sm-4 lin-h40 wid27  no-padding client-link">
+                                                                工会名称：
+                                                            </div>
+                                                            <div class="col-sm-8   no-padding">
+                                                                <select class="input-sm form-control input-s-sm inline">
+                                                                    <option value="0" v-for="(item,name) in Ghlist">{{item.laborun_name}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 no-padding">
+                                                            <div class="col-sm-4 wid27 no-padding lin-h40 client-link">
+                                                                工会编号：
+                                                            </div>
+                                                            <div class="col-sm-8  no-padding">
+                                                                <select class="input-sm form-control input-s-sm inline">
+                                                                    <option value="0" v-for="(item,name) in Ghlist">{{item.laborun_code}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4 no-padding">
+                                                            <div class="col-sm-12 no-padding">
+                                                                <button type="button"
+                                                                        class="btn  btn-primary mar-r15">
+                                                                    搜索
+                                                                </button>
+                                                                <button type="button"
+                                                                        class="btn  btn-primary mar-r15">
+                                                                    重置
+                                                                </button>
+                                                                <a href="javacript:void(0)" class="more"><span
+                                                                        class="lin-h40">高级搜索></span></a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12 no-padding disn morecheackboxo">
+                                                            <div class="col-sm-1 wid9  no-padding  client-link lin-h40">
+                                                                工会级别：
+                                                            </div>
+                                                            <div class="form-group lin-h40 col-sm-10">
+                                                                <div class="col-sm-12">
+                                                                    <label class="checkbox-inline i-checks">
+                                                                        <input type="checkbox" value="option1" class="allCheck">全部
+                                                                    </label>
+                                                                    <label class="checkbox-inline i-checks">
+                                                                        <input type="checkbox"
+                                                                               value="option2">基层工会委员会</label>
+                                                                    <label class="checkbox-inline i-checks">
+                                                                        <input type="checkbox" value="option3">基层工会联合委员会</label>
+                                                                    <label class="checkbox-inline i-checks">
+                                                                        <input type="checkbox" value="option4">联合基层工会委员会</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12 no-padding disn morecheackboxt">
+                                                            <div class="col-sm-1 wid9  no-padding  client-link lin-h40">
+                                                                工会类型：
+                                                            </div>
+                                                            <div class="form-group lin-h40 col-sm-10">
+                                                                <div class="col-sm-12">
+                                                                    <label class="checkbox-inline i-checks">
+                                                                        <input type="checkbox" class="allCheck"
+                                                                               value="option1">全部</label>
+                                                                    <label class="checkbox-inline i-checks">
+                                                                        <input type="checkbox"
+                                                                               value="option2">组织工会</label>
+                                                                    <label class="checkbox-inline i-checks">
+                                                                        <input type="checkbox"
+                                                                               value="option3">产业工会</label>
+                                                                    <label class="checkbox-inline i-checks">
+                                                                        <input type="checkbox"
+                                                                               value="option4">企事业工会</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="ibox float-e-margins"
+                                                                 style="margin-top: 25px">
+                                                                <p style="text-align: center;">
+                                                                    <button type="button"
+                                                                            class="btn btn-outline btn-default">
+                                                                        建会
+                                                                    </button>
+                                                                    <button type="button"
+                                                                            class="btn btn-outline btn-primary">
+                                                                        转移
+                                                                    </button>
+                                                                    <button type="button"
+                                                                            class="btn btn-outline btn-info">
+                                                                        合并
+                                                                    </button>
+                                                                    <button type="button"
+                                                                            class="btn btn-outline btn-danger">
+                                                                        解散
+                                                                    </button>
+
+                                                                    <button type="button"
+                                                                            class="btn  btn-primary mar-r15">
+                                                                        导入
+                                                                    </button>
+                                                                    <button type="button"
+                                                                            class="btn  btn-primary mar-r15">
+                                                                        导入模板
+                                                                    </button>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="table-responsive row">
+                                                        <table class="table table-striped  table-hover dataTables-example">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>
+                                                                    <label class="checkbox-inline i-checks" style="font-weight: 700">
+                                                                        <input type="checkbox" class="allCheck" value="option1">全部
+                                                                    </label>
+                                                                </th>
+                                                                <th>工会名称</th>
+                                                                <th>工会编号</th>
+                                                                <th>行政区划</th>
+                                                                <th>工会级别</th>
+                                                                <th>工会类型</th>
+                                                                <th>工会状态</th>
+                                                                <th>操作</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <!--VUE——基层工会-->
+                                                            <tbody id="basicLevel">
+                                                            <tr v-for="(item,index) in list" :key="index">
+                                                                <td>
+                                                                    <input type="checkbox" checked
+                                                                           class="i-checks iCheck-helper"
+                                                                           name="input[]"
+                                                                    >
+                                                                </td>
+                                                                <td>
+                                                                    {{item.laborunName}}
+                                                                </td>
+                                                                <td>{{item.laborunCode}}</td>
+                                                                <td>{{item.administratName}}</td>
+                                                                <td>{{item.laborunLevelText}}</td>
+                                                                <td>{{item.laborunTypeText}}</td>
+                                                                <td>{{item.laborunStatusText}}</td>
+                                                                <td class="wid18">
+
+                                                                    <button type="button"
+                                                                            class="btn  btn-primary">
+                                                                        查看
+                                                                    </button>
+                                                                    <button type="button"
+                                                                            class="btn  btn-primary">
+                                                                        编辑
+                                                                    </button>
+
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+
+<script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+
+
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+
+<!--vue axios-->
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script>
+    //    模糊搜索之工会列表,工会编号
+    var vmGhlist = new Vue({
+        el: "#nameselect",
+        data: {
+            Ghlist: []
+        },
+        mounted() {
+            var __this = this;
+            axios({
+                method: 'get',
+                url: "http://112.35.92.177:90/passLaborweb/api/laborun/union/getLaborunList",
+                data: {
+                    "laborunName": ""
+                }
+            }).then(function (data) {
+                /* console.log(data.data);*/
+                __this.Ghlist = data.data.data;
+                /*console.log(__this.Ghlist)*/
+
+            });
+        }
+    });
+    //    请求基层工会下边表格信息
+    var unionTable= new Vue({
+        el: "#basicLevel",
+        data: {
+            list: []
+        },
+        mounted() {
+            var _this = this;
+            axios({
+                method: 'post',
+                url: "http://112.35.92.177:90/passLaborweb/api/laborun/union/queryPage",
+                data: {
+                    "page":2,
+                    "size": 2,
+                    "laborunName": "",
+                    "laborunCode": "",
+                    "laborunLevel": 1,
+                    "laborunKind": 1
+                }
+            }).then(function (data) {
+                console.log(data.data.data.content)
+                _this.list = data.data.data.content;
+                console.log(_this.list)
+
+            });
+        }
+    });
+    //    请求工会详情信息
+    var unionDetails = new Vue({
+        el: "#unionDetails",
+        data: {
+            Detailslist: [],
+            itemunitName: 'ddd'
+        },
+        mounted() {
+            var __this = this;
+            axios({
+                method: 'post',
+                url: "http://112.35.92.177:90/passLaborweb/api/laborun/union/query",
+                data: {
+                    "laborunCode": "140000000000"
+                }
+            }).then(function (data) {
+                /*  console.log(data.data.data)*/
+                __this.Detailslist = data.data.data;
+
+
+            });
+        }
+    });
+    //   请求工会变更信息
+    var unionChange = new Vue({
+        el: "#unionChange",
+        data: {
+            unionCh: []
+        },
+        mounted() {
+            var _this = this;
+            axios({
+                method: 'post',
+                url: "http://112.35.92.177:90/passLaborweb/api/laborun/laborunChRecord/queryPage",
+                data: {
+                    "laborunCode": ""
+                }
+            }).then(function (data) {
+                /*   console.log(data.data.data)*/
+                _this.unionCh = data.data.data.content;
+
+
+            });
+        }
+    })
+</script>
+
+
+<script>
+    $('.more').on('click', function () {
+        $(this).toggleClass("moreup");
+        $('.morecheackboxo').slideToggle('slow');
+        $('.morecheackboxt').slideToggle('slow');
+        if ($(this).attr('class') == 'more moreup') {
+            $(this).children('span').text('点击收起∨');
+        } else {
+            $(this).children('span').text('高级搜索>');
+        }
+
+    })
+</script>
+<!-- Flot -->
+<script src="js/plugins/flot/jquery.flot.js"></script>
+<script src="js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+<script src="js/plugins/flot/jquery.flot.spline.js"></script>
+<script src="js/plugins/flot/jquery.flot.resize.js"></script>
+<script src="js/plugins/flot/jquery.flot.pie.js"></script>
+<script src="js/plugins/flot/jquery.flot.symbol.js"></script>
+<script src="js/plugins/flot/curvedLines.js"></script>
+<!-- Peity -->
+<script src="js/plugins/peity/jquery.peity.min.js"></script>
+<script src="js/demo/peity-demo.js"></script>
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+<!--模糊搜索-->
+<script src="js/jquery.combo.select.js"></script>
+<!-- jQuery UI -->
+<script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Jvectormap -->
+<script src="js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+
+<!-- EayPIE -->
+<script src="js/plugins/easypiechart/jquery.easypiechart.js"></script>
+
+<!-- Sparkline -->
+<script src="js/plugins/sparkline/jquery.sparkline.min.js"></script>
+
+<!-- Sparkline demo data  -->
+<script src="js/demo/sparkline-demo.js"></script>
+<!--树状图-->
+<script src="js/plugins/treeview/bootstrap-treeview.js"></script>
+<script src="js/demo/treeview-demo.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.chart').easyPieChart({
+            barColor: '#f8ac59',
+            //                scaleColor: false,
+            scaleLength: 5,
+            lineWidth: 4,
+            size: 80
+        });
+
+        $('.chart2').easyPieChart({
+            barColor: '#1c84c6',
+            //                scaleColor: false,
+            scaleLength: 5,
+            lineWidth: 4,
+            size: 80
+        });
+
+        var d1 = [
+            [1262304000000, 1],
+            [1264982400000, 100],
+            [1267401600000, 1],
+            [1270080000000, 200],
+            [1272672000000, 1],
+            [1275350400000, 100],
+            [1277942400000, 1],
+            [1280620800000, 300]
+        ];
+        var d2 = [
+            [1262304000000, 100],
+            [1264982400000, 1],
+            [1267401600000, 150],
+            [1270080000000, 1],
+            [1272672000000, 230],
+            [1275350400000, 1],
+            [1277942400000, 150],
+            [1280620800000, 10]
+        ];
+
+        var data3 = [
+            {
+                label: "Data 1",
+                data: d1,
+                color: '#23c6c8'
+            },
+            {
+                label: "Data 2",
+                data: d2,
+                color: '#1ab394'
+            }
+        ];
+        $.plot($("#flot-chart3"), data3, {
+            xaxis: {
+                tickDecimals: 0
+            },
+            series: {
+                lines: {
+                    show: true,
+                    fill: true,
+                    fillColor: {
+                        colors: [{
+                            opacity: 1
+                        }, {
+                            opacity: 1
+                        }]
+                    },
+                },
+                curvedLines: {
+                    active: true,
+                    fit: true,
+                    apply: true
+                },
+                points: {
+                    width: 0.1,
+                    show: false
+                },
+            },
+            grid: {
+                show: false,
+                borderWidth: 0
+            },
+            legend: {
+                show: false,
+            }
+        });
+
+
+        var mapData = {
+            "US": 298,
+            "SA": 200,
+            "DE": 220,
+            "FR": 540,
+            "CN": 120,
+            "AU": 760,
+            "BR": 550,
+            "IN": 200,
+            "GB": 120,
+        };
+
+        $('#world-map').vectorMap({
+            map: 'world_mill_en',
+            backgroundColor: "transparent",
+            regionStyle: {
+                initial: {
+                    fill: '#e4e4e4',
+                    "fill-opacity": 0.9,
+                    stroke: 'none',
+                    "stroke-width": 0,
+                    "stroke-opacity": 0
+                }
+            },
+
+            series: {
+                regions: [{
+                    values: mapData,
+                    scale: ["#1ab394", "#22d6b1"],
+                    normalizeFunction: 'polynomial'
+                }]
+            },
+        });
+    });
+</script>
+
+
+<!--表格代码-->
+<!-- Bootstrap table -->
+<script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+<!--统计代码，可删除-->
+
+<!--分页 逻辑-->
+<script>
+
+    $('#mytab').bootstrapTable({
+        method : 'post',
+        url : "http://112.35.92.177:90/passLaborweb/api/laborun/union/getLaborunList",
+        striped : true, //是否显示行间隔色
+        pageNumber : 1, //初始化加载第一页
+        pagination : true,//是否分页
+        sidePagination : 'client',//server:服务器端分页|client：前端分页
+        pageSize : 4,//单页记录数
+        pageList : [ 5, 10, 20, 30 ],//可选择单页记录数
+        showRefresh : true,//刷新按钮
+        data:{
+            "page" :1,
+            "size" :2,
+            "laborunName" :"",
+            "laborunCode" :"",
+            "laborunLevel" :1,
+            "laborunKind" :1
+        },
+        queryParams : function(params) {//上传服务器的参数
+            var temp = {//如果是在服务器端实现分页，limit、offset这两个参数是必须的
+                limit : params.limit, // 每页显示数量
+                offset : params.offset, // SQL语句起始索引
+                //page : (params.offset / params.limit) + 1, //当前页码
+                Name : $('#search_name').val(),
+                Tel : $('#search_tel').val()
+
+            };
+            return temp;
+        },
+
+        success: function (msg) {
+            console.log(("成功信息 " + msg));
+        },
+        columns : [
+            {
+            title : '登录名',
+            field : 'loginName',
+            sortable : true
+        },
+            {
+            title : '姓名',
+            field : 'name',
+            sortable : true
+        },
+            {
+            title : '手机号',
+            field : 'tel',
+        },
+            {
+            title : '性别',
+            field : 'sex',
+            formatter : formatSex,//对返回的数据进行处理再显示
+        },
+            {
+            title : '操作',
+            field : 'id',
+            formatter : operation,//对资源进行操作
+        }]
+
+    });
+
+
+    //value代表该列的值，row代表当前对象
+    function formatSex(value, row, index) {
+        return value == 1 ? "男" : "女";
+    }
+
+    //删除、编辑操作
+    function operation(value, row, index) {
+        var htm = "<button>删除</button><button>修改</button>"
+        return htm;
+    }
+
+    //查询按钮事件
+   /* $('#search_btn').click(function() {
+        $('#mytab').bootstrapTable('refresh', {
+            url : 'http://112.35.92.177:90/passLaborweb/api/laborun/union/queryPage'
+        });
+    })*/
+
+
+
+</script>
+<!-- iCheck -->
+<script src="js/plugins/iCheck/icheck.min.js"></script>
+<script>
+    window.onload = function () {
+        $('.dataTables-example').dataTable({
+//           searching : false, //去掉搜索框方法一：百度上的方法，但是我用这没管用
+            sDom: '"top"i',   //去掉搜索框方法二：这种方法可以，动态获取数据时会引起错误
+//            bFilter: false,    //去掉搜索框方法三：这种方法可以
+            "ordering": false,
+            bLengthChange: false,   //去掉每页显示多少条数据方法
+        });
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+        $('select').comboSelect();
+        $(".allCheck").on('ifChanged', function (event) {
+            console.log($(this));
+            var selectThis = $(this).parents('label').nextAll().find('input[type=checkbox]');
+            console.log(selectThis);
+            selectThis.prop("checked", $(this).prop("checked"));
+            if ($(this)[0].checked) {
+                selectThis.parent().addClass("checked");
+            } else {
+                selectThis.parent().removeClass("checked");
+            }
+        });
+        //        列表全选功能
+        $(".allCheck").on('ifChanged', function (event) {
+            console.log($(this));
+            var selectThis = $(this).parents('label').nextAll().find('input[type=checkbox]');
+            console.log(selectThis);
+            selectThis.prop("checked", $(this).prop("checked"));
+            if ($(this)[0].checked) {
+                selectThis.parent().addClass("checked");
+            } else {
+                selectThis.parent().removeClass("checked");
+            }
+        });
+    };
+</script>
+
+
+</body>
+</html>

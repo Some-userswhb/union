@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+</head>
+<style>
+    .col-sm-8 input.form-control, .col-sm-8 select.form-control {
+        width: 50%;
+        display: inline-block;
+    }
+
+    .help-block.m-b-none {
+        display: inline;
+        margin-left: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .float-e-margins .btn {
+        margin-bottom: 3px;
+        margin-left: 5px;
+        outline: none;
+    }
+    .float-e-margins .btn:hover{
+        box-shadow:  1px 1px 9px #1ab394;
+    }
+</style>
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="signupForm" v-cloak>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">上级工会：</label>
+                        <div class="col-sm-8">
+                            <input id="parentLaborunName" name="parentLaborunName" class="form-control"
+                                   type="text" v-model="parentLaborunName" disabled="disabled">
+                            <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 上级工会</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工会分类：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control"  id="laborunKind" v-model="laborunKind">
+                                <option v-for="item in laborunKinds" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工会级别：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control"  id="laborunLevel" v-model="laborunLevel" disabled="disabled">
+                                <option v-for="item in laborunLevels" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工会类型：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control"  id="laborunType" v-model="laborunType">
+                                <option v-for="item in laborunTypes" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >工会名称：</label>
+                        <div class="col-sm-8">
+                            <input id="laborunName" name="laborunName" class="form-control" type="text" v-model="laborunName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工会编号：</label>
+                        <div class="col-sm-8">
+                            <input id="laborunCode" name="laborunCode" v-model="laborunCode" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <!--时间自选框-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">建会时间：</label>
+                        <div class="col-sm-8">
+                            <input id="confirm_password"
+                                   name="confirm_password"
+                                   v-model="establishTime"
+                                   onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"
+                                   class="form-control " >
+                            <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>请输入建会时间</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">行政区划：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control"  id="administratCode" v-model="administratCode">
+                                <option v-for="item in administratCodes" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工会地址：</label>
+                        <div class="col-sm-8">
+                            <input id="laborunAddr" name="laborunAddr" v-model="laborunAddr" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">社会保险缴纳：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='isTax' name="isTax" v-model="isTax">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                            <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 社会保险缴纳</span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">负责人：</label>
+                        <div class="col-sm-8">
+                            <input id="coper" name="coper" class="form-control" type="text" aria-required="true" v-model="principal" aria-invalid="true" class="error">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">负责人电话：</label>
+                        <div class="col-sm-8">
+                            <input id="principalPhone" name="principalPhone"  v-model="principalPhone" class="form-control" type="number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">职工人数：</label>
+                        <div class="col-sm-8">
+                            <input id="workers" name="workers"  v-model="workers" class="form-control" type="number">&nbsp;&nbsp;&nbsp;人
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">统一社会信用代码：</label>
+                        <div class="col-sm-8">
+                            <input id="socialCreditCode" name="socialCreditCode" v-model="socialCreditCode"
+                                   class="form-control" type="text">
+                            <button class="btn btn-primary" type="button" @click="addUnit">添加</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">组建方式：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="buildWay" v-model="buildWay">
+                                <option v-for="item in buildWays" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">建会单位：</label>
+                        <div class="col-sm-8">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>单位名称</th>
+                                        <th>社会统一信用代码</th>
+                                        <th>单位类型</th>
+                                        <th>单位行业</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="item in addmsg">
+                                        <td>{{item.unitName}}</td>
+                                        <td>{{item.socialCreditCode}}</td>
+                                        <td>{{item.unitTypeText}}</td>
+                                        <td>{{item.unitIndustryText}}</td>
+                                        <td>
+                                            <i class="fa fa-trash"></i>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工会备注：</label>
+                        <div class="col-sm-8">
+                            <textarea id="remark" name="remark" class="form-control" required="" aria-required="true" style="resize: none" v-model="remark"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <input type="text" class="btn btn-primary" @click="establish" value="建会" style="width: 60px;">
+                            <input type="text" class="btn btn-primary" @click="closeUnion" value="取消" style="width: 60px;">
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/baseaddr.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+<!--vue axios-->
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="js/plugins/layer/laydate/laydate.js"></script>
+
+<script>
+    new Vue({
+        el:'#signupForm',
+        data:{
+            list:[],
+            addmsg:[],
+            laborunKinds:[],
+            laborunLevels:[],
+            laborunTypes:[],
+            administratCodes:[],
+            unitTypes:[],
+            buildWays:[],
+            laborunLevel:'', /*工会级别*/
+            laborunName:'',   /*工会名称*/
+            laborunCode:'',   /*工会编号*/
+            parentLaborunCode:'', /*上级工会*/
+            parentLaborunName:'',
+            laborunKind:'1',   /*工会分类*/
+            laborunType:'1',   /*工会类型*/
+            administratCode:'', /*行政区划*/
+            establishTime: laydate.now(0,"YYYY-MM-DD hh:mm:ss"), /*建会时间*/
+            laborunAddr:'',     /*工会地址*/
+            unitType:'1',            /*单位类型*/
+            isTax:'1',               /*社会保险缴纳*/
+            principal:'',       /*负责人*/
+            principalPhone:'',  /*负责人电话*/
+            workers:'',          /*职工人数*/
+            socialCreditCode:'', /*统一社会信用代码*/
+            remark:''           /*备注*/
+        },
+        methods:{
+            establish:function () {
+                var that = this
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    url: baseUrl + "/passLaborweb/api/laborun/union/establish",
+                    data: Qs.stringify({
+                        "laborunLevel":this.laborunLevel,
+                        "laborunName":this.laborunName,
+                        "laborunCode":this.laborunCode,
+                        "parentLaborunCode":this.parentLaborunCode,
+                        "laborunKind":this.laborunKind,
+                        "laborunType":this.laborunType,
+                        "administratCode":this.administratCode,
+                        "establishTime":this.establishTime,
+                        "laborunAddr":this.laborunAddr,
+                        "unitType":this.unitType,
+                        "isTax":this.isTax,
+                        "principal":this.principal,
+                        "principalPhone":this.principalPhone,
+                        "workers":this.workers,
+                        "socialCreditCode":this.socialCreditCode,
+                        "remark":this.remark
+                    }),
+                }).then((res) => {
+                    if(res.data.code === '0'){
+                        layer.msg("建会成功", {icon: 1, time: 1000})
+                        that.closeUnion()
+                    }else{
+                        layer.msg(res.data.msg, {icon: 2, time: 1000})
+                    }
+                }).catch((err) => {
+                    layer.msg("服务器繁忙，请稍后再试", {icon: 2, time: 1000})
+                });
+            },
+            addUnit:function () {
+                var that = this;
+                that.addmsg.forEach(item => {
+                    if (item.socialCreditCode == that.socialCreditCode) {
+                        layer.confirm("单位已添加，请不要重复添加", {icon: 2, btn :[ '确定' ]})
+                        return ;
+                    }
+                });
+                axios({
+                    method: 'get',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    url: baseUrl + "/passLaborweb/api/laborun/enterprisesUnit/getUnitInfo",
+                    data: Qs.stringify({
+                        "socialCreditCode": that.socialCreditCode,
+                    })
+                }).then((res) => {
+                    if (res.data.code === '0') {
+                        if (res.data.data === null || res.data.data.length === 0) {
+                            layer.msg("单位不存在", {icon: 2, time: 1000})
+                        } else {
+                            that.addmsg.push(res.data.data[0])
+                            console.log( that.addmsg)
+                        }
+                    } else {
+                        layer.msg(res.data.msg, {icon: 2, time: 1000})
+                    }
+                });
+            },
+            getSystemDictionary(){
+                var that = this
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    url: baseUrl + "/passLaborweb/api/laborun/systemDictionary/query",
+                    data: {
+                        "sn": "laborunKind,laborunLevel,laborunType,unitBuildWay,unitType"
+                    }
+                }).then(function (res) {
+                    if(res.data.code ==='0'){
+                        $.each(res.data.data, function (index, item) {
+                            if(item.laborunKind !== undefined){
+                                that.laborunKinds = item.laborunKind;
+                            }
+                            if(item.laborunLevel !== undefined){
+                                that.laborunLevels = item.laborunLevel;
+                            }
+                            if(item.laborunType !== undefined){
+                                that.laborunTypes = item.laborunType;
+                            }
+                            if(item.unitBuildWay !== undefined){
+                                that.buildWays = item.unitBuildWay;
+                            }
+                            if(item.unitType !== undefined){
+                                that.unitTypes = item.unitType;
+                            }
+                        })
+                    }
+                });
+            },
+            getlaborunAdministrat(){
+                var that = this
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    url: baseUrl + "/passLaborweb/api/laborun/laborunAdministrat/getAdminstratList",
+                    data: {
+                        "administratCode": ""
+                    }
+                }).then(function (res) {
+                    if(res.data.code ==='0'){
+                        that.administratCodes = res.data.data;
+                    }
+                });
+            },
+            closeUnion() {
+                var that = this
+                var index = that.parent.layer.getFrameIndex(window.name);
+                that.parent.layer.close(index);
+            }
+        },
+        computed:{
+        },
+        mounted() {
+            var that = this;
+            var url = location.search;
+            console.log(url);
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                that.parentLaborunCode=decodeURIComponent(strs[0].split("=")[1]);
+                that.laborunLevel=decodeURIComponent(strs[1].split("=")[1]);
+                that.parentLaborunName=decodeURIComponent(strs[2].split("=")[1]);
+
+            }
+            that.getSystemDictionary();
+            that.getlaborunAdministrat();
+        },
+    });
+</script>
+
+</body>
+
+</html>

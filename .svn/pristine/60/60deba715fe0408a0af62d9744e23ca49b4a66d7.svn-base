@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<style>
+    .col-sm-8 input.form-control, .col-sm-8 select.form-control {
+        width: 50%;
+        display: inline-block;
+    }
+
+    .help-block.m-b-none {
+        display: inline;
+        margin-left: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .uoloadfile {
+        width: 200px;
+        height: 100px;
+        position: relative;
+        margin: .2rem;
+        /*border:1px solid #000;*/
+        overflow: hidden;
+    }
+
+    .uoloadfile img {
+        position: absolute;
+        top: 0rem;
+        z-index: 9998;
+    }
+
+    .change {
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="euForm">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;所属工会：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='laborunCode' v-model="laborunCode" aria-required="true"
+                                    aria-invalid="false" class="valid">
+                                <option v-for="item in laborunNames" v-bind:value="item.laborun_code">{{item.laborun_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >单位名称：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="unitName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >营业执照：</label>
+                        <div class="col-sm-3">
+                            <div style="float:left">
+                                <div class="uoloadfile">
+                                    <input type="file" onchange="imgfile(this,this)" class="change"
+                                           style="position: absolute;z-index: 9998;" accept="image/*"/>
+                                    <img style="width:100%;height:100%;z-index:1;"
+                                         src="js/plugins/layer/laydate/skins/default/20180926100023.png"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >统一社会信用代号：</label>
+                        <div class="col-sm-8"><input class="form-control" type="text" v-model="socialCreditCode"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >行政区划：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control"  id="administratCode" v-model="administratCode">
+                                <option v-for="item in administratCodes" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >单位地址：</label>
+                        <div class="col-sm-5">
+                            <textarea class="form-control" required="" aria-required="true" style="resize: none" v-model="unitAddr"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >单位行业：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='unitIndustry' v-model="unitIndustry">
+                                <option v-for="item in unitIndustrys" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >单位类型：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='unitType' v-model="unitType">
+                                <option v-for="item in unitTypes" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >社会保险缴纳：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='isTax' v-model="isTax">
+                                <option v-for="item in yesnos" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >职工人数：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="workers">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >劳务派遣人数：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="dispatchLabors">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >负责人：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="principal">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >负责人电话：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="principalPhone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >单位状态：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='unitStatus' v-model="unitStatus">
+                                <option v-for="item in unitStatuses" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >单位备注：</label>
+                        <div class="col-sm-5">
+                            <textarea class="form-control" required="" aria-required="true" style="resize: none" v-model="remark"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <input type="text" class="btn btn-primary" @click="saveUnit" value="保存" style="width: 60px;">
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+<!--vue axios-->
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+<!-- 自定义js -->
+<script src="js/baseaddr.js"></script>
+<script src="js/jquery.combo.select.js"></script>
+<script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+<script>
+    new Vue({
+        el:'#euForm',
+        data:{
+            administratCodes:[],
+            unitIndustrys:[],
+            unitTypes:[],
+            yesnos:[],
+            unitStatuses:[],
+            laborunNames:[],
+            laborunName:'',
+            laborunCode:'',
+            unitName:'', /*单位名称*/
+            socialCreditCode:'',   /*统一社会信用代号*/
+            businessLicensePic:'',
+            administratCode:'',   /*行政区划*/
+            unitAddr:'',   /*单位地址*/
+            unitIndustry:'',   /*单位行业*/
+            administratCode:'',   /*行政区划*/
+            unitType:'', /*单位类型*/
+            isTax:'', /*社会保险缴纳*/
+            workers:'', /*职工人数*/
+            dispatchLabors:'', /*劳务派遣人数*/
+            principal:'', /*负责人*/
+            principalPhone:'', /*负责人电话*/
+            unitStatus:'', /*单位状态*/
+            remark:'' /*单位备注*/
+        },
+        methods:{
+            saveUnit() {
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    url: baseUrl + "/passLaborweb/api/laborun/enterprisesUnit/add",
+                    data: Qs.stringify({
+                        "laborunCode":this.laborunCode,
+                        "unitName":this.unitName,
+                        "socialCreditCode":this.socialCreditCode,
+                        "administratCode":this.administratCode,
+                        "businessLicensePic":this.businessLicensePic,
+                        "unitAddr":this.unitAddr,
+                        "unitIndustry":this.unitIndustry,
+                        "administratCode":this.administratCode,
+                        "administratCode":this.administratCode,
+                        "unitType":this.unitType,
+                        "isTax":this.isTax,
+                        "workers":this.workers,
+                        "dispatchLabors":this.dispatchLabors,
+                        "principal":this.principal,
+                        "principalPhone":this.principalPhone,
+                        "unitStatus":this.unitStatus,
+                        "remark":this.remark
+                    }),
+                }).then((res) => {
+                    if(res.data.code === '0'){
+                        layer.msg("成功",{icon: 1, time: 1000})
+                }else{
+                        layer.msg(res.data.msg,{icon: 2, time: 1000})
+                }
+            }).catch((err) => {
+                    layer.msg("单位创建失败",{icon: 2, time: 1000})
+            });
+            },
+            getSystemDictionary(){
+                var that = this
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    url: baseUrl + "/passLaborweb/api/laborun/systemDictionary/query",
+                    data: {
+                        "sn": "unitIndustry,unitType,yesno,unitStatus"
+                    }
+                }).then(function (res) {
+                    if(res.data.code ==='0'){
+                        $.each(res.data.data, function (index, item) {
+                            if(item.unitIndustry !== undefined){
+                                that.unitIndustrys = item.unitIndustry;
+                            }
+                            if(item.unitType !== undefined){
+                                that.unitTypes = item.unitType;
+                            }
+                            if(item.yesno !== undefined){
+                                that.yesnos = item.yesno;
+                            }
+                            if(item.unitStatus !== undefined){
+                                that.unitStatuses = item.unitStatus;
+                            }
+                        })
+                    }
+                });
+            },
+            getlaborunAdministrat(){
+                var that = this
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    url: baseUrl + "/passLaborweb/api/laborun/laborunAdministrat/getAdminstratList",
+                    data: {
+                        "administratCode": ""
+                    }
+                }).then(function (res) {
+                    if(res.data.code ==='0'){
+                        that.administratCodes = res.data.data;
+                    }
+                });
+            },
+            getLaborun(){
+                var that = this
+                axios({
+                    method: 'get',
+                    url: baseUrl + "/passLaborweb/api/laborun/union/getLaborunList",
+                    data: {
+                        "laborunName": that.laborunName
+                    }
+                }).then(function (res) {
+                    if(res.data.code === '0'){
+                        that.laborunNames = res.data.data
+                    }
+                });
+            }
+        },
+        mounted() {
+            var that = this
+            that.getSystemDictionary();
+            this.getLaborun();
+            that.getlaborunAdministrat();
+        }
+    })
+    function imgfile(obj, file) {
+        var that = this
+        if (file.files && file.files[0]) {
+            if (file.files.length === 1) {
+                let file1 = file.files[0];
+                that.uploadFile(file1);
+                var reader = new FileReader();
+                reader.onload = function (evt) {
+                    $(obj).after('<img style="width:100%;height:100%;z-index:10"  src="' + evt.target.result + '" />');
+                    $(obj).after('<img style="z-index:9999;top: 0;right: 0;width: .6rem;"  src="js/plugins/layer/laydate/skins/default/20180926100023.png" onclick="del(this)"/>')
+                    $(obj).parent().find("img:last").remove();
+                }
+                reader.readAsDataURL(file1);
+            }
+        }
+    }
+
+    function uploadFile(file){
+        var that = this
+        var param = new FormData();
+        param.append('file', file, file.name);// 通过append向form对象添加数据
+        let config = {
+            headers: {'Content-Type': 'multipart/form-data'}
+        };
+        axios.post(baseUrl + '/passLaborweb/api/laborun/file/upload', param, config)
+            .then(res => {
+                if (res.data.code === '0') {
+                    that.vm.businessLicensePic = res.data.data.fileId;
+                    layer.msg("添加成功",{icon: 1, time: 1000})
+                } else {
+                    layer.msg(res.data.msg,{icon: 2, time: 1000})
+                }
+            })
+    };
+    function del(obj) {
+        $(obj).parent().find("img:last").replaceWith('<img style="width:100%;height:100%;z-index:1;"  ' +
+            'src="js/plugins/layer/laydate/skins/default/20180926100023.png" />');
+        $(obj).remove();
+    }
+</script>
+
+</body>
+</html>

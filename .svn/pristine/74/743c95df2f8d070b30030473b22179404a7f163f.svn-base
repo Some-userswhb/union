@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<style>
+    .col-sm-8 input.form-control, .col-sm-8 select.form-control {
+        width: 50%;
+        display: inline-block;
+    }
+    .help-block.m-b-none {
+        display: inline;
+        margin-left: 10px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+</style>
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="transfer">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工会编号：</label>
+                        <div class="col-sm-8">
+                            <input id="laborunCode" name="laborunCode" class="form-control"
+                                   type="text" v-model="laborunCode" placeholder="精确查询">
+                            <button class="btn btn-primary" type="button" @click="addUnion">添加</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">解散工会：</label>
+                        <div class="col-sm-8">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>工会名称</th>
+                                        <th>工会编号</th>
+                                        <th>职工人数</th>
+                                        <th>会员人数</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(item,index) in addmsg">
+                                            <td>{{item.laborunName}}</td>
+                                            <td>{{item.laborunCode}}</td>
+                                            <td>{{item.workers}}</td>
+                                            <td>{{item.mems}}</td>
+                                        <td><i class="fa fa-trash" @click="deleteUnion(index)"></i></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工会备注：</label>
+                        <div class="col-sm-8">
+                            <textarea id="remark" name="remark"
+                                      class="form-control" required=""
+                                      aria-required="true" style="resize: none"
+                                      v-model="remark">
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <input type="button" class="btn btn-primary" @click="dissolve" value="保存">
+                            <input type="button" class="btn btn-primary" @click="closeUnion()" value="取消">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<!-- 自定义js -->
+<script src="js/baseaddr.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+<!-- jQuery Validation plugin javascript-->
+<script src="js/plugins/validate/jquery.validate.min.js"></script>
+<script src="js/plugins/validate/messages_zh.min.js"></script>
+<script src="js/demo/form-validate-demo.js"></script>
+
+<script>
+    new Vue({
+        el:'#transfer',
+        data:{
+            addmsg:[],
+            laborunCode:'',
+            remark:''
+        },
+        methods:{
+            closeUnion() {
+                var that = this
+                var index = that.parent.layer.getFrameIndex(window.name);
+                that.parent.layer.close(index);
+            },
+            deleteUnion:function (index) {
+                var that = this
+                that.addmsg.splice(index,1);
+            },
+            addUnion:function () {
+                var that = this
+                var isAdd = false;
+                that.addmsg.forEach(item => {
+                    if (item.laborunCode == that.laborunCode) {
+                        isAdd = true;
+                        return;
+                    }
+                });
+                if(isAdd){
+                    layer.confirm("工会已添加，请不要重复添加", {icon: 2, btn :[ '确定' ]})
+                    return ;
+                }
+                axios({
+                    method: 'post',
+                    contentType:'x-www-form-urlencoded',
+                    url: baseUrl + "/passLaborweb/api/laborun/union/getSimpleLaborunList",
+                    data: Qs.stringify({
+                        "laborunCode":that.laborunCode
+                    })
+                }).then((res) => {
+                    if (res.data.data === null || res.data.data.length === 0) {
+                        layer.msg("工会不存在", {icon: 2, time: 1000})
+                    } else {
+                        that.addmsg.push(res.data.data[0])
+                    }
+                });
+            },
+            dissolve:function () {
+                var that = this;
+                var laborunCodes = "";
+                that.addmsg.forEach(item => {
+                    if(laborunCodes ===''){
+                        laborunCodes = item.laborunCode;
+                    }else{
+                        laborunCodes = laborunCodes + "," + item.laborunCode;
+                    }
+                });
+                axios({
+                    method: 'post',
+                    url: baseUrl + "/passLaborweb/api/laborun/union/dissolve",
+                    contentType:'x-www-form-urlencoded',
+                    data:Qs.stringify({
+                        "laborunCodes":that.laborunCodes,
+                        "remark":that.remark
+                    })
+                }).then((res) => {
+                    if(res.data.code === '0'){
+                        layer.msg("解散成功", {icon: 1, time: 1000});
+                        that.closeUnion();
+                    }else{
+                        layer.msg(res.data.msg, {icon: 2, time: 1000})
+                    }
+                }).catch(error => {
+                    layer.msg("服务器繁忙，请稍后再试", {icon: 2, time: 1000})
+                })
+            }
+        },
+    })
+</script>
+</body>
+
+</html>

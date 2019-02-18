@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title>山西省总工会媒体矩阵管理平台 - 登录</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <script>
+        if (window.top !== window.self) {
+            window.top.location = window.location;
+        }
+    </script>
+
+</head>
+
+<body class="signin">
+<div class="signinpanel">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="signin-info">
+                <div class="loginlogo">
+                    <img src="img/loginlogo.png" alt="">
+                </div>
+            </div>
+            <form id="signupForm" method="post">
+                <input type="text" name="username"  class="form-control uname" placeholder="请输入姓名" value="admin"/>
+                <input type="password" id="pwd" name="password" class="form-control pword m-b" placeholder="请输入登录密码" value="123456"/>
+                <input type="hidden" name="systemCode" value="S1001"/>
+               <!--  <a href="index.html" class="btn btn-outline btn-block ourclour">登录</a> -->
+                	<div class="checkbox-custom">
+				        <input type="checkbox" id="rememberme" name="rememberme">
+				         <label for="rememberme">记住我</label>
+               			 <a href="javascript:void (0);" onclick="bb()" style="color: #f15944; float: right;">忘记密码</a>
+				    </div>
+                    <button class="btn btn-success btn-block" id="btnSubmit" data-loading="正在验证登录，请稍后...">登录</button>
+            </form>
+        </div>
+    </div>
+    <div class="signup-footer">
+        <div style="color: #333; text-align: center">
+            <p>&copy; 2013-2019 山西普罗迪克科技有限公司 版权所有</p>
+            <p>推荐使用 Google Chrome 浏览器</p>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<!-- layer javascript -->
+<script src="js/validate/jquery.validate.min.js" ></script>
+<script src="js/validate/messages_zh.min.js" ></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+<script src="js/jquery.blockUI.js" ></script>
+<script src="js/common.js"></script>
+<script src="js/login.js"></script>
+</html>

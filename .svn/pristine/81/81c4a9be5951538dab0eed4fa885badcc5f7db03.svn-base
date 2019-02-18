@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工会底层平台</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <style>
+        .noread{
+            font-size: 12px;
+            background-color: red;
+            color: white;
+            border-radius: 2px;
+            padding: 2px 2px;
+        }
+        .yesread{
+            font-size: 12px;
+            background-color: grey;
+            color: white;
+            border-radius: 2px;
+            padding: 2px 2px;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight" id="indexVue">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title ourclour">
+                    <h5>通知&nbsp;<i class="fa fa-volume-up"></i></h5>
+                </div>
+                <div class="ibox-content clear shadow">
+                    <ul class="no-padding notice" v-for="item in messages">
+                        <li>
+                            <a href="#">
+                                <span v-if = "item.messageStatus === '1'" class="yesread">已读</span>
+                                <span v-else class="noread">未读</span>
+                                <span>{{item.title}}</span>
+                                <span class="dateli pull-right">{{item.noticeTime}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+<!-- Data Tables -->
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<!--vue axios-->
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+<!-- 自定义js -->
+<script src="js/baseaddr.js"></script>
+<!-- 自定义js -->
+<!--模糊搜索-->
+<script src="js/jquery.combo.select.js"></script>
+<!-- jQuery UI -->
+<script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+<script>
+    var vm = new Vue({
+        el: "#indexVue",
+        data: {
+            messages: []
+        },
+        mounted() {
+            var that = this;
+            that.getMessage();
+        },
+        methods: {
+            getMessage(){
+                var that = this
+                axios({
+                    method: 'post',
+                    url: baseUrl + "/passLaborweb/api/laborun/message/getHomePD",
+                    data: Qs.stringify({
+                        "size": 5
+                    })
+                }).then(function (res) {
+                    if(res.data.code === '0'){
+                        that.messages = res.data.data;
+                        console.log(that.messages)
+                    }
+                });
+            },
+            getMoreMessage(){
+
+            }
+        }
+    });
+</script>
+
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+
+</body>
+
+</html>

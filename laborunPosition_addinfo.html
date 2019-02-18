@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<style>
+    .col-sm-8 input.form-control, .col-sm-8 select.form-control {
+        width: 50%;
+        display: inline-block;
+    }
+
+    .help-block.m-b-none {
+        display: inline;
+        margin-left: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+</style>
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="euForm">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >所属工会：</label>
+                        <div class="col-sm-8  no-padding">
+                            <select class="form-control" id="laborunName"></select>
+                        </div>
+                        </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >职位名称：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="positionName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >备注：</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" required="" aria-required="true" style="resize: none" v-model="remark"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <input type="text" class="btn btn-primary" @click="savePosition" value="保存" style="width: 60px;">
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<!--vue axios-->
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+<!-- 自定义js -->
+<script src="js/baseaddr.js"></script>
+<!-- 自定义js -->
+<!--模糊搜索-->
+<script src="js/jquery.combo.select.js"></script>
+<!-- jQuery UI -->
+<script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- iCheck -->
+<script src="js/plugins/iCheck/icheck.min.js"></script><script src="js/plugins/iCheck/icheck.min.js"></script>
+<script>
+    new Vue({
+        el:'#euForm',
+        data:{
+            laborunCode:'',
+            positionName:'',
+            remark:''
+        },
+        mounted() {
+            var that = this
+            that.getLaborun()
+        },
+        methods:{
+            getLaborun(){
+                axios({
+                    method: 'get',
+                    url: baseUrl + "/passLaborweb/api/laborun/union/getLaborunList",
+                    data: {
+                        "laborunName": ""
+                    }
+                }).then(function (res) {
+                    var stationEnum = "";
+                    $.each(res.data.data, function (index, item) {
+                        stationEnum += "<option value='" + item.laborun_code + "'>" + item.laborun_name + "</option>"
+                    })
+                    $('#laborunName').html(stationEnum)
+                });
+            },
+            savePosition:function () {
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    url: baseUrl + "/passLaborweb/api/laborun/laborunPosition/add",
+                    data: Qs.stringify({
+                        "positionName":this.positionName,
+                        "laborunCode": $('#laborunName').val(),
+                        "remark":this.remark
+                    }),
+                }).then((res) => {
+                    if(res.data.code === '0'){
+                        layer.msg('添加成功', {icon: 1, time: 1500})
+                }else{
+                        layer.msg(res.data.msg, {icon: 2, time: 1500})
+                }
+            }).catch((err) => {
+                    layer.msg('添加失败', {icon: 2, time: 1500})
+            });
+            }
+        },
+    })
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<style>
+    .col-sm-8 input.form-control, .col-sm-8 select.form-control {
+        width: 50%;
+        display: inline-block;
+    }
+
+    .help-block.m-b-none {
+        display: inline;
+        margin-left: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+</style>
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="euForm">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >所属工会：</label>
+                        <div class="col-sm-8  no-padding">
+                            <select class="form-control" id='laborunName' v-model="laborunCode"></select>
+                        </div>
+                        </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >职位名称：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="positionName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >备注：</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" required="" aria-required="true" style="resize: none" v-model="remark"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <input type="text" class="btn btn-primary" @click="goto" value="保存" style="width: 60px;">
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<script src="js/baseaddr.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+
+<!-- jQuery Validation plugin javascript-->
+<script src="js/plugins/validate/jquery.validate.min.js"></script>
+<script src="js/plugins/validate/messages_zh.min.js"></script>
+<script src="js/demo/form-validate-demo.js"></script>
+<script>
+    new Vue({
+        el:'#euForm',
+        data:{
+            laborunCode:'',
+            positionName:'',
+            remark:'',
+            laborunName:'',
+            id:''
+        },
+        methods:{
+            getLaborun(){
+                var that = this
+                axios({
+                    method: 'get',
+                    url: baseUrl + "/passLaborweb/api/laborun/union/getLaborunList",
+                    data: {
+                        "laborunName": that.laborunName
+                    }
+                }).then(function (res) {
+                    var stationEnum = "";
+                    $.each(res.data.data, function (index, item) {
+                        stationEnum += "<option value='" + item.laborun_code + "'>" + item.laborun_name + "</option>"
+                    })
+                    $('#laborunName').html(stationEnum)
+
+                });
+            },
+
+            /*保存*/
+            goto:function () {
+                axios({
+                   method: 'post',                                 
+                   headers: {'Content-Type': 'application/json'},  
+                    url: baseUrl + "/passLaborweb/api/laborun/laborunPosition/update",
+                     data: JSON.stringify({
+                         "id": this.id ,
+                         "positionName":this.positionName,
+                         "laborunCode": $('#laborunName').val(),
+                         "remark":this.remark
+                     })                                            
+                }).then((res) => {
+                    if(res.data.msg === 'success'){
+                        layer.msg('编辑成功', {icon: 1, time: 1500})
+                    }else{
+                        layer.msg(res.data.msg, {icon: 1, time: 1500});
+                    }
+                }).catch((err) => {
+                    layer.msg('编辑失败', {icon: 2, time: 1500})
+                });
+            }
+        },
+        mounted() {
+            var that = this
+            var url = location.search; //获取url中"?"符后的字串
+            console.log(url);
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                that.id= decodeURIComponent(strs[0].split("=")[1]);
+            }
+            that.getLaborun();
+            axios({
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                url: baseUrl + "/passLaborweb/api/laborun/laborunPosition/getLaborunPositionById",
+                data: JSON.stringify({
+                    "id": this.id
+                })
+            }).then(function (res) {
+                if (res.data.code === '0') {
+                    if (res.data.data.length !== 0) {
+                        that.remark=res.data.data.remark;
+                        that.positionName=res.data.data.positionName;
+                        that.laborunName = res.data.data.laborunName;
+                        that.laborunCode = res.data.data.laborunCode;
+                    }
+                } else {
+                    layer.msg(res.data.msg, {icon: 2, time: 1000})
+                }
+
+            });
+        }
+    })
+</script>
+
+</body>
+</html>

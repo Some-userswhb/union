@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基于bootstrap的组织架构图</title>
+    <meta name="keywords" content="基于icheck的组织架构图">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+
+</head>
+<style>
+    .col-sm-8 input.form-control, .col-sm-8 select.form-control {
+        width: 50%;
+        display: inline-block;
+    }
+
+    .help-block.m-b-none {
+        display: inline;
+        margin-left: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .juzhong th, .juzhong2 td {
+        text-align: center;
+    }
+
+    ul {
+        display: block;
+        list-style: none;
+        cursor: pointer;
+    }
+
+    #lv3U2, #lv3U3 {
+        display: none;
+    }
+
+    #lv3U1, #lv3U2, #lv3U3 {
+        padding-left: 60px;
+    }
+
+    #tree, #lv1U {
+        overflow: hidden;
+    }
+
+    #tree i {
+        float: left;
+        font-size: 20px;
+        color: #ccc;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    #tree .listbox {
+        height: 35px;
+    }
+
+    .icheckbox_square-green {
+        float: left;
+    }
+
+    .lv3Checks {
+        display: block;
+        float: left;
+        clear: left;
+        width: 15px;
+        height: 15px;
+    }
+</style>
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <div>
+                    <div id="tree">
+                        <ul id="lv1U">
+                            <i class="fa fa-minus-circle" id="lv1M"></i>
+                            <input type="checkbox" class="i-checks" name="" id="allCheck"/>
+                            <li id="lv1L1">一级菜单
+                                <ul id="lv2U" style="clear: left;">
+                                    <i class="fa fa-minus-circle" id="lv2M1" style="clear: left;"></i>
+                                    <input type="checkbox" class="i-checks" name="" id="secondCheck1">
+                                    <li id="lv2L1">二级菜单1
+                                        <ul id="lv3U1" style="clear: left;">
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_1Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单1_1</li>
+                                            </div>
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_1Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单1_2</li>
+                                            </div>
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_1Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单1_3</li>
+                                            </div>
+                                        </ul>
+                                    </li>
+                                    <i class="fa  fa-plus-circle " id="lv2M2" style="clear: left;"></i>
+                                    <input type="checkbox" id="secondCheck2" class="i-checks"/>
+                                    <li id="lv2L2"><span style="float: left;">二级菜单2</span>
+                                        <ul id="lv3U2" style="clear: left;">
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_2Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单2_1</li>
+                                            </div>
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_2Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单2_2</li>
+                                            </div>
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_2Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单2_3</li>
+                                            </div>
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_2Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单2_1</li>
+                                            </div>
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_2Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单2_2</li>
+                                            </div>
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_2Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单2_3</li>
+                                            </div>
+                                        </ul>
+                                    </li>
+                                    <i class="fa  fa-plus-circle " id="lv2M3" style="clear: left;"></i>
+                                    <input type="checkbox" id="secondCheck3" class="i-checks"/>
+                                    <li id="lv2L3">
+                                        <span style="float: left;">二级菜单3</span>
+                                        <ul id="lv3U3" style="clear: left;">
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_3Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单3_1</li>
+                                            </div>
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_3Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单3_2</li>
+                                            </div>
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_3Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单3_3</li>
+                                            </div>
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_3Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单3_4</li>
+                                            </div>
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_3Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单3_5</li>
+                                            </div>
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_3Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单3_6</li>
+                                            </div>
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_3Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单3_7</li>
+                                            </div>
+                                            <div class="listbox">
+                                                <input type="checkbox" name="lv3_3Check"
+                                                       class="lv3Checks i-checks"/>
+                                                <li>三级菜单3_8</li>
+                                            </div>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="radio i-checks col-sm-4">
+                        <label>
+                            <input type="radio" value="option1" name="a" class="seleAll"> <i></i>全选</label>
+                    </div>
+                    <div class="radio i-checks col-sm-4">
+                        <label>
+                            <input type="radio" checked="" value="option2" name="a" class="noAll"> <i></i>重置</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+
+<!-- jQuery Validation plugin javascript-->
+<script src="js/plugins/validate/jquery.validate.min.js"></script>
+<script src="js/plugins/validate/messages_zh.min.js"></script>
+
+<script src="js/demo/form-validate-demo.js"></script>
+<script src="js/plugins/iCheck/icheck.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green'
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("#lv1M").click(function () {
+            if ($("#lv2U").is(":visible")) {
+                //                      alert("隐藏内容");
+                $("#lv1M").attr("class", "fa fa-plus-circle");
+            } else {
+                //                      alert("显示内容");
+                $("#lv1M").attr("class", "fa fa-minus-circle");
+            }
+            $("#lv2U").slideToggle(300);
+        });
+
+        $("#lv2M1").click(function () {
+            if ($("#lv3U1").is(":visible")) {
+                //                      alert("隐藏内容");
+                $("#lv2M1").attr("class", "fa fa-plus-circle");
+            } else {
+                //                      alert("显示内容");
+                $("#lv2M1").attr("class", "fa fa-minus-circle");
+            }
+            $("#lv3U1").slideToggle(300);
+        });
+
+        $("#lv2M2").click(function () {
+            if ($("#lv3U2").is(":visible")) {
+                //                      alert("隐藏内容");
+                $("#lv2M2").attr("class", "fa fa-plus-circle");
+            } else {
+                //                      alert("显示内容");
+                $("#lv2M2").attr("class", "fa fa-minus-circle");
+            }
+            $("#lv3U2").slideToggle(500);
+        });
+
+        $("#lv2M3").click(function () {
+            if ($("#lv3U3").is(":visible")) {
+                //                      alert("隐藏内容");
+                $("#lv2M3").attr("class", "fa fa-plus-circle");
+            } else {
+                //                      alert("显示内容");
+                $("#lv2M3").attr("class", "fa fa-minus-circle");
+            }
+            $("#lv3U3").slideToggle(400);
+        });
+
+        $("#allCheck").on('ifChanged', function (event) {
+            $("input[type=checkbox]").prop("checked", $("#allCheck").prop("checked"));
+            if ($("input[type='checkbox']")[0].checked) {
+                $(".icheckbox_square-green").addClass("checked");
+                $(".seleAll").prop("checked", true);
+                $(".noAll").prop("checked", false);
+                $(".seleAll").parents('.iradio_square-green').addClass('checked');
+                $(".noAll").parents('.iradio_square-green').removeClass('checked');
+                console.log($("input[type=radio]"));
+            } else {
+                $(".icheckbox_square-green").removeClass("checked");
+                $(".noAll").prop("checked", true);
+                $(".seleAll").prop("checked", false);
+                $(".noAll").parents('.iradio_square-green').addClass('checked');
+                $(".seleAll").parents('.iradio_square-green').removeClass('checked');
+            }
+        });
+
+        $("#secondCheck1").on('ifChanged', function (event) {
+            $("input[name=lv3_1Check]").prop("checked", $("#secondCheck1").prop("checked"));
+            if ($(this)[0].checked) {
+                $("#lv3U1").find('.icheckbox_square-green').addClass("checked");
+            } else {
+                $("#lv3U1").find('.icheckbox_square-green').removeClass("checked");
+            }
+        });
+        $("#secondCheck2").on('ifChanged', function (event) {
+
+            $("input[name=lv3_2Check]").prop("checked", $("#secondCheck2").prop("checked"));
+            if ($(this)[0].checked) {
+                $("#lv3U2").find('.icheckbox_square-green').addClass("checked");
+            } else {
+                $("#lv3U2").find('.icheckbox_square-green').removeClass("checked");
+            }
+        });
+        $("#secondCheck3").on('ifChanged', function (event) {
+
+            $("input[name=lv3_3Check]").prop("checked", $("#secondCheck3").prop("checked"));
+//            console.log($("input[name=lv3_3Check]")[0].checked);
+            if ($(this)[0].checked) {
+                $("#lv3U3").find('.icheckbox_square-green').addClass("checked");
+            } else {
+                $("#lv3U3").find('.icheckbox_square-green').removeClass("checked");
+            }
+        });
+
+        $(".seleAll").on('ifChecked', function (event) {
+            $("input[type=checkbox]").prop("checked", true);
+            $(".icheckbox_square-green").addClass("checked");
+        });
+        $(".noAll").on('ifChecked', function (event) {
+            $("input[type=checkbox]").prop("checked", false);
+            $(".icheckbox_square-green").removeClass("checked");
+        });
+    });
+</script>
+</body>
+
+</html>

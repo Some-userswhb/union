@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添智·智慧工会云服务平台</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<style>
+    .col-sm-8 input.form-control, .col-sm-8 select.form-control {
+        width: 50%;
+        display: inline-block;
+    }
+
+    .help-block.m-b-none {
+        display: inline;
+        margin-left: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .uoloadfile {
+        width: 200px;
+        height: 100px;
+        position: relative;
+        margin: .2rem;
+        /*border:1px solid #000;*/
+        overflow: hidden;
+    }
+
+    .uoloadfile img {
+        position: absolute;
+        top: 0rem;
+        z-index: 9998;
+    }
+
+    .change {
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="a10Membership">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;会员证号：</label>
+                        <div class="col-sm-8">
+                            <input id="memNumber" name="memNumber" v-model="memNumber" class="form-control" type="text" aria-required="true"
+                                   aria-invalid="false" class="valid">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;入会时间：</label>
+                        <div class="col-sm-8">
+                            <input id="addTime"  class="laydate-icon form-control layer-date" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;所属工会：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='laborunCode' v-model="laborunCode" aria-required="true"
+                                    aria-invalid="false" class="valid">
+                                <option v-for="item in laborunNames" v-bind:value="item.laborun_code">{{item.laborun_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;所属单位：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='socialCreditCode' v-model="socialCreditCode">
+                                <option v-for="item in unitNames" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;证件类型：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='cardType' v-model="cardType">
+                                <option v-for="item in cardTypes" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;证件照片：</label>
+                        <div class="col-sm-8">
+                            <div style="float:left">
+                                <h4 style="text-align:center">正面</h4>
+                                <div class="uoloadfile">
+                                    <input type="file" onchange="imgfile(1,this,this)" class="change"
+                                           style="position: absolute;z-index: 9998;" accept="image/*"/>
+                                    <img style="width:100%;height:100%;z-index:1;"
+                                         src="js/plugins/layer/laydate/skins/default/20180926100023.png"/>
+                                </div>
+                            </div>
+                            <!-- 身份证反面 -->
+                            <div style="float:left">
+                                <h4 style="text-align:center">反面</h4>
+                                <div class="uoloadfile">
+                                    <input type="file" onchange="imgfile(2,this,this)" class="change"
+                                           style="position: absolute;z-index: 9998;" accept="image/*"/>
+                                    <img style="width:100%;height:100%;z-index:1;"
+                                         src="js/plugins/layer/laydate/skins/default/20180926100023.png"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;姓名：</label>
+                        <div class="col-sm-8">
+                            <input id="memName" v-model="memName" class="form-control" type="text" aria-required="true"
+                                   aria-invalid="false" class="valid">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;性别：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='sex' v-model="sex">
+                                <option v-for="item in sexs" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;民族：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='nation' v-model="nation">
+                                <option v-for="item in nations" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;出生日期：</label>
+                        <div class="col-sm-8">
+                            <input id="birthDate"  class="laydate-icon form-control layer-date" onclick="laydate({istime: true, format: 'YYYY-MM-DD'})">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;籍贯：</label>
+                        <div class="col-sm-8">
+                            <input id="nativePlace" v-model="nativePlace" class="form-control" type="text" aria-required="true"
+                                   aria-invalid="true" class="error" placeholder="最多输入50个字">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;农民工：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='isPeasantWorker' v-model="isPeasantWorker">
+                                <option value="2">否</option>
+                                <option value="1">是</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;困难职工：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='isNeedyWorker' v-model="isNeedyWorker">
+                                <option value="2">否</option>
+                                <option value="1">是</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">困难职工档案号：</label>
+                        <div class="col-sm-8">
+                            <input id="needyWorkerFn" v-model="needyWorkerFn" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;证件号码：</label>
+                        <div class="col-sm-8">
+                            <input id="cardNo" v-model="cardNo" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;联系电话：</label>
+                        <div class="col-sm-8">
+                            <input id="contactPhone" v-model="contactPhone" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;人像采集：</label>
+                        <div class="col-sm-8">
+                            <div style="float:left">
+                                <div class="uoloadfile">
+                                    <input type="file" onchange="imgfile(3,this,this)" class="change"
+                                           style="position: absolute;z-index: 9998;" accept="image/*"/>
+                                    <img style="width:100%;height:100%;z-index:1;"
+                                         src="js/plugins/layer/laydate/skins/default/20180926100023.png"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">*&nbsp;政治面貌：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='politicsStatus' v-model="politicsStatus">
+                                <option v-for="item in politicsStatuses" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">文化程度：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='standaedCulture' v-model="standaedCulture">
+                                <option v-for="item in standaedCultures" v-bind:value="item.value">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">专业技能：</label>
+                        <div class="col-sm-8">
+                            <input id="professionalSkill" v-model="professionalSkill" class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">薪资：</label>
+                        <div class="col-sm-8">
+                            <input id="salary" v-model="salary" class="form-control" type="number">元
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <button class="btn btn-primary" type="button" @click="membership">保存</button>
+                            <button class="btn btn-default" type="button" @click="closeUnion">关闭</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<script src="js/baseaddr.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+<script src="js/plugins/validate/jquery.validate.min.js"></script>
+<script src="js/plugins/validate/messages_zh.min.js"></script>
+<script src="js/plugins/layer/laydate/laydate.js"></script>
+
+<script>
+</script>
+<script>
+    var vm = new Vue({
+        el: "#a10Membership",
+        data: {
+            cardTypes:[],
+            sexs:[],
+            nations:[],
+            politicsStatuses:[],
+            standaedCultures:[],
+            laborunNames:[],
+            unitNames:[],
+            memNumber:'',
+            cardType:'',
+            cardNo:'',
+            memName:'',
+            contactPhone:'',
+            nation:'',
+            sex:'',
+            laborunCode:'',
+            socialCreditCode:'',
+            politicsStatus:'',
+            nativePlace:'',
+            isPeasantWorker:'',
+            isNeedyWorker:'',
+            needyWorkerFn:'',
+            figure:'',
+            cardFrontPic:'',
+            cardReversePic:'',
+            standaedCulture:'',
+            professionalSkill:'',
+            salary:'',
+            remark:''
+        },
+        mounted() {
+            this.getSystemDictionary();
+            this.getLaborun();
+            this.getUnitName();
+        },
+        methods: {
+            membership(){
+                var that = this
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    url: baseUrl + "/passLaborweb/api/laborun/a10BaseInfo/membership",
+                    data: Qs.stringify({
+                        "memNumber":this.memNumber,
+                        "addTime":$('#addTime').val(),
+                        "cardType":this.cardType,
+                        "cardNo":this.cardNo,
+                        "memName":this.memName,
+                        "birthDate":$('#birthDate').val(),
+                        "contactPhone":this.contactPhone,
+                        "nation":this.nation,
+                        "sex":this.sex,
+                        "laborunCode":this.laborunCode,
+                        "socialCreditCode":this.socialCreditCode,
+                        "politicsStatus":this.politicsStatus,
+                        "nativePlace":this.nativePlace,
+                        "isPeasantWorker":this.isPeasantWorker,
+                        "isNeedyWorker":this.isNeedyWorker,
+                        "needyWorkerFn":this.needyWorkerFn,
+                        "figure":this.figure,
+                        "cardFrontPic":this.cardFrontPic,
+                        "cardReversePic":this.cardReversePic,
+                        "standaedCulture":this.standaedCulture,
+                        "professionalSkill":this.professionalSkill,
+                        "salary":this.salary,
+                        "remark":this.remark
+                    }),
+                }).then((res) => {
+                    if(res.data.code === '0'){
+                        layer.msg("入会成功", {icon: 1, time: 1000});
+                        //that.closeUnion();
+                    }else{
+                        layer.msg(res.data.msg, {icon: 2, time: 1000})
+                    }
+                }).catch((err) => {
+                    layer.msg("服务器繁忙，请稍后再试", {icon: 2, time: 1000})
+                });
+            },
+            closeUnion() {
+                var that = this
+                var index = that.parent.layer.getFrameIndex(window.name);
+                that.parent.layer.close(index);
+            },
+            getSystemDictionary(){
+                var that = this
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    url: baseUrl + "/passLaborweb/api/laborun/systemDictionary/query",
+                    data: {
+                        "sn": "cardType,sex,nation,politicsStatus,standaedCulture"
+                    }
+                }).then(function (res) {
+                    if(res.data.code ==='0'){
+                        $.each(res.data.data, function (index, item) {
+                            if(item.standaedCulture !== undefined){
+                                that.standaedCultures = item.standaedCulture;
+                            }
+                            if(item.cardType !== undefined){
+                                that.cardTypes = item.cardType;
+                            }
+                            if(item.sex !== undefined){
+                                that.sexs = item.sex;
+                            }
+                            if(item.nation !== undefined){
+                                that.nations = item.nation;
+                            }
+                            if(item.politicsStatus !== undefined){
+                                that.politicsStatuses = item.politicsStatus;
+                            }
+                            if(item.standaedCulture !== undefined){
+                                that.standaedCultures = item.standaedCulture;
+                            }
+                        })
+                    }
+                });
+            },
+            getLaborun(){
+                var that = this
+                axios({
+                    method: 'get',
+                    url: baseUrl + "/passLaborweb/api/laborun/union/getLaborunList",
+                    data: {
+                        "laborunName": that.laborunName
+                    }
+                }).then(function (res) {
+                    if(res.data.code === '0'){
+                        that.laborunNames = res.data.data
+                    }
+                });
+            },
+            getUnitName(){
+                var that = this
+                axios({
+                    method: 'post',
+                    url: baseUrl + "/passLaborweb/api/laborun/enterprisesUnit/getUnitList",
+                    data: {
+                        "unitName": ""
+                    }
+                }).then(function (res) {
+                    if(res.data.code === '0'){
+                        that.unitNames = res.data.data
+                    }
+                });
+            }
+        }
+    });
+</script>
+<script>
+    $.validator.setDefaults({
+        highlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+        },
+        success: function (element) {
+            element.closest('.form-group').removeClass('has-error').addClass('has-success');
+        },
+        errorElement: "span",
+        errorPlacement: function (error, element) {
+            if (element.is(":radio") || element.is(":checkbox")) {
+                error.appendTo(element.parent().parent().parent());
+            } else {
+                error.appendTo(element.parent());
+            }
+        },
+        errorClass: "help-block m-b-none",
+        validClass: "help-block m-b-none"
+    });
+    $().ready(function () {
+        var icon = "<i class='fa fa-times-circle'></i> ";
+        $("#a10Membership").validate({
+            rules: {
+                memNumber: "required",
+                addTime: "required",
+                cardType: {
+                    required: true
+                },
+                cardNo: {
+                    required: true
+                },
+                memName: {
+                    required: true
+                },
+                birthDate: {
+                    required: true
+                },
+                contactPhone: {
+                    required: true
+                },
+                nation: {
+                    required: true
+                },
+                sex:{
+                    required: true
+                },
+                laborunCode: "required",
+                socialCreditCode:  "required",
+                politicsStatus: "required",
+                nativePlace: "required"
+            },
+            messages: {
+                memNumber: icon + "请输入会员证号",
+                addTime: icon + "请选择入会时间",
+                cardType: {
+                    required: icon + "请选择证件类型"
+                },
+                cardNo: {
+                    required: icon + "请输入证件号"
+                },
+                memName: {
+                    required: icon + "请输入姓名"
+                },
+                birthDate: icon + "请选择出生年日",
+                contactPhone: icon + "请输入联系电话",
+                nation: {
+                    required: icon + "请选择民族"
+                },
+                sex: {
+                    required: icon + "请选择性别"
+                },
+                laborunCode: icon + "请选择所属工会",
+                socialCreditCode: icon + "请选择所属单位",
+                politicsStatus: icon + "请选择政治面貌",
+                nativePlace: icon + "请输入籍贯"
+
+            }
+        });
+    });
+    function imgfile(type,obj, file) {
+        var that = this
+        if (file.files && file.files[0]) {
+            if (file.files.length === 1) {
+                let file1 = file.files[0];
+                that.uploadFile(type,file1);
+                var reader = new FileReader();
+                reader.onload = function (evt) {
+                    $(obj).after('<img style="width:100%;height:100%;z-index:10"  src="' + evt.target.result + '" />');
+                    $(obj).after('<img style="z-index:9999;top: 0;right: 0;width: .6rem;"  src="js/plugins/layer/laydate/skins/default/20180926100023.png" onclick="del(this)"/>')
+                    $(obj).parent().find("img:last").remove();
+                }
+                reader.readAsDataURL(file1);
+            }
+        }
+    }
+    function uploadFile(type,file){
+        var that = this
+        var param = new FormData();
+        param.append('file', file, file.name);// 通过append向form对象添加数据
+        let config = {
+            headers: {'Content-Type': 'multipart/form-data'}
+        };
+        axios.post(baseUrl + '/passLaborweb/api/laborun/file/upload', param, config)
+            .then(res => {
+                if (res.data.code === '0') {
+                    if(type === 1){
+                        that.vm.cardFrontPic = res.data.data.fileId;
+                    }else if(type === 2){
+                        that.vm.cardReversePic = res.data.data.fileId;
+                    }else if(type === 3){
+                        that.vm.figure = res.data.data.fileId;
+                    }
+                    layer.msg("添加成功",{icon: 1, time: 1000})
+                } else {
+                    layer.msg(res.data.msg,{icon: 2, time: 1000})
+                }
+            })
+    };
+    function del(obj) {
+        $(obj).parent().find("img:last").replaceWith('<img style="width:100%;height:100%;z-index:1;"  ' +
+            'src="js/plugins/layer/laydate/skins/default/20180926100023.png" />');
+        $(obj).remove();
+    }
+</script>
+</body>
+
+</html>

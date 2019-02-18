@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工会底层平台</title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <style>
+        .fontSmall{
+            float: left;
+            width: 60%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        .martop{
+            margin-top: 16px;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight" id="indexVue">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title ourclour">
+                    <h5><i class="fa fa-gears"></i>&nbsp;工会管理</h5>
+                </div>
+                <div class="ibox-content clear shadow">
+                    <div class="col-sm-2 no-padding wid135 range0">
+                        <div id="small-chat">
+                            <a href="#daiban">
+                                <span class="badge badge-warning pull-right">5</span>
+                            </a>
+                        </div>
+                        <a href="http://www.baidu.com" class=“J_menuItem”>
+                            <div class="showbox">
+                                <i class="fa fa-pencil-square-o"></i>
+                                <p>待办管理</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-2 no-padding wid135 range1">
+                        <a href="http://112.35.92.177:90/laborun/message_manage.html" class=“J_menuItem”>
+                            <div class="showbox">
+                                <i class="fa fa-volume-up"></i>
+                                <p>通知管理</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-2 no-padding wid135 range2">
+                        <a href="http://112.35.92.177:90/laborun/message_manage.html" class=“J_menuItem”>
+                            <div class="showbox">
+                                <i class="fa fa-address-card"></i>
+                                <p>用户实名管理</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-2 no-padding wid135 range3">
+                        <a href="http://112.35.92.177:90/laborun/union_details.html" class=“J_menuItem”>
+                            <div class="showbox">
+                                <i class="fa fa-sitemap"></i>
+                                <p>组织管理</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-2 no-padding wid135 range4">
+                        <a href="http://112.35.92.177:90/laborun/enterprisesUnit_manage.html" target="_top">
+                            <div class="showbox">
+                                <i class="fa fa-building"></i>
+                                <p>企事业管理</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-2 no-padding wid135 range5">
+                        <a href="http://112.35.92.177:90/laborun/a10_manager.html" class=“J_menuItem”>
+                            <div class="showbox">
+                                <i class="fa fa-vimeo"></i>
+                                <p>会员管理</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-2 no-padding wid135 range6">
+                        <a href="http://www.baidu.com" class=“J_menuItem”>
+                            <div class="showbox">
+                                <i class="fa fa-users"></i>
+                                <p>工会人事管理</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-2 no-padding wid135 range7">
+                        <a href="http://www.baidu.com" class=“J_menuItem”>
+                            <div class="showbox">
+                                <i class="fa fa-desktop"></i>
+                                <p>平台内容管理</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-2 no-padding wid135 range8">
+                        <a href="http://www.baidu.com" class=“J_menuItem”>
+                            <div class="showbox">
+                                <i class="fa fa-bar-chart"></i>
+                                <p>数据统计中心</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title ourclour">
+                    <h5>通知&nbsp;<i class="fa fa-volume-up"></i></h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link ourclour"  @click="getMoreMessage">查看更多<i class="fa fa-angle-double-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content clear shadow">
+                    <ul class="no-padding notice" v-for="item in messages">
+                        <li>
+                            <a href="#" class="clear">
+                                <i class="fa fa-square pull-left martop"></i>
+                                <span class="fontSmalls">{{item.title}}</span>
+                                <span class="dateli pull-right">{{item.noticeTime}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6" id="daiban">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title ourclour">
+                    <h5>待办&nbsp;<i class="fa fa-pencil-square-o"></i></h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link ourclour" @click="getMoretodoInfo">查看更多<i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+                <div class="ibox-content clear shadow ">
+                    <ul class="no-padding notice" v-for="item in todoInfos">
+                        <li>
+                            <a href="#" class="clear">
+                                <!--<span v-if = "item.isRead === '1'" class="yesread">已读</span>
+                                <span v-else class="noread">未读</span>-->
+                                <i class="fa fa-square ourclour  pull-left martop"></i>
+                                <span class="fontSmall">{{item.title}}</span>
+                                <span class="dateli pull-right">{{item.createTime}}</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+<!-- Data Tables -->
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<!--vue axios-->
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+<!-- 自定义js -->
+<script src="js/baseaddr.js"></script>
+<!-- 自定义js -->
+<!--模糊搜索-->
+<script src="js/jquery.combo.select.js"></script>
+<!-- jQuery UI -->
+<script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+
+
+<script>
+    var vm = new Vue({
+        el: "#indexVue",
+        data: {
+            messages: [],
+            todoInfos:[]
+        },
+        mounted() {
+            var that = this;
+            that.getMessage();
+            that.getTodoInfo(),
+            that.getPermMenus()
+        },
+        methods: {
+            getMessage(){
+                var that = this
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    url: baseUrl + "/passLaborweb/api/laborun/message/getHomeMessagePage",
+                    data: JSON.stringify({
+                        "size": 5,
+                        "page": 1
+                    })
+                }).then(function (res) {
+                    if(res.data.code === '0'){
+                        if(res.data.data.content.length >0){
+                            that.messages = res.data.data.content;
+                        }
+                    }
+                });
+            },
+            getMoreMessage(){
+                layer.open({
+                    type: 2,
+                    title: '',
+                    shadeClose: true,
+                    skin: 'layui-layer-molv',
+                    area: ['50%', '80%'],
+                    content: 'index_more_message.html'
+                })
+            },
+            getTodoInfo(){
+                var that = this
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    url: baseUrl + "/passLaborweb/api/laborun/laborunTodoInfo/queryPage",
+                    data: JSON.stringify({
+                        "size": 5,
+                        "page": 1
+                    })
+                }).then(function (res) {
+                    if(res.data.code === '0'){
+                        if(res.data.data.content.length >0){
+                            that.todoInfos = res.data.data.content;
+                        }
+                    }
+                });
+            },
+            getMoretodoInfo(){
+                layer.open({
+                    type: 2,
+                    title: '',
+                    shadeClose: true,
+                    skin: 'layui-layer-molv',
+                    area: ['50%', '80%'],
+                    content: 'index_more_todo.html'
+                })
+            },
+            getPermMenus(){
+
+            }
+        }
+    });
+</script>
+
+</body>
+
+</html>

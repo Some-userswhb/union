@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <!-- Morris -->
+    <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="css/combo.select.css" rel="stylesheet">
+    <link href="css/plugins/treeview/bootstrap-treeview.css" rel="stylesheet">
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+</head>
+<body class="gray-bg sidebar-content">
+<style>
+    th, td {
+        text-align: center;
+    }
+
+    .dataTables-example td, .dataTables-example th {
+        padding: 8px 0 !important;
+    }
+    .selefile{
+        display: block;
+        border:none;
+        background-color: #fff;
+        float: left;
+    }
+    .selefiledele{
+        margin-top: 3px;
+        display: none;
+    }
+</style>
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="euForm">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >标题：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="title">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >内容：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="content">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >附件：</label>
+                        <div class="col-sm-8">
+                            <input  type="file"  @change="update"/>
+                            <input type="button" value="删除" class="selefile selefiledele">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >通知日期：</label>
+                        <div class="col-sm-8">
+                            <input
+                                   v-model="noticeTime"
+                                   onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"
+                                   class="form-control " >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >接收方：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="recipientAccount">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >备注：</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" required="" aria-required="true" style="resize: none" v-model="remark"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <input type="text" class="btn btn-primary" @click="goto" value="保存" style="width: 60px;">
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<!--vue axios-->
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<script>
+    new Vue({
+        el:'#euForm',
+        data:{
+            title:'标题',
+            content:'内容',
+            fileId:'0',
+            noticeTime:'2019-01-26 13:58:00',
+            recipientAccount:'1231',
+            remark:'部门备注'
+        },
+        methods:{
+            /*保存*/
+            goto:function () {
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    url: "http://127.0.0.1:5003/message/add",
+                    data: Qs.stringify({
+                        "title":this.title,
+                        "content":this.content,
+                        "fileId":this.fileId,
+                        "noticeTime":this.noticeTime,
+                        "recipientAccount":this.recipientAccount,
+                        "remark":this.remark
+                    }),
+                }).then((res) => {
+                    if(res.data.msg === 'success'){
+                    alert('成功')
+                }else{
+                    alert(res.data.msg)
+                }
+            }).catch((err) => {
+                    alert('建会失败')
+            });
+            },
+            update (e){  // 上传照片
+                var self = this;
+                let file = e.target.files[0];
+                /* eslint-disable no-undef */
+                // 创建form对象
+                var param = new FormData();
+                param.append('file', file, file.name);// 通过append向form对象添加数据
+                //param.append('chunk', '0') // 添加form表单中其他数据
+                //console.log(param.get('file')); // FormData私有类对象，访问不到，可以通过get判断值是否传进去
+                let config = {
+                    headers: {'Content-Type': 'multipart/form-data'}
+                };
+                axios.post('http://112.35.92.177:90/passLaborweb/api/laborun/file/upload', param, config)
+
+                    .then(response =>
+                {
+                    if (response.data.msg === 'success') {
+                        alert('上传成功');
+                        self.fileId=response.data.data.fileId;
+                    }
+                console.log(response.data.msg)
+            })
+            }
+        },
+    })
+</script>
+
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+
+<script src="js/plugins/layer/laydate/laydate.js"></script>
+<script>
+    //外部js调用
+    laydate({
+        elem: '#hello', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+        event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+    });
+
+    //日期范围限制
+    var start = {
+        elem: '#start',
+        format: 'YYYY/MM/DD hh:mm:ss',
+        min: laydate.now(), //设定最小日期为当前日期
+        max: '2099-06-16 23:59:59', //最大日期
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            end.min = datas; //开始日选好后，重置结束日的最小日期
+            end.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    var end = {
+        elem: '#end',
+        format: 'YYYY/MM/DD hh:mm:ss',
+        min: laydate.now(),
+        max: '2099-06-16 23:59:59',
+        istime: true,
+        istoday: false,
+        choose: function (datas) {
+            start.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
+    laydate(start);
+    laydate(end);
+</script>
+</body>
+</html>

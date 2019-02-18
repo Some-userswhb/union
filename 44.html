@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!--<script src="./js/bootstrap-table-zh-CN.js"></script>-->
+
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <!-- Morris -->
+    <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="css/combo.select.css" rel="stylesheet">
+    <link href="css/plugins/treeview/bootstrap-treeview.css" rel="stylesheet">
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+</head>
+<body>
+<div style="width: 1000px;">
+    <p id="page-content" class="animated fadeInRight">
+    <p class="col-sm-4 col-md-3 col-lg-3" style="width: 100%;">
+        <form id="search_User">
+    <p class="panel-body search_box">
+    <p class="search_p">
+        <label for="search_name">用户姓名：</label>
+        <input type="text" class="form-control" id="search_name" name="UserV2.name">
+    </p>
+    <p class="search_p">
+        <label for="search_mobile">手机号：</label>
+        <input type="text" class="form-control" id="search_mobile" name="UserV2.phone">
+    </p>
+    <p class="search_p">
+        <label for="search_sex">性别：</label>
+        <select class="form-control" id="search_sex" name="UserV2.sex">
+            <option value="">---请选择---</option>
+            <option value="男">男</option>
+            <option value="女">女</option>
+        </select>
+    </p>
+    </p>
+    <p class="panel-body search_box">
+    <p class="search_p">
+        <label for="search_name">用户账号：</label>
+        <input type="text" class="form-control" id="search_username" name="UserV2.username">
+    </p>
+    <p class="search_p">
+        <label for="search_name">用户Email：</label>
+        <input type="text" class="form-control" id="search_email" name="UserV2.email">
+    </p>
+    <p class="search_p" style="text-align: center;">
+        <input type="button" class="btn btn-primary btn_search" value="搜索" onclick="serachUser()"/>
+    </p>
+    </p>
+    </form>
+    </p>
+</div>
+<div style="height:auto;">
+    <table id="userListTable" class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr> <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr> <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr> <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr> <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr> <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr> <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr> <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr> <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr> <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr> <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr> <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr> <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr> <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr> <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr> <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr> <tr>
+            <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0"
+                tabindex="0">
+                <div class="th-inner "><input name="btSelectAll" type="checkbox"></div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+                <div class="th-inner ">ID</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+                <div class="th-inner ">用户姓名</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="sex" tabindex="0">
+                <div class="th-inner ">性别</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="username" tabindex="0">
+                <div class="th-inner ">用户账号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="phone" tabindex="0">
+                <div class="th-inner ">手机号</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="email" tabindex="0">
+                <div class="th-inner ">邮箱</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="rolename" tabindex="0">
+                <div class="th-inner ">权限</div>
+                <div class="fht-cell"></div>
+            </th>
+            <th style="text-align: center; " data-field="id" tabindex="0">
+                <div class="th-inner ">操作</div>
+                <div class="fht-cell"></div>
+            </th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<!--vue axios-->
+
+
+<!--表格代码-->
+<!-- Bootstrap table -->
+<script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+
+
+<script>
+    $(function () {
+        var columns = [
+            {
+                checkbox: true,
+                align: 'center',
+                valign: 'middle',
+            },
+            {
+                title: 'ID',
+                field: 'id',
+                align: 'center',
+                valign: 'middle',
+            },
+            {
+                title: '用户姓名',
+                field: 'name',
+                align: 'center',
+                valign: 'middle',
+            },
+            {
+                title: '性别',
+                field: 'sex',
+                align: 'center',
+            },
+            {
+                title: '用户账号',
+                field: 'username',
+                align: 'center',
+            },
+            {
+                title: '手机号',
+                field: 'phone',
+                align: 'center',
+            },
+            {
+                title: '邮箱',
+                field: 'email',
+                align: 'center',
+            },
+            {
+                title: '权限',
+                field: 'rolename',
+                align: 'center',
+            },
+            {
+                title: '操作',
+                field: 'id',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    var e = '<button href="#" class="btn btn-primary"  onclick="edit(\'' + row.id + '\')">编辑</button> ';
+                    var d = '<button href="#" class="btn btn-danger"  onclick="del(\'' + row.id + '\')">删除</button> ';
+                    return e + d;
+                }
+            }
+        ];
+        a('./data.php', columns);
+
+    });
+    function a(dataurl, columns) {
+        $('#userListTable').bootstrapTable({
+            url: dataurl,
+            method: "post",
+            dataType: "json",
+            contentType: "application/x-www-form-urlencoded",
+            striped: true,//隔行变色
+            cache: false,  //是否使用缓存
+            showColumns: false,// 列
+//            toobar:'#toolbar',
+            pagination: true, //分页
+            paginationLoop: false,
+            paginationPreText: '上一页',
+            paginationNextText: '下一页',
+//            showFooter:true,//显示列脚
+//            showRefresh:true,//显示刷新
+            showPaginationSwitch: false,//是否显示数据条数选择框
+            sortable: false,           //是否启用排序
+            singleSelect: false,
+            search: false, //显示搜索框
+            buttonsAlign: "right", //按钮对齐方式
+            showRefresh: false,//是否显示刷新按钮
+            sidePagination: "server", //服务端处理分页
+            pageNumber: 1,
+            pageSize: 5,
+            pageList: [5, 10, 25, 50, 100],
+            undefinedText: '--',
+            uniqueId: "id", //每一行的唯一标识，一般为主键列
+            queryParamsType: '',
+            queryParams: queryParams,//传递参数（*）
+            columns: columns
+        });
+
+        //得到查询的参数
+        function queryParams(params) {
+            var temp = {  //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                pageSize: params.pageSize,  //页面大小
+                pageNumber: params.pageNumber, //页码
+                username: $("#search_username").val(),//后台请求传的查询参数
+                name: $("#search_name").val(),
+                sex: $("#search_sex").val(),
+                phone: $("#search_mobile").val(),
+                email: $("#search_email").val(),
+            };
+            return temp;
+        };
+    }
+
+    //搜索
+    function serachUser() {
+        $("#userListTable").bootstrapTable('refresh');
+    }
+</script>

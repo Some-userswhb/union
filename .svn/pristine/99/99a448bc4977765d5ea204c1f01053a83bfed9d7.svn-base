@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <!-- Morris -->
+    <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="css/combo.select.css" rel="stylesheet">
+    <link href="css/plugins/treeview/bootstrap-treeview.css" rel="stylesheet">
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+</head>
+<body class="gray-bg sidebar-content">
+<style>
+    th, td {
+        text-align: center;
+    }
+
+    .dataTables-example td, .dataTables-example th {
+        padding: 8px 0 !important;
+    }
+</style>
+<div class="panel-body">
+    <div class="ibox-title">
+        <h5>会员管理</h5>
+    </div>
+    <div class="ibox float-e-margins">
+        <div class="ibox-content">
+            <div class="row" id="nameselect">
+                <div class="col-sm-3 no-padding">
+                    <div class="col-sm-1 lin-h40 wid27 no-padding client-link">
+                        会员姓名：
+                    </div>
+                    <div class="col-sm-7  no-padding">
+                        <div class="combo-select">
+                            <input type="text" id="memName" placeholder="请输入会员姓名" class="combo-input text-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 no-padding">
+                    <div class="col-sm-1 wid27 no-padding lin-h40 client-link">
+                        所属工会：
+                    </div>
+                    <div class="col-sm-7  no-padding">
+                        <select class="input-sm form-control input-s-sm inline" id="laborunName">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3 no-padding">
+                    <div class="col-sm-1 lin-h40 wid27  no-padding client-link">
+                        证件号码：
+                    </div>
+                    <div class="col-sm-7  no-padding">
+                        <div class="combo-select">
+                            <input type="text" id="cardNo" placeholder="请输入证件号码" class="combo-input text-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2 no-padding">
+                    <button type="button" class="btn  btn-primary " onclick="search()">搜索</button>
+                    <button type="button" class="btn  btn-primary " id="reset">重置</button>
+                </div>
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins" style="margin-top: 25px">
+                        <p style="text-align: left;">
+                            <button type="button" class="btn  btn-primary" @click="membership">入会</button>
+                            <button type="button" class="btn  btn-primary" @click="crossProvinceInfo">转会</button>
+                            <button type="button" class="btn  btn-primary" @click="crossProvinceInfo">跨省转入</button>
+                            <button type="button" class="btn  btn-primary" @click="memRetention">会籍保留</button>
+                            <button type="button" class="btn  btn-primary" @click="memRetention">会籍恢复</button>
+                            <button type="button" class="btn  btn-primary" @click="memRetention">退会</button>
+                            <input type="file" id="excleFile" name="excleFile"onchange="uploadfile(this,this);" style="display:none"/>
+                            <button onclick="$('input[id=excleFile]').click();" class="btn  btn-primary">导入</button>
+                            <button type="button" class="btn  btn-primary" @click="templateDownload" >导入模板</button>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive row">
+                <table class="table table-striped  table-hover dataTables-example">
+                    <thead>
+                    <tr>
+                        <th>
+                            <label class="checkbox-inline i-checks" style="font-weight: 700">
+                                <input type="checkbox" class="allCheckList" value="option1"> 全选
+                            </label>
+                        </th>
+                        <th>会员姓名</th>
+                        <th>会员证号</th>
+                        <th>所属工会</th>
+                        <th>所属单位</th>
+                        <th>证件号码</th>
+                        <th>就业状态</th>
+                        <th>会员状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+<!--vue axios-->
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<!-- 自定义js -->
+<script src="js/plugins/layer/layer.min.js"></script>
+
+<!-- 自定义js -->
+<script src="js/baseaddr.js"></script>
+<!--模糊搜索-->
+<script src="js/jquery.combo.select.js"></script>
+<!-- jQuery UI -->
+<script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- iCheck -->
+<script src="js/plugins/iCheck/icheck.min.js"></script>
+<script>
+    //    模糊搜索之工会列表,工会编号
+    var vmGhlist = new Vue({
+        el: "#nameselect",
+        data: {
+            Ghlist: []
+        },
+        mounted() {
+            axios({
+                method: 'get',
+                url: baseUrl+"/passLaborweb/api/laborun/union/getLaborunList",
+                data: {
+                    "laborunName": ""
+                }
+            }).then(function (res) {
+                var stationEnum = "<option value=''>请选择</option>";
+                $.each(res.data.data, function (index, item) {
+                    stationEnum += "<option value='" + item.laborun_code + "'>" + item.laborun_name + "</option>"
+                })
+                $('#laborunName').html(stationEnum)
+
+            });
+        },
+        methods: {
+            membership() {
+                layer.open({
+                    type: 2,
+                    title: '入会',
+                    shadeClose: true,
+                    skin: 'layui-layer-molv',
+                    area: ['70%', '540px'],
+                    content: 'a10_membership.html'
+                })
+            },
+            crossProvinceInfo() {
+                layer.open({
+                    type: 2,
+                    title: '跨省转入',
+                    shadeClose: true,
+                    skin: 'layui-layer-molv',
+                    area: ['70%', '540px'],
+                    content: 'a10_crossProvinceInfo.html'
+                })
+            },
+            memRetention() {
+                layer.open({
+                    type: 2,
+                    title: '会籍保留',
+                    shadeClose: true,
+                    skin: 'layui-layer-molv',
+                    area: ['70%', '540px'],
+                    content: 'a10_memOperate.html'
+                })
+            },
+            templateDownload () {
+                window.location.href= baseUrl + "/passLaborweb/api/laborun/file/download?fileName=excel/入会导入模板.xlsx"
+            }
+        }
+    });
+
+    $('.more').on('click', function () {
+        $(this).toggleClass("moreup");
+        $('.morecheackboxo').slideToggle('slow');
+        $('.morecheackboxt').slideToggle('slow');
+        if ($(this).attr('class') == 'more moreup') {
+            $(this).children('span').text('点击收起∨');
+        } else {
+            $(this).children('span').text('高级搜索>');
+        }
+
+    });
+    var a10Table;
+    window.onload = function () {
+        a10Table = $('.dataTables-example').dataTable({
+            sDom: '"top"i',   //去掉搜索框方法二：这种方法可以，动态获取数据时会引起错误
+            ordering: false,
+            bLengthChange: false,   //去掉每页显示多少条数据方法
+            language: lang,  //提示信息
+            autoWidth: true,  //禁用自动调整列宽
+            stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
+            processing: true,  //隐藏加载提示,自行处理
+            serverSide: true,  //启用服务器端分页
+            searching: false,  //禁用原生搜索
+            orderMulti: false,  //启用多列排序
+            order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
+            renderer: "bootstrap",  //渲染样式：Bootstrap和jquery-ui
+            pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
+            columnDefs: [{
+                "targets": 'nosort',  //列的样式名
+                "orderable": false    //包含上样式名‘nosort’的禁止排序
+            }],
+            ajax: function (data, callback, settings) {
+                //封装请求参数
+                console.log(data);
+                var param = {};
+                param.size = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+                param.page = (data.start / data.length) + 1;//当前页码
+                param.cardNo = $('#cardNo').val();
+                param.memName = $('#memName').val();
+                param.laborunCode = $('#laborunName').val();
+
+                $.ajax({
+                    type: "post",
+                    url: baseUrl+"/passLaborweb/api/laborun/a10BaseInfo/queryPage",
+                    cache: false,  //禁用缓存
+                    data: JSON.stringify(param),  //传入组装的参数
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (result) {
+                        console.log(result);
+                        //setTimeout仅为测试延迟效果
+                        //封装返回数据
+                        var returnData = {};
+                        returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                        returnData.recordsTotal = result.data.total;//返回数据全部记录
+                        returnData.recordsFiltered = result.data.total;//后台不实现过滤功能，每次查询均视作全部结果
+                        returnData.data = result.data.content;//返回的数据列表
+                        console.log(returnData);
+                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        callback(returnData);
+                        $('.i-checks').iCheck({
+                            checkboxClass: 'icheckbox_square-green',
+                            radioClass: 'iradio_square-green',
+                        });
+                        $('select').comboSelect();
+                        $(".allCheck").on('ifChanged', function (event) {
+//                            console.log($(this));
+                            var selectThis = $(this).parents('label').nextAll().find('input[type=checkbox]');
+//                            console.log(selectThis);
+                            selectThis.prop("checked", $(this).prop("checked"));
+                            if ($(this)[0].checked) {
+                                selectThis.parent().addClass("checked");
+                            } else {
+                                selectThis.parent().removeClass("checked");
+                            }
+                        });
+                        //        列表全选功能
+                        $(".allCheckList").on('ifChanged', function (event) {
+//                            console.log($(this));
+                            var selectThis = $(this).parents('thead').next('tbody').find('input[type=checkbox]');
+//                            console.log(selectThis);
+                            selectThis.prop("checked", $(this).prop("checked"));
+                            if ($(this)[0].checked) {
+                                selectThis.parent().addClass("checked");
+                            } else {
+                                selectThis.parent().removeClass("checked");
+                            }
+                        });
+                        $('.dataTables-example tr td:first-child').css({"text-align": 'left'});
+                        $('.dataTables-example tr th:first-child').css({"text-align": 'left'});
+
+                    }
+                });
+            },
+            columns: [
+                {
+                    "render": function () {
+                        return '<input type="checkbox" class="i-checks iCheck-helper" name="input[]">';
+                    },
+                    "bSortable": false
+                },
+                {"data": "memName"},
+                {"data": "memNumber"},
+                {"data": "laborName"},
+                {"data": "unitName"},
+                {"data": "cardNo"},
+                {"data": "jobStatusText"},
+                {"data": "memStatusText"},
+                {
+                    "render": function () {
+                        return ' <button type="button" class="btn  btn-primary">查看</button> <button type="button" class="btn  btn-primary">转会 </button> <button type="button" class="btn  btn-primary">编辑 </button>';
+                    },
+                    "bSortable": false
+                },
+            ]
+        }).api();//此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
+
+    };
+    function search() {
+        a10Table.draw(false);
+    }
+
+    $('#reset').on('click', function () {
+        $('#cardNo').val('');
+        $('#memName').val('');
+        $('#laborunName').val('');
+        a10Table.draw(false);
+    })
+
+    function uploadfile(obj, file) {
+        var that = this
+        if (file.files && file.files[0]) {
+            if (file.files.length === 1) {
+                let file1 = file.files[0];
+                var that = this
+                var param = new FormData();
+                param.append('file', file1, file1.name);// 通过append向form对象添加数据
+                let config = {
+                    headers: {'Content-Type': 'multipart/form-data'}
+                };
+                axios.post(baseUrl + '/passLaborweb/api/laborun/a10BaseInfo/import', param, config)
+                    .then(res => {
+                        if (res.data.code === '0') {
+                            layer.msg("导入成功",{icon: 1, time: 1000})
+                            $('input[id=excleFile]').val(null);
+                        } else {
+                            layer.msg(res.data.msg,{icon: 2, time: 1000})
+                            $('input[id=excleFile]').val(null);
+                        }
+                    })
+            }
+        }
+    }
+
+
+</script>
+<script>
+
+</script>
+
+
+</body>
+</html>

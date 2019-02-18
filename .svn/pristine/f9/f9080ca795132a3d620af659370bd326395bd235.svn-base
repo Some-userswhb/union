@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+</head>
+<style>
+    .col-sm-8 input.form-control, .col-sm-8 select.form-control {
+        width: 50%;
+        display: inline-block;
+    }
+
+    .help-block.m-b-none {
+        display: inline;
+        margin-left: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+</style>
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="legalAdd">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">所属工会：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='laborunName' v-model="laborunCode"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">统一社会信用代码：</label>
+                        <div class="col-sm-8">
+                            <input id="socialCreditCode" name="socialCreditCode" v-model="leageldata.socialCreditCode"
+                                   class="form-control" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工会法人：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='dutyName' name="dutyName" v-model="leageldata.dutyType">
+                                <option value="2">副主席</option>
+                                <option value="1">主席</option>
+                            </select>
+                            <button class="btn btn-primary" type="button" @click="getDutyName">添加</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">法人信息：</label>
+                        <div class="col-sm-8">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>会员姓名</th>
+                                        <th>会员证号</th>
+                                        <th>证件号</th>
+                                        <th>工会职务</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="(item,key) in addmsg">
+                                        <td>{{item.memName}}</td>
+                                        <td>{{item.memNumber}}</td>
+                                        <td>{{item.cardNo}}</td>
+                                        <td>{{item.dutyName}}</td>
+                                        <td>
+                                            <i class="fa fa-trash" @click="deleteLegal"></i>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">收入信息：</label>
+                        <div class="col-sm-8">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>上年结余累计</th>
+                                        <th>年会员会费</th>
+                                        <th>年2%经费留成</th>
+                                        <th>其他收入</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td><input id="lastYearBalance" v-model="leageldata.lastYearBalance"
+                                                   name="lastYearBalance" placeholder="元" type="text"></td>
+                                        <td><input id="annualMemsFee" v-model="leageldata.annualMemsFee"
+                                                   name="annualMemsFee" placeholder="元" type="text"></td>
+                                        <td><input id="annualFunds" v-model="leageldata.annualFunds" name="annualFunds"
+                                                   placeholder="元" type="text"></td>
+                                        <td><input id="otherIncome" v-model="leageldata.otherIncome" name="otherIncome"
+                                                   placeholder="元" type="text"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">资金情况：</label>
+                        <div class="col-sm-8">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>固定资金</th>
+                                        <th>流动资金</th>
+                                        <th>其他</th>
+                                        <th>合计</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td><input id="fixedCapital" name="fixedCapital" v-model="fixedCapital"
+                                                   placeholder="元" type="text"></td>
+                                        <td><input id="workingCapital" name="workingCapital" v-model="workingCapital"
+                                                   placeholder="元" type="text"></td>
+                                        <td><input id="otherCapital" name="otherCapital" v-model="otherCapital"
+                                                   placeholder="元" type="text"></td>
+                                        <td> {{capitalSum}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">场所情况：</label>
+                        <div class="col-sm-8">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>办公场所</th>
+                                        <th>活动场所</th>
+                                        <th>其他场所</th>
+                                        <th>合计</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td><input id="office" ame="office" v-model="office" placeholder="平方米"
+                                                   type="text"></td>
+                                        <td><input id="activities" name="activities" v-model="activities"
+                                                   placeholder="平方米" type="text"></td>
+                                        <td><input id="otherPlace" name="otherPlace" v-model="otherPlace"
+                                                   placeholder="平方米" type="text"></td>
+                                        <td> {{officeSum}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">民事责任能力：</label>
+                        <div class="col-sm-8">
+                            <textarea id="civilLiability" v-model="leageldata.civilLiability" name="civilLiability"
+                                      class="form-control" required=""
+                                      aria-required="true" style="resize: none"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <input type="button" class="btn btn-primary" @click="saveLegal" value="更新">
+                            <input type="button" class="btn btn-primary" onclick="closeLegal()" value="取消">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<script src="js/baseaddr.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+
+<!-- jQuery Validation plugin javascript-->
+<script src="js/plugins/validate/jquery.validate.min.js"></script>
+<script src="js/plugins/validate/messages_zh.min.js"></script>
+<script src="js/demo/form-validate-demo.js"></script>
+
+<script>
+    new Vue({
+        el: '#legalAdd',
+        data: {
+            addmsg: [],
+            leageldata: [],
+            laborunName:'',
+            laborunCode:'',
+            office: '',
+            activities: '',
+            otherPlace: '',
+            fixedCapital: '',
+            workingCapital: '',
+            otherCapital: '',
+            id:''
+
+        },
+        methods: {
+            getDutyName: function () {
+                var that = this;
+                if (that.addmsg.length === 1) {
+                    layer.confirm("工会法人已添加，请删除之后再添加", {icon: 2, btn: ['确定']})
+                    return;
+                }
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    url: baseUrl + "/passLaborweb/api/laborun/laborunDuty/queryRecord",
+                    data: JSON.stringify({
+                        "laborunCode": $('#laborunName').val(),
+                        "dutyType": $('#dutyName').val()
+                    })
+                }).then((res) => {
+                    if (res.data.code === '0') {
+                        if (res.data.data === null || res.data.data.length === 0) {
+                            layer.msg("该工会职务未任职，请先任职", {icon: 2, time: 1000})
+                        } else {
+                            that.addmsg.push(res.data.data[0])
+                            console.log(that.addmsg)
+                        }
+                    } else {
+                        layer.msg(res.data.msg, {icon: 2, time: 1000})
+                    }
+                });
+
+            },
+            saveLegal: function () {
+                var that = this
+                if (that.addmsg.length === 0) {
+                    layer.msg("请选择工会法人", {icon: 2, time: 1000})
+                } else {
+                    axios({
+                        method: 'post',
+                        url: baseUrl + "/passLaborweb/api/laborun/laborunLegal/update",
+                        contentType: 'x-www-form-urlencoded',
+                        data: Qs.stringify({
+                            "id":"",
+                            "laborunCode": $('#laborunName').val(),
+                            "memNumber": that.addmsg[0].memNumber,
+                            "dutyType": $('#dutyName').val(),
+                            "socialCreditCode": $('#socialCreditCode').val(),
+                            "lastYearBalance": $('#lastYearBalance').val(),
+                            "annualMemsFee": $('#annualMemsFee').val(),
+                            "annualFunds": $('#annualFunds').val(),
+                            "otherIncome": $('#otherIncome').val(),
+                            "fixedCapital": $('#fixedCapital').val(),
+                            "workingCapital": $('#workingCapital').val(),
+                            "otherCapital": $('#otherCapital').val(),
+                            "office": $('#office').val(),
+                            "activities": $('#activities').val(),
+                            "otherPlace": $('#otherPlace').val(),
+                            "civilLiability": $('#civilLiability').val()
+                        })
+                    }).then((res) => {
+                        if (res.data.code === '0') {
+                            layer.msg("添加成功", {icon: 1, time: 1000})
+                        } else {
+                            layer.msg(res.data.msg, {icon: 2, time: 1000})
+                        }
+                    })
+                        .catch(error => {
+                            layer.msg("服务器繁忙，请稍后再试", {icon: 2, time: 1000})
+                            console.log(error)
+                        })
+                }
+            },
+            deleteLegal() {
+                var that = this
+                that.addmsg = [];
+            },
+            getLaborun(){
+                var that = this
+                axios({
+                    method: 'get',
+                    url: baseUrl + "/passLaborweb/api/laborun/union/getLaborunList",
+                    data: {
+                        "laborunName": that.laborunName
+                    }
+                }).then(function (res) {
+                    var stationEnum = "";
+                    $.each(res.data.data, function (index, item) {
+                        stationEnum += "<option value='" + item.laborun_code + "'>" + item.laborun_name + "</option>"
+                    })
+                    $('#laborunName').html(stationEnum)
+
+                });
+            }
+        },
+        mounted() {
+            var that = this
+            var url = location.search; //获取url中"?"符后的字串
+            console.log(url);
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                that.id= decodeURIComponent(strs[0].split("=")[1]);
+            }
+            that.getLaborun();
+            axios({
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                url: baseUrl + "/passLaborweb/api/laborun/laborunLegal/query",
+                data: JSON.stringify({
+                    "id": this.id
+                })
+            }).then(function (res) {
+                if (res.data.code === '0') {
+                    if (res.data.data.length !== 0) {
+                        that.leageldata = res.data.data
+                        that.office = res.data.data.office;
+                        that.activities = res.data.data.activities;
+                        that.otherPlace = res.data.data.otherPlace;
+                        that.fixedCapital = res.data.data.fixedCapital;
+                        that.workingCapital = res.data.data.workingCapital;
+                        that.otherCapital = res.data.data.otherCapital;
+                        that.laborunName = res.data.data.laborunName;
+                        that.laborunCode = res.data.data.laborunCode;
+                        var param = {
+                            memName: that.leageldata.memName,
+                            memNumber: that.leageldata.memNumber,
+                            cardNo: that.leageldata.cardNo,
+                            dutyName: that.leageldata.dutyName
+                        }
+                        that.addmsg.push(param)
+                    }
+                } else {
+                    layer.msg(res.data.msg, {icon: 2, time: 1000})
+                }
+
+            });
+        },
+        computed: {
+            officeSum: function () {
+                return this.office === '' ? 0 : parseInt(this.office)
+                + this.activities === '' ? 0 : parseInt(this.activities)
+                + this.otherPlace === '' ? 0 : parseInt(this.otherPlace);
+            },
+            capitalSum: function () {
+                return this.fixedCapital === '' ? parseFloat(0) : parseFloat(this.fixedCapital)
+                + this.workingCapital === '' ? parseFloat(0) : parseFloat(this.workingCapital)
+                + this.otherCapital === '' ? parseFloat(0) : parseFloat(this.otherCapital);
+            }
+        }
+    })
+</script>
+<script>
+    function closeLegal() {
+        var that = this
+        var index = that.parent.layer.getFrameIndex(window.name);
+        that.parent.layer.close(index);
+    }
+</script>
+</body>
+
+</html>

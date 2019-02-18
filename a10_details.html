@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <!-- Morris -->
+    <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="css/combo.select.css" rel="stylesheet">
+    <link href="css/plugins/treeview/bootstrap-treeview.css" rel="stylesheet">
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+</head>
+<body class="gray-bg sidebar-content">
+<style>
+    .dataTables-example td, .dataTables-example th {
+        padding: 8px 0 !important;
+    }
+
+    #unionChange {
+        height: 500px;
+        overflow-y: scroll;
+        position: relative;
+    }
+
+    .file-add {
+        padding-top: 20px;
+    }
+
+    .butt-right {
+        width: 28%;
+    }
+
+    .file-operating li {
+        float: left;
+        margin-left: 5px;
+    }
+
+    [v-cloak] {
+        display: none;
+    }
+
+    .btn-group {
+        width: 210px;
+        height: 39px;
+        margin-bottom: 12px;
+    }
+
+    .btn-default.active.focus, .btn-default.active:focus,
+    .btn-default.active:hover, .btn-default:active.focus,
+    .btn-default:active:focus, .btn-default:active:hover,
+    .open > .dropdown-toggle.btn-default.focus, .open > .dropdown-toggle.btn-default:focus,
+    .open > .dropdown-toggle.btn-default:hover {
+        background-color: white;
+
+    }
+
+    .btn-default:hover, .btn-default:focus, .btn-default:active,
+    .btn-default.active, .open .dropdown-toggle.btn-default {
+        background-color: white;
+    }
+
+    .btn-default.active, .btn-default:focus, .btn-default:hover {
+        background-color: white;
+    }
+
+    .btn-group input {
+        width: 100%;
+        height: 40px;
+        background-color: white;
+        font-size: 12px !important;
+        text-align: left;
+        cursor: text;
+    }
+
+    .btn-group .dropdown-menu {
+        width: 210px;
+        height: 200px;
+        overflow: hidden;
+        overflow-y: scroll;
+        border-radius: 2px;
+    }
+
+    .btn-group .dropdown-menu li {
+        width: 100%;
+        height: 35px;
+        line-height: 35px;
+        padding-left: 10px;
+        border-bottom: 1px solid #e6e6e6;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .btn-group .dropdown-menu li:hover {
+        background-color: #1b6d85;
+        color: white;
+    }
+
+    .input-sm {
+        height: 40px !important;
+    }
+
+    .input-sm option {
+        width: 100%;
+        height: 40px !important;
+    }
+
+    .table-wrap {
+        width: 100%;
+        height: 500px;
+        overflow-y: auto;
+
+    }
+
+    .table-wrap::-webkit-scrollbar {
+        width: 3px;
+
+    }
+
+</style>
+<div id="treeGhlist">
+    <div class="ibox float-e-margins">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="tabs-container">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active"><a data-toggle="tab" href="#tab-1-1" aria-expanded="true">基本信息</a>
+                                        </li>
+                                        <li class=""><a data-toggle="tab" href="#tab-1-2" aria-expanded="false"
+                                                        @click="getChRecord">会籍变更</a></li>
+                                        <li class=""><a data-toggle="tab" href="#tab-1-3" @click="queryFilesRecord"
+                                                        aria-expanded="false">文件档案</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div id="tab-1-1" class="tab-pane active">
+                                            <div class="panel-body table-scroll"
+                                                 id="unionDetails"
+                                                 v-cloak>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-hover no-bottom">
+                                                                <tbody>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        会员证号 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        {{Detailslist.memNumber}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        入会时间 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        {{Detailslist.addTime}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        所属工会 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        {{Detailslist.laborName}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        证件类型 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        {{Detailslist.cardTypeText}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        证件照片 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        <div class="col-sm-3">
+                                                                            <img style="width:100%;height:100%;z-index:1;"
+                                                                                 src="js/plugins/layer/laydate/skins/default/20180926100023.png"/>
+                                                                            <img style="width:100%;height:100%;z-index:2;"
+                                                                                 src="js/plugins/layer/laydate/skins/default/20180926100023.png"/>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        姓名 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        {{Detailslist.memName}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        性别 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        {{Detailslist.memName}}
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-hover no-bottom">
+                                                                <tbody>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        民族 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        {{Detailslist.nationText}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        出生日期 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        {{Detailslist.birthDate}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        证件号码 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        {{Detailslist.cardNo}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        联系电话 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        {{Detailslist.contactPhone}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        人像采集 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        <div class="col-sm-3">
+                                                                            <img style="width:100%;height:100%;z-index:1;"
+                                                                                 src="js/plugins/layer/laydate/skins/default/20180926100023.png"/>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        政治面貌 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        {{Detailslist.politicsStatusText}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        文化程度 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        {{Detailslist.standaedCultureText}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        专业技能 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        {{Detailslist.professionalSkill}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        薪资 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        {{Detailslist.salary}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        会员状态:
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        {{Detailslist.memStatusText}}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="nback">
+                                                                    <td class="client-link no-top-border col-sm-3">
+                                                                        就业状态 :
+                                                                    </td>
+                                                                    <td class="no-top-border">
+                                                                        {{Detailslist.jobStatusText}}
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="tab-1-2" class="tab-pane" v-cloak>
+                                            <div class="panel-body">
+                                                <div class="table-wrap">
+                                                    <table class="table table-bordered" id="chRecord">
+                                                        <thead class="tab-fiexd">
+                                                        <tr>
+                                                            <th>变更</th>
+                                                            <th>变更时间</th>
+                                                            <th>变更项</th>
+                                                            <th>操作备注</th>
+                                                        </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--文件档案-->
+                                        <div id="tab-1-3" class="tab-pane" v-cloak>
+                                            <div class="file-add">
+                                                <div style="margin-left: 20px">
+                                                    <button type="button" class="btn  btn-primary" onclick="addfile(3)">
+                                                        添加
+                                                    </button>
+                                                </div>
+                                                <table class="table table-striped  table-hover" id="fileRecord">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>文件名称</th>
+                                                        <th>文件</th>
+                                                        <th>文件分类</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<!--自定义js -->
+<script src="js/baseaddr.js"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<!--vue axios-->
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<!-- layer javascript -->
+<script src="js/plugins/layer/layer.min.js"></script>
+<script>layer.config({skin: 'layui-layer-molv'})</script>
+<!-- jQuery UI -->
+<script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- iCheck -->
+<script src="js/plugins/iCheck/icheck.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#treeGhlist",
+        data: {
+            Detailslist: [],
+            unionCh: [],
+            fileTable: null,
+            chRecordTable: null,
+            memNumber: ''
+
+        },
+        methods: {
+            getA10Base: function () {
+                var that = this;
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    url: baseUrl + "/passLaborweb/api/laborun//a10BaseInfo/query",
+                    data: JSON.stringify({
+                        "memNumber": that.memNumber
+                    })
+                }).then(function (res) {
+                    if (res.data.code === '0') {
+                        that.Detailslist = res.data.data;
+                    }
+                });
+            },
+            queryFilesRecord() {
+                var that = this;
+                if (that.fileTable === null) {
+                    that.fileTable = $('#fileRecord').dataTable({
+                        sDom: '"top"i',   //去掉搜索框方法二：这种方法可以，动态获取数据时会引起错误
+                        ordering: false,
+                        language: lang,  //提示信息
+                        bLengthChange: false,   //去掉每页显示多少条数据方法
+                        autoWidth: true,  //禁用自动调整列宽
+                        stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
+                        processing: true,  //隐藏加载提示,自行处理
+                        serverSide: true,  //启用服务器端分页
+                        searching: false,  //禁用原生搜索
+                        orderMulti: false,  //启用多列排序
+                        order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
+                        renderer: "bootstrap",  //渲染样式：Bootstrap和jquery-ui
+                        pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
+                        columnDefs: [{
+                            "targets": 'nosort',  //列的样式名
+                            "orderable": false    //包含上样式名‘nosort’的禁止排序
+                        }],
+                        ajax: function (data, callback, settings) {
+                            //封装请求参数
+                            var param = {};
+                            param.size = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+                            param.page = (data.start / data.length) + 1;
+                            param.fileType = 4;
+                            $.ajax({
+                                type: "post",
+                                url: baseUrl + "/passLaborweb/api/laborun/laborunFilesRecord/queryPage",
+                                cache: false,  //禁用缓存
+                                data: JSON.stringify(param),  //传入组装的参数
+                                dataType: "json",
+                                contentType: "application/json",
+                                success: function (result) {
+                                    var returnData = {};
+                                    returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                                    returnData.recordsTotal = result.data.total;//返回数据全部记录
+                                    returnData.recordsFiltered = result.data.total;//后台不实现过滤功能，每次查询均视作全部结果
+                                    returnData.data = result.data.content;//返回的数据列表
+                                    callback(returnData);
+                                }
+                            });
+                        },
+                        columns: [
+                            {"data": "fileName"},
+                            {"data": "fileConcent"},
+                            {"data": "fileKindName"},
+                            {
+                                "render": function (data, type, row, meta) {
+                                    var that = this
+                                    return '<button type="button" class="btn  btn-primary" data-id="' + row.id + '" onclick="fileQuery(this)">查看</button>' +
+                                        '<button type="button" style="margin-left: 10px" class="btn  btn-primary" data-id="' + row.id + '" onclick="fileEdit(this)" > 编辑</button>' +
+                                        '<button type="button" style="margin-left: 10px" class="btn  btn-primary" data-id="' + row.id + '" onclick="fileDelete(this,2)" > 删除</button>';
+                                },
+                                "bSortable": false
+                            },
+                        ]
+                    }).api();//此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
+                } else {
+                    that.fileTable.draw(false);
+                }
+            },
+            getChRecord() {
+                var that = this;
+                if (that.chRecordTable === null) {
+                    that.chRecordTable = $('#chRecord').dataTable({
+                        sDom: '"top"i',   //去掉搜索框方法二：这种方法可以，动态获取数据时会引起错误
+                        ordering: false,
+                        language: lang,  //提示信息
+                        bLengthChange: false,   //去掉每页显示多少条数据方法
+                        autoWidth: true,  //禁用自动调整列宽
+                        stripeClasses: ["odd", "even"],  //为奇偶行加上样式，兼容不支持CSS伪类的场合
+                        processing: true,  //隐藏加载提示,自行处理
+                        serverSide: true,  //启用服务器端分页
+                        searching: false,  //禁用原生搜索
+                        orderMulti: false,  //启用多列排序
+                        order: [],  //取消默认排序查询,否则复选框一列会出现小箭头
+                        renderer: "bootstrap",  //渲染样式：Bootstrap和jquery-ui
+                        pagingType: "full_numbers",  //分页样式：simple,simple_numbers,full,full_numbers
+                        columnDefs: [{
+                            "targets": 'nosort',  //列的样式名
+                            "orderable": false    //包含上样式名‘nosort’的禁止排序
+                        }],
+                        ajax: function (data, callback, settings) {
+                            //封装请求参数
+                            var param = {};
+                            param.size = data.length;//页面显示记录条数，在页面显示每页显示多少项的时候
+                            param.page = (data.start / data.length) + 1;
+                            $.ajax({
+                                type: "post",
+                                url: baseUrl + "/passLaborweb/api/laborun/a10ChangeRecord/queryPage",
+                                cache: false,  //禁用缓存
+                                data: JSON.stringify(param),  //传入组装的参数
+                                dataType: "json",
+                                contentType: "application/json",
+                                success: function (result) {
+                                    var returnData = {};
+                                    returnData.draw = data.draw;//这里直接自行返回了draw计数器,应该由后台返回
+                                    returnData.recordsTotal = result.data.total;//返回数据全部记录
+                                    returnData.recordsFiltered = result.data.total;//后台不实现过滤功能，每次查询均视作全部结果
+                                    returnData.data = result.data.content;//返回的数据列表
+                                    callback(returnData);
+                                }
+                            });
+                        },
+                        columns: [
+                            {"data": "typeText"},
+                            {"data": "changeTime"},
+                            {"data": "changeConcent"},
+                            {"data": "changeRemark"}
+                        ]
+                    }).api();//此处需调用api()方法,否则返回的是JQuery对象而不是DataTables的API对象
+                } else {
+                    that.chRecordTable.draw(false);
+                }
+            }
+        },
+        mounted() {
+            var that = this;
+            var url = location.search; //获取url中"?"符后的字串
+            console.log(url);
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                that.memNumber = decodeURIComponent(strs[0].split("=")[1]);
+            }
+            that.getA10Base();
+        },
+        computed: {}
+
+    });
+</script>
+<script>
+    function addfile(fileType) {
+        layer.open({
+            type: 2,
+            title: '添加文件',
+            shadeClose: true,
+            area: ['450px', '540px'],
+            content: 'union-addfliemask.html?fileType=' + fileType
+        })
+    };
+
+    function fileEdit(obj) {
+        var id = $(obj)[0].attributes[3].nodeValue;
+        var that = this
+        layer.open({
+            type: 2,
+            title: '编辑文件',
+            shadeClose: true,
+            area: ['450px', '540px'],
+            content: 'union-editfile.html?id=' + id
+        })
+    };
+
+    function fileQuery(obj) {
+        var id = $(obj)[0].attributes[2].nodeValue;
+        var that = this
+        layer.open({
+            type: 2,
+            title: '查看',
+            shadeClose: true,
+            area: ['450px', '300px'],
+            content: 'union-queryfile.html?id=' + id
+        })
+    };
+
+    function fileDelete(obj, fileType) {
+        var that = this
+        var id = $(obj)[0].attributes[3].nodeValue;
+        axios({
+            method: 'post',
+            url: baseUrl + "/passLaborweb/api/laborun/laborunFilesRecord/delete",
+            data: {
+                "id": id
+            }
+        }).then(function (res) {
+            if (res.data.code === '0') {
+                layer.msg("删除成功", {icon: 1, time: 1000})
+                if (fileType === 2) {
+                    that.vm.fileTable.draw(false);
+                } else {
+                    that.vm.fileTable2.draw(false);
+                }
+            } else {
+                layer.msg(res.data.msg, {icon: 2, time: 1000})
+            }
+        });
+    }
+
+</script>
+
+
+</body>
+</html>

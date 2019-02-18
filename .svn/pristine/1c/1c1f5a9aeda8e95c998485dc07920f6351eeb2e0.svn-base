@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+    <!--<meta http-equiv="Access-Control-Allow-Origin" content="*"/>-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <!-- Morris -->
+    <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="css/combo.select.css" rel="stylesheet">
+    <link href="css/plugins/treeview/bootstrap-treeview.css" rel="stylesheet">
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+
+</head>
+<body class="gray-bg sidebar-content">
+<div class="sidebard-panel">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>工会列表</h5>
+            </div>
+            <div>
+                <select>
+                    <option value="">请选择工会</option>
+                    <option value="阳泉总工会">阳泉总工会</option>
+                    <option value="太原总工会">太原总工会</option>
+                    <option value="山西总工会">山西总工会</option>
+                    <option value="普罗迪克工会">普罗迪克工会</option>
+                    <option value="阳泉总工会">阳泉总工会</option>
+                    <option value="太原总工会">太原总工会</option>
+                    <option value="山西总工会">山西总工会</option>
+                    <option value="普罗迪克工会">普罗迪克工会</option>
+                    <option value="阳泉总工会">阳泉总工会</option>
+                    <option value="太原总工会">太原总工会</option>
+                    <option value="山西总工会">山西总工会</option>
+                    <option value="普罗迪克工会">普罗迪克工会</option>
+                </select>
+            </div>
+            <div class="ibox-content">
+                <div id="treeview5" class="test"></div>
+                <div class="iconshow">
+                    <ul class="no-padding">
+                        <li>
+                            <i class="fa fa fa-sitemap"></i>
+                            <span class="nav-label">组织工会</span>
+                        </li>
+                        <li><i class="fa fa fa-database"></i>
+                            <span class="nav-label">产业工会</span></li>
+                        <li><i class="fa fa fa-building"></i>
+                            <span class="nav-label">企事业工会</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>工会管理</h5>
+                </div>
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins"
+                         style="margin-top: 25px">
+                        <p style="text-align: center;">
+                            <a data-toggle="modal" class="btn btn-outline btn-default"
+                               href="#modal-formo">建会</a>
+                            <button type="button" class="btn btn-outline btn-primary" onclick="bb()">
+                                转移
+                            </button>
+                            <button type="button"
+                                    class="btn btn-outline btn-info">
+                                合并
+                            </button>
+                            <button type="button"
+                                    class="btn btn-outline btn-danger">
+                                解散
+                            </button>
+
+                            <button type="button"
+                                    class="btn  btn-primary mar-r15">
+                                导入
+                            </button>
+                            <button type="button"
+                                    class="btn  btn-primary mar-r15">
+                                导入模板
+                            </button>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-formo" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated flipInY">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">请选择一种工会级别：</h4>
+            </div>
+            <small class="font-bold">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <div class="radio i-checks col-sm-4">
+                                <label class="">
+                                    <div class="iradio_square-green" style="position: relative;"><input type="radio"
+                                                                                                        value="option1"
+                                                                                                        name="a"
+                                                                                                        style="position: absolute; opacity: 0;">
+                                        <ins class="iCheck-helper"
+                                             style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                    </div>
+                                    <i></i>组织工会</label>
+                            </div>
+                            <div class="radio i-checks col-sm-4" style="margin: 10px 0">
+                                <label class="">
+                                    <div class="iradio_square-green " style="position: relative;">
+                                        <input type="radio"
+                                               checked=""
+                                               value="option2"
+                                               name="a"
+                                               style="position: absolute; opacity: 0;">
+                                        <ins class="iCheck-helper"
+                                             style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
+
+                                        </ins>
+                                    </div>
+                                    <i></i>产业工会</label>
+                            </div>
+                            <div class="radio i-checks col-sm-4" style="margin: 10px 0">
+                                <label class="">
+                                    <div class="iradio_square-green " style="position: relative;"><input type="radio"
+                                                                                                         checked=""
+                                                                                                         value="option2"
+                                                                                                         name="a"
+                                                                                                         style="position: absolute; opacity: 0;">
+                                        <ins class="iCheck-helper"
+                                             style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                    </div>
+                                    <i></i> 企事业工会</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a data-toggle="modal" class="btn btn-primary" onclick="aa()"
+                       href="#modal-formt">确定</a>
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                </div>
+            </small>
+        </div>
+        <small class="font-bold">
+        </small>
+    </div>
+</div>
+
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+<!-- layer javascript -->
+<script src="js/plugins/layer/layer.min.js"></script>
+<script>
+    layer.config({skin: 'my-skin'})
+</script>
+<script>
+    function aa() {
+        $($('.modal-backdrop')[0]).hide('slow');
+        $("#modal-formo").modal('hide');
+        //自定页
+        layer.open({
+            type: 2,
+            title: '建会',
+            skin: 'my-skin',
+            fixed: false,
+            shadeClose: true, //点击遮罩关闭层
+            area: ['100%', '100%'],
+            content: 'union_admission.html',
+            shift: 0,
+            offset: 0
+        })
+    }
+    function bb() {
+        //自定页
+        layer.open({
+            type: 2,
+            title: '转移',
+            fixed: false,
+            shadeClose: true, //点击遮罩关闭层
+            area: ['100%', '100%'],
+            content: 'union_addinfo.html',
+            shift: 0,
+            offset: 0
+        })
+    }
+</script>
+
+<!-- iCheck -->
+<script src="js/plugins/iCheck/icheck.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    });
+</script>
+<script>
+    $('.more').on('click', function () {
+        $(this).toggleClass("moreup");
+        $('.morecheackboxo').slideToggle('slow');
+        $('.morecheackboxt').slideToggle('slow');
+        if ($(this).attr('class') == 'more moreup') {
+            $(this).children('span').text('点击收起∨');
+        } else {
+            $(this).children('span').text('高级搜索>');
+        }
+
+    })
+</script>
+<!-- Flot -->
+<script src="js/plugins/flot/jquery.flot.js"></script>
+<script src="js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+<script src="js/plugins/flot/jquery.flot.spline.js"></script>
+<script src="js/plugins/flot/jquery.flot.resize.js"></script>
+<script src="js/plugins/flot/jquery.flot.pie.js"></script>
+<script src="js/plugins/flot/jquery.flot.symbol.js"></script>
+<script src="js/plugins/flot/curvedLines.js"></script>
+<!-- Peity -->
+<script src="js/plugins/peity/jquery.peity.min.js"></script>
+<script src="js/demo/peity-demo.js"></script>
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+<!--模糊搜索-->
+<script src="js/jquery.combo.select.js"></script>
+<script>
+    $(function () {
+        $('select').comboSelect();
+    });
+</script>
+<!-- jQuery UI -->
+<script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Jvectormap -->
+<script src="js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+
+<!-- EayPIE -->
+<script src="js/plugins/easypiechart/jquery.easypiechart.js"></script>
+
+<!-- Sparkline -->
+<script src="js/plugins/sparkline/jquery.sparkline.min.js"></script>
+
+<!-- Sparkline demo data  -->
+<script src="js/demo/sparkline-demo.js"></script>
+<!--树状图-->
+<script src="js/plugins/treeview/bootstrap-treeview.js"></script>
+<script src="js/demo/treeview-demo.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.chart').easyPieChart({
+            barColor: '#f8ac59',
+            //                scaleColor: false,
+            scaleLength: 5,
+            lineWidth: 4,
+            size: 80
+        });
+
+        $('.chart2').easyPieChart({
+            barColor: '#1c84c6',
+            //                scaleColor: false,
+            scaleLength: 5,
+            lineWidth: 4,
+            size: 80
+        });
+
+        var d1 = [
+            [1262304000000, 1],
+            [1264982400000, 100],
+            [1267401600000, 1],
+            [1270080000000, 200],
+            [1272672000000, 1],
+            [1275350400000, 100],
+            [1277942400000, 1],
+            [1280620800000, 300]
+        ];
+        var d2 = [
+            [1262304000000, 100],
+            [1264982400000, 1],
+            [1267401600000, 150],
+            [1270080000000, 1],
+            [1272672000000, 230],
+            [1275350400000, 1],
+            [1277942400000, 150],
+            [1280620800000, 10]
+        ];
+
+        var data3 = [
+            {
+                label: "Data 1",
+                data: d1,
+                color: '#23c6c8'
+            },
+            {
+                label: "Data 2",
+                data: d2,
+                color: '#1ab394'
+            }
+        ];
+        $.plot($("#flot-chart3"), data3, {
+            xaxis: {
+                tickDecimals: 0
+            },
+            series: {
+                lines: {
+                    show: true,
+                    fill: true,
+                    fillColor: {
+                        colors: [{
+                            opacity: 1
+                        }, {
+                            opacity: 1
+                        }]
+                    }
+                },
+                curvedLines: {
+                    active: true,
+                    fit: true,
+                    apply: true
+                },
+                points: {
+                    width: 0.1,
+                    show: false
+                },
+            },
+            grid: {
+                show: false,
+                borderWidth: 0
+            },
+            legend: {
+                show: false,
+            }
+        });
+
+
+        var mapData = {
+            "US": 298,
+            "SA": 200,
+            "DE": 220,
+            "FR": 540,
+            "CN": 120,
+            "AU": 760,
+            "BR": 550,
+            "IN": 200,
+            "GB": 120,
+        };
+
+        $('#world-map').vectorMap({
+            map: 'world_mill_en',
+            backgroundColor: "transparent",
+            regionStyle: {
+                initial: {
+                    fill: '#e4e4e4',
+                    "fill-opacity": 0.9,
+                    stroke: 'none',
+                    "stroke-width": 0,
+                    "stroke-opacity": 0
+                }
+            },
+
+            series: {
+                regions: [{
+                    values: mapData,
+                    scale: ["#1ab394", "#22d6b1"],
+                    normalizeFunction: 'polynomial'
+                }]
+            },
+        });
+    });
+</script>
+
+
+<!--表格代码-->
+<!-- Bootstrap table -->
+<script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<!-- Peity -->
+<!--<script src="js/demo/bootstrap-table-demo.js"></script>-->
+<script>
+    (function () {
+        var bt_data = [{
+            "Cname": "山西太原华瑞科技公司",
+            "Code": "140123456789",
+            "Style": "智慧工会",
+            "Maner": "蔡小燕",
+            "Tele": "13453168472"
+        }, {
+            "Cname": "山西普罗迪克科技有限公司",
+            "Code": "140123456789",
+            "Style": "基层工会",
+            "Maner": "栋梁哥",
+            "Tele": "13453168472"
+        }, {
+            "Cname": "山西科技有限公司",
+            "Code": "140123456789",
+            "Style": "企业工会",
+            "Maner": "雅琪",
+            "Tele": "13453168472"
+        }, {
+            "Cname": "山西普罗有限公司",
+            "Code": "140123456789",
+            "Style": "组织工会",
+            "Maner": "雅琪",
+            "Tele": "13453168472"
+        }];
+
+
+        $('#exampleTableFromData').bootstrapTable({
+            data: bt_data
+            // mobileResponsive: true,
+//            height: "250"
+        });
+    })();
+</script>
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+<!--统计代码，可删除-->
+
+<script>
+    $.ajax({
+        type:"post",
+//        dataType: 'jsonp',
+        contentType: 'application/json',
+        url: "http://112.35.92.177:90/passLaborweb/api/laborun/a10BaseInfo/queryPage/",
+        data: {
+            "page": 1,
+            "size": 3,
+            "memName": "",
+            "laborName": "",
+            "cardNo": "",
+            "jobStatus": "",
+            "memStatus": ""
+        },
+        success: function (msg) {
+            console.log(("成功信息 " + msg));
+        },
+        error: function (msg) {
+            console.log(msg);
+        }
+    });
+</script>
+</body>
+</html>

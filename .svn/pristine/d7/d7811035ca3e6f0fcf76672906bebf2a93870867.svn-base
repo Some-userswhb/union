@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.22/vue.min.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+</head>
+<body>
+<div class="app">
+    <ul>
+        <li v-for="(item,index) in list">
+            <span v-for="items in item.sex">
+                {{items.name}} --{{items.value}}
+            </span>
+            <span v-for="items in item.yesno">
+                {{items.name}} --{{items.value}}
+            </span>
+        </li>
+    </ul>
+</div>
+<div id="vue_det">
+    <input type="number" v-model="text">
+    <div>{{textAdd}}</div>
+</div>
+<script>
+    var vm = new Vue({
+        el: ".app",
+        data: {
+            list: []
+        },
+        mounted(){
+            axios({
+                method: 'post',
+                url: "http://112.35.92.177:90/passLaborweb/api/laborun/union/queryPage",
+                data: {
+
+                "page": 1,
+                    "size": 2,
+                    "laborunName": "",
+                    "laborunCode": "",
+                    "laborunLevel": 1,
+                    "laborunKind": 1
+
+                }
+            }).then(function (data) {
+                console.log(data)
+                vm.$data.list = data.data.data;
+                console.log(vm.$data.list);
+            });
+        }
+    });
+    var vmo = new Vue({
+        el: '#vue_det',
+        data: {
+            text: 1
+            // textAdd:this.text+1
+        },
+        computed: {
+            textAdd: function() {
+                return  (parseInt(this.text) + 1);
+            }
+        }
+    })
+</script>
+
+<script type="text/javascript">
+
+</script>
+</body>
+</html>
+
+
+
+
+
+

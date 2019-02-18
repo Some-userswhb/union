@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<style>
+    .col-sm-8 input.form-control, .col-sm-8 select.form-control {
+        width: 50%;
+        display: inline-block;
+    }
+
+    .help-block.m-b-none {
+        display: inline;
+        margin-left: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .selefile {
+        display: block;
+        border: none;
+        background-color: #fff;
+        float: left;
+    }
+
+    .selefiledele {
+        margin-top: 3px;
+        display: none;
+    }
+
+</style>
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="fileAdd">
+                    <!--文件名称-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">文件名称：</label>
+                        <div class="col-sm-8">
+                            <input id="fileName" name="fileName" v-model="fileRecord.fileName" class="form-control" type="text" placeholder="最多输入20个字">
+                        </div>
+                    </div>
+                    <!--选择上传文件-->
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">文件：</label>
+                        <div class="col-sm-8">
+                            <input name="file" type="file" @change="upload">
+                            <div id="fileAddr"></div>
+                            <div style="margin-top:10px;" v-for="(item,key) in flieList">
+                                <label>{{ item.fileName }}</label>
+                                <span @click="deleteFile(item.fileId)" style="position:absolute;font-size:12px;color:rgb(0, 183, 146);margin-left:20px;">删除</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--文件类型-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">文件分类：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control"  id='fileKind' name="fileKind" v-model="fileRecord.fileKind">
+                            </select>
+                        </div>
+                    </div>
+                    <!--备注-->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">工会备注：</label>
+                        <div class="col-sm-8">
+                            <textarea id="remark" name="remark" v-model="fileRecord.remark" class="form-control" required="" aria-required="true"
+                                      style="resize: none" placeholder="最多输入200个字"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <input type="button" class="btn btn-primary" @click="editFile()" value="保存">
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="js/qs.6.60.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+
+<!-- 自定义js -->
+<script src="js/baseaddr.js"></script>
+<!-- jQuery Validation plugin javascript-->
+<script src="js/plugins/validate/jquery.validate.min.js"></script>
+<script src="js/plugins/validate/messages_zh.min.js"></script>
+<script src="js/demo/form-validate-demo.js"></script>
+<script>
+     var vm = new Vue({
+        el: '#fileAdd',
+        data: {
+            flieList: [],
+            fileKindlist: [],
+            fileRecord:{},
+            fileId:''
+
+        },
+        methods: {
+            upload(e) {
+                var self = this;
+                let file = e.target.files[0];
+                var param = new FormData();
+                param.append('file', file, file.name);// 通过append向form对象添加数据
+                let config = {
+                    headers: {'Content-Type': 'multipart/form-data'}
+                };
+                axios.post(baseUrl + '/passLaborweb/api/laborun/file/upload', param, config)
+                    .then(res => {
+                        if (res.data.code === '0') {
+                            self.flieList.push(res.data.data)
+                            console.log(self.flieList)
+                            layer.msg("添加成功",{icon: 1, time: 1000})
+                        } else {
+                            layer.msg(res.data.msg,{icon: 2, time: 1000})
+                        }
+                    })
+            },
+            deleteFile(fileId) {
+                var self = this;
+                var param = Qs.stringify({
+                    fileId: fileId.toString()
+                });
+                let config = {
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                };
+                axios.post(baseUrl + '/passLaborweb/api/laborun/file/delete', param, config)
+                    .then(res => {
+                        var resultFileList = []
+                        if (res.data.code === '0') {
+                            for (var i = 0; i < self.flieList.length; i++) {
+                                if (self.flieList[i].fileId !== fileId.toString()) {
+                                    resultFileList.push(self.flieList[i])
+                                }
+                            }
+                            self.flieList = resultFileList;
+                            layer.msg("删除成功",{icon: 1, time: 1000})
+                        } else {
+                            layer.msg(res.data.msg,{icon: 2, time: 1000})
+                        }
+                    })
+            },
+            editFile(){
+                var self = this;
+                var fileConcent = "";
+                for (var i = 0; i < self.flieList.length; i++) {
+                    if(fileConcent === ""){
+                        fileConcent  = self.flieList[i].fileId;
+                    }else{
+                        fileConcent  = fileConcent+","+self.flieList[i].fileId;
+                    }
+                }
+                var param = Qs.stringify({
+                    fileType: self.fileRecord.fileType,
+                    fileConcent: fileConcent,
+                    fileName:  $('#fileName').val(),
+                    fileKindId:  $('#fileKind').val(),
+                    remark:  $('#remark').val()
+                });
+                let config = {
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                };
+                axios.post(baseUrl + '/passLaborweb/api/laborun/laborunFilesRecord/add', param, config)
+                    .then(res => {
+                        if (res.data.code === '0') {
+                            layer.msg("编辑成功",{icon: 1, time: 1000})
+                            var index = self.parent.layer.getFrameIndex(window.name);
+                            self.parent.layer.close(index);
+                        } else {
+                            layer.msg(res.data.msg,{icon: 2, time: 1000})
+                        }
+                    })
+            },
+            getFileKind(){
+                var that = this
+                 axios({
+                     method: 'get',
+                     url: baseUrl + "/passLaborweb/api/laborun/fileKindManager/getfileKindList",
+                     data: {
+                         "fileKindName":""
+                     }
+                 }).then(function (res) {
+                     if(res.data.code === '0'){
+                         var stationEnum = ""
+                         $.each(res.data.data, function (index, item) {
+                             stationEnum += "<option value='" + item.id + "'>" + item.name + "</option>"
+                         })
+                         $('#fileKind').html(stationEnum)
+                     }
+                 });
+            },
+            getFileDetail(){
+                var that = this
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    url: baseUrl + "/passLaborweb/api/laborun/laborunFilesRecord/query",
+                    data: JSON.stringify({
+                        "id": that.fileId,
+                    })
+                }).then((res) => {
+                    if (res.data.code === '0') {
+                        that.fileRecord = res.data.data;
+                        that.flieList =that.fileRecord.flieList;
+                    } else {
+                        layer.msg(res.data.msg, {icon: 2, time: 1000})
+                    }
+                });
+            }
+        },
+         mounted() {
+         var that = this;
+         var url = location.search; //获取url中"?"符后的字串
+         var theRequest = new Object();
+         if (url.indexOf("?") != -1) {
+             var str = url.substr(1);
+             strs = str.split("&");
+             that.fileId = decodeURIComponent(strs[0].split("=")[1]);
+         }
+         that.getFileKind();
+         this.getFileDetail();
+     }
+    });
+
+     $().ready(function() {
+         $("#fileAdd").validate({
+             rules: {
+                 fileKind: "required",
+                 fileName: {
+                     required: true,
+                     maxlength: 20
+                 }
+             },
+             messages: {
+                 fileKind: "必须选择文件类型",
+                 username: {
+                     required: "请输入文件名称",
+                     maxlength: "文件名称在20字以内"
+                 }
+             }
+         });
+     });
+</script>
+</body>
+</html>

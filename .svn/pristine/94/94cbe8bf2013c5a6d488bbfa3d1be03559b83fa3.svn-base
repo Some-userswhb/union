@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>添智·智慧工会云服务平台</title>
+    <meta name="keywords">
+    <meta name="description">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+<style>
+    .col-sm-8 input.form-control, .col-sm-8 select.form-control {
+        width: 50%;
+        display: inline-block;
+    }
+
+    .help-block.m-b-none {
+        display: inline;
+        margin-left: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+</style>
+<body class="gray-bg">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="euForm">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >单位名称：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="unitName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >营业执照：</label>
+                        <div class="col-sm-8">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >统一社会信用代号：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="socialCreditCode">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >行政区划：</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id='area' name="area" v-model="administratCode">
+                                <option>140000</option>
+                                <option>140001</option>
+                                <option>140002</option>
+                                <option>140003</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >单位地址：</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" required="" aria-required="true" style="resize: none" v-model="unitAddr"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >单位行业：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="unitIndustry">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >单位类型：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="unitType">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >社会保险缴纳：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="isTax">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >职工人数：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="workers">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >劳务派遣人数：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="dispatchLabors">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >负责人：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="principal">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >负责人电话：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="principalPhone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >单位状态：</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" v-model="unitStatus">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" >单位备注：</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" required="" aria-required="true" style="resize: none" v-model="remark"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <input type="text" class="btn btn-primary" @click="goto" value="保存" style="width: 60px;">
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+
+<!--vue axios-->
+<script src="js/vue2.5.22.js"></script>
+<script src="js/ixios.0.18.0.js"></script>
+<script src="https://cdn.bootcss.com/qs/6.6.0/qs.min.js"></script>
+<script>
+    new Vue({
+        el:'#euForm',
+        data:{
+            unitName:'单位名称', /*单位名称*/
+            socialCreditCode:'1',   /*统一社会信用代号*/
+            administratCode:'1',   /*行政区划*/
+            unitAddr:'单位地址',   /*单位地址*/
+            unitIndustry:'1',   /*单位行业*/
+            administratCode:'140000',   /*行政区划*/
+            unitType:'1', /*单位类型*/
+            isTax:'1', /*社会保险缴纳*/
+            workers:'100', /*职工人数*/
+            dispatchLabors:'100', /*劳务派遣人数*/
+            principal:'xxx', /*负责人*/
+            principalPhone:'15900000000', /*负责人电话*/
+            unitStatus:'1', /*单位状态*/
+            remark:'单位备注' /*单位备注*/
+        },
+        methods:{
+            /*保存*/
+            goto:function () {
+                axios({
+                    method: 'post',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    url: "http://127.0.0.1:5003/enterprisesUnit/add",
+                    data: Qs.stringify({
+                        "unitName":this.unitName,
+                        "socialCreditCode":this.socialCreditCode,
+                        "administratCode":this.administratCode,
+                        "unitAddr":this.unitAddr,
+                        "unitIndustry":this.unitIndustry,
+                        "administratCode":this.administratCode,
+                        "administratCode":this.administratCode,
+                        "unitType":this.unitType,
+                        "isTax":this.isTax,
+                        "workers":this.workers,
+                        "dispatchLabors":this.dispatchLabors,
+                        "principal":this.principal,
+                        "principalPhone":this.principalPhone,
+                        "unitStatus":this.unitStatus,
+                        "remark":this.remark
+                    }),
+                }).then((res) => {
+                    if(res.data.code === '0'){
+                        layer.msg("成功",{icon: 1, time: 1000})
+                }else{
+                        layer.msg(res.data.msg,{icon: 2, time: 1000})
+                }
+            }).catch((err) => {
+                    layer.msg("单位创建失败",{icon: 2, time: 1000})
+            });
+            }
+        },
+    })
+</script>
+
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+<!-- jQuery Validation plugin javascript-->
+<!--<script src="js/plugins/validate/jquery.validate.min.js"></script>-->
+<!--<script src="js/plugins/validate/messages_zh.min.js"></script>-->
+
+<!--<script src="js/demo/form-validate-demo.js"></script>-->
+</body>
+</html>
